@@ -24,7 +24,7 @@ const handleErrors = (err) => {
 
 const maxAge = 3 * 24 * 120;
 const createToken = (id) => {
-  return jwt.sign({ id }, "sadeeqSecret", {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: maxAge,
   });
 };
@@ -63,7 +63,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         if (validAdmissionNo) {
           if (validPassword) {
-            const token = createToken(user._id);
+            const token = await createToken(user._id);
 
             setCookie(res, "jwt", token, cookieOptions);
 
