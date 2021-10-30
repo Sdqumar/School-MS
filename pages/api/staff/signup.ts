@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import jwt from 'jsonwebtoken';
-import {student} from './model'
+import {staff} from './model'
 import connectDB from '../../../config/connectDB';
 import { serialize,CookieSerializeOptions } from "cookie";
 
@@ -10,15 +10,11 @@ import { serialize,CookieSerializeOptions } from "cookie";
 const handleErrors = (err) => {
   let errors = { email: "", password: "" };
 
-    // incorrect email
-    if (err.message === 'incorrect email') {
-      errors.email = 'That email is not registered';
-    }
-    
+  
 
   //duplicate error code
   if (err.code === 11000) {
-    errors.email = "Email already registered";
+    errors.email = "Staff ID already registered";
     return errors;
   }
   if (err.message.includes("users validation failed")) {
@@ -62,10 +58,10 @@ const handler = async (
 console.log({data})
     
   try {
-        const user = await student.create({...data });
+        const user = await staff.create({...data });
 console.log(user)
         
-        const token =await createToken(user._id);
+        const token = await createToken(user._id);
         setCookie(res, 'User', token, cookieOptions)
         res.status(201).json({ user_id: user._id, email: user.email });
       } catch (err) {

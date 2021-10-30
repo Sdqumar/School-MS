@@ -3,12 +3,12 @@ import {isEmail} from 'validator'
 import argon2 from 'argon2'
 
 
-import {student as studentValues} from '../../student/signup'
+import {staff as staffValue } from '../../staff/signup'
 
-const studentSchema = new Schema<studentValues>({
-  admissionNo: {
+const staffSchema = new Schema<staffValue>({
+  staffID: {
     type:String,
-    required:[ true, 'Please enter admission number'],
+    required:[ true, 'Please enter staff ID'],
     unique: true,
   },
   firstName: {
@@ -31,14 +31,11 @@ const studentSchema = new Schema<studentValues>({
     type:String,
     required:[ true, 'Please enter date of birth']
   },
-  class: {
+  level: {
     type:String,
-    required:[ true, 'Please enter class'],
+    required:[ true, 'Please enter level'],
   },
-  house: {
-    type:String,
-    required:[ true, 'Please enter house'],
-  },
+  
 state: {
   type:String,
   required:[ true, 'Please enter state'],
@@ -61,11 +58,24 @@ LGA: {
 
 
 //fire a function before doc saved to db
-studentSchema.pre('save', async function (next){
+staffSchema.pre('save', async function (next){
     this.password = await argon2.hash(this.password);
     next()
 })
 
+//static method to login user
+// userSchema.statics.login = async function(email,password){
+//     const user = await this.findOne({email})
+//     if(user){
+//         const auth = await argon2.verify(user.password,password)
+//         if(auth){
+//             return user
+//         }
+
+//         throw Error('incorrect password')
+//     }
+//     throw Error('incorrect email')
+// }
 
 
-export const student = mongoose.models.students || mongoose.model('students', studentSchema);
+export const staff = mongoose.models.staff|| mongoose.model('staff',staffSchema);

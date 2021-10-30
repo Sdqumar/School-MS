@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-export type student = {
-  admissionNo: string;
+export type staff = {
+    staffID: string;
   firstName: string;
   lastName: string;
   middleName: string;
-  class: string;
-  house: string;
+  level: string;
   state: string;
   LGA: string;
   email: string;
@@ -22,13 +21,10 @@ export default function App() {
     setValue,
     getValues,
     formState: { errors },
-  } = useForm<student>();
+  } = useForm<staff>();
 
-  const setPassword = () => {
-    const { lastName } = getValues();
-    setValue("password", lastName);
-  };
-  const submitHandler = async (formValues: student) => {
+
+  const submitHandler = async (formValues: staff) => {
     console.log(formValues);
 
     try {
@@ -51,21 +47,20 @@ export default function App() {
 
   return (
     <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
-      <h2>Student Sign Up</h2>
-      <label>Admission Number</label>
+      <h2>Staff Sign Up</h2>
+      <label> staff ID</label>
 
       <input
-        {...register("admissionNo", { required: "Required" })}
+        {...register("staffID", { required: "Required" })}
         type="text"
       />
-      {errors.admissionNo && <Errror message={errors.admissionNo.message} />}
+      {errors. staffID && <Errror message={errors. staffID.message} />}
 
       <label>Firstname</label>
 
       <input
         {...register("firstName", { required: "Required" })}
         type="text"
-        onBlur={setPassword}
       />
       {errors.firstName && <Errror message={errors.firstName.message} />}
 
@@ -74,7 +69,6 @@ export default function App() {
       <input
         {...register("lastName", { required: "Required" })}
         type="text"
-        onBlur={setPassword}
       />
       {errors.lastName && <Errror message={errors.lastName.message} />}
 
@@ -99,16 +93,12 @@ export default function App() {
       />
       {errors.dateOfBirth && <Errror message={errors.dateOfBirth.message} />}
 
-      <label>Class</label>
+      <label>Level</label>
 
-      <input {...register("class", { required: "Required" })} type="text" />
-      {errors.class && <Errror message={errors.class.message} />}
+      <input {...register("level", { required: "Required" })} type="text" />
+      {errors.level && <Errror message={errors.level.message} />}
 
-      <label>House</label>
-
-      <input {...register("house", { required: "Required" })} type="text" />
-      {errors.house && <Errror message={errors.house.message} />}
-
+      
       <label>State</label>
 
       <input {...register("state", { required: "Required" })} type="text" />
@@ -126,7 +116,7 @@ export default function App() {
 
       <label>password</label>
 
-      <input {...register("password")} type="text" disabled={true} />
+      <input {...register("password",{ required: "Required" })} type="text"  />
       {errors.state && <Errror message={errors.password.message} />}
       <button>submit</button>
     </form>

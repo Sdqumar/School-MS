@@ -2,9 +2,9 @@ import React from "react";
 import {  useForm } from "react-hook-form";
 import { useCookies } from 'react-cookie';
 
-type student = {
+type staff = {
   password: string;
-  admissionNo: string;
+  staffID: string;
 };
 
 export default function App() {
@@ -13,11 +13,11 @@ export default function App() {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<student>();
+  } = useForm<staff>();
   const submitHandler = async (formValues) => {
 
     try {
-      const res = await fetch("/api/student/login", {
+      const res = await fetch("/api/staff/login", {
         method: "POST",
         body: JSON.stringify(formValues),
         headers: { "Content-Type": "application/json" },
@@ -39,17 +39,17 @@ export default function App() {
 
   return (
     <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
-      <h2>Portal Sign In </h2>
+      <h2>Staff Sign In Portal</h2>
 
-      <label>Admission No</label>
+      <label>Staff ID</label>
 
       <input
-        {...register("admissionNo", {
+        {...register("staffID", {
           required: "Required"
         })}
         type="text"
       />
-      {errors.admissionNo && <Errror message={errors.admissionNo.message} />}
+      {errors.staffID && <Errror message={errors.staffID.message} />}
 
       <label>Password</label>
 
