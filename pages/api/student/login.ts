@@ -24,7 +24,7 @@ const handleErrors = (err) => {
 
 const maxAge = 3 * 24 * 120;
 const createToken = (id) => {
-  return jwt.sign({ id }, "sadeeqSecret", {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: maxAge,
   });
 };
