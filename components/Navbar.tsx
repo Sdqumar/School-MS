@@ -1,48 +1,61 @@
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState,useEffect} from 'react'
+import { useCookies } from 'react-cookie';
 
 
 function Navbar() {
-  const session = false
-  const loading = false
+ const  [user,setUser]=useState(null)
+ const [cookies, removeCookie] = useCookies(['user']);
+
+useEffect(()=>{
+  const {user} = cookies 
+setUser(user)
+console.log(user);
+},[cookies])
+
+
+ 
 
   const handleLogout = async () => {
 
-      const res = await fetch("/api/auth/signout");
+      const res = await fetch("/api/signout");
        const data = await res.json();
        if(data){
 console.log(data);
      }
+ removeCookie('user','',{maxAge:1});
+ console.log('cookie removed');
+
   };
   return (
     <nav className='header'>
-      <ul className={`main-nav ${!session && loading ? 'loading' : 'loaded'}`}>
+      <ul className={`main-nav`}>
         <li>
           <Link href='/'>
             <a>Home</a>
           </Link>
         </li>
         <li>
-          <Link href='/comment'>
+          <Link href='/blog'>
             <a>Blog</a>
           </Link>
         </li>
 
-        {!loading && !session && (
-          <li>
-            <Link href='/login'>
+        {!user && (
+<>
+<li>
+            <Link href='/staff/login'>
                               Sign In
             </Link>
           </li>
-        )}
-        {
           <li>
-            <Link href='/signup'>
+            <Link href='/staff/signup'>
               Sign Up
             </Link>
           </li>
-        }
-        {
+  </>
+        )}
+        {user &&
           <li>
             <Link href='#'>
               <a

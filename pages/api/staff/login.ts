@@ -7,16 +7,16 @@ import {  staff } from "./model";
 
 //handle errors
 const handleErrors = (err) => {
-  let errors = { AdmissionNo: "", password: "" };
+  let errors = { staffID: "", password: "" };
   console.log(err);
 
-  if (err.message === "incorrect Admission No") {
-    errors.AdmissionNo = "incorrect Admission No";
+  if (err.message === "incorrect staff ID") {
+    errors.staffID = "incorrect staff ID";
   }
 
   // incorrect password
   if (err.message === "incorrect password") {
-    errors.password = "Password is incorrect";
+    errors.password = "incorrect password";
   }
 
   return errors;
@@ -50,18 +50,18 @@ export const setCookie = (
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
-    const { admissionNo, password } = req.body;
+    const { staffID, password } = req.body;
 
     try {
-      const user = await staff.findOne({ admissionNo });
+      const user = await staff.findOne({staffID });
 
       console.log(user);
 
       if (user) {
         const validPassword = await argon2.verify(user.password, password);
-        const validAdmissionNo = admissionNo === user.admissionNo;
+        const validstaffID = staffID === user.staffID;
 
-        if (validAdmissionNo) {
+        if (validstaffID) {
           if (validPassword) {
             const token = await createToken(user._id);
 
@@ -71,15 +71,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           }
           throw Error("incorrect password");
         }
-        throw Error("incorrect Admission No");
+        throw Error("incorrect staff ID");
       }
-      throw Error("incorrect Admission No");
+      throw Error("incorrect staff ID");
     } catch (err) {
       const errors = handleErrors(err);
-      res.status(400).json({ errors });
+      res.status(403).json({ errors });
     }
   }
-  res.status(400).send("unauthorized access");
+  res.status(401).send("unauthorized access");
 };
 
 export default connectDB(handler);

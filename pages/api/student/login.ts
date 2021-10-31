@@ -76,10 +76,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       throw Error("incorrect Admission No");
     } catch (err) {
       const errors = handleErrors(err);
-      res.status(400).json({ errors });
+      res.status(403).json({ errors });
     }
   }
-  res.status(400).send("unauthorized access");
+  res.status(401).send("unauthorized access");
 };
 
 export default connectDB(handler);

@@ -8,7 +8,7 @@ type staff = {
 };
 
 export default function App() {
-  const [cookies, setCookie, removeCookie] = useCookies(['user']);
+  const [cookies, setCookie] = useCookies(['user']);
   const {
     handleSubmit,
     register,
@@ -25,12 +25,11 @@ export default function App() {
       const data = await res.json();
       if (data.errors) {
         console.log(data.errors);
-      }
-      if (data) {
+      }else {
         // location.assign("/");
         console.log({message:'Logging successfully'});
         
-        setCookie('user', data, );
+        setCookie('user', data,{path:'/'} );
       }
     } catch (err) {
       console.log(err);

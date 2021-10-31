@@ -8,13 +8,17 @@ import { serialize,CookieSerializeOptions } from "cookie";
 
 //handle errors
 const handleErrors = (err) => {
-  let errors = { email: "", password: "" };
+  let errors = { staffID: "",password:'',email:'' };
 
   
 
   //duplicate error code
   if (err.code === 11000) {
-    errors.email = "Staff ID already registered";
+   if (err.keyValue.staffID){
+    errors.staffID = "Staff ID already registered";}
+   if (err.keyValue.email){
+     errors.email = "email already registered";
+  }
     return errors;
   }
   if (err.message.includes("users validation failed")) {
@@ -55,7 +59,6 @@ const handler = async (
 ) => {
    if (req.method === 'POST') {
   const data = req.body;
-console.log({data})
     
   try {
         const user = await staff.create({...data });
@@ -67,11 +70,11 @@ console.log(user)
       } catch (err) {
         console.log(err);
         const errors = handleErrors(err);
-        res.status(400).json({ errors });
+        res.status(403).json({ errors });
       }
   
   }
-res.status(400).send('unauthorized access');
+res.status(401).send('unauthorized access');
 
 }
 

@@ -13,36 +13,36 @@ const staffSchema = new Schema<staffValue>({
   },
   firstName: {
     type:String,
-    required:[ true, 'Please enter firstname'],
+    // required:[ true, 'Please enter firstname'],
   },
   lastName: {
     type:String,
-    required:[ true, 'Please enter lastName'],
+    // required:[ true, 'Please enter lastName'],
   },
   middleName: {
     type:String,
-    required:[ true, 'Please enter middleName'],
+    // required:[ true, 'Please enter middleName'],
   },
   age: {
     type:Number,
-    required:[ true, 'Please enter age'],
+    // required:[ true, 'Please enter age'],
   },
   dateOfBirth: {
     type:String,
-    required:[ true, 'Please enter date of birth']
+    // required:[ true, 'Please enter date of birth']
   },
   level: {
     type:String,
-    required:[ true, 'Please enter level'],
+    // required:[ true, 'Please enter level'],
   },
   
 state: {
   type:String,
-  required:[ true, 'Please enter state'],
+  // required:[ true, 'Please enter state'],
   },  
 LGA: {
   type:String,
-  required:[ true, 'Please enter LGA'],
+  // required:[ true, 'Please enter LGA'],
   },  
   email: {
     type: String,

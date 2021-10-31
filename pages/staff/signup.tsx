@@ -111,12 +111,12 @@ export default function App() {
 
       <label>Email</label>
 
-      <input {...register("email")} type="email" />
+      <input {...register("email",{ required: "Required" })} type="email" />
       {errors.email && <Errror message={errors.email.message} />}
 
       <label>password</label>
 
-      <input {...register("password",{ required: "Required" })} type="text"  />
+      <input {...register("password")} type="text"  />
       {errors.state && <Errror message={errors.password.message} />}
       <button>submit</button>
     </form>

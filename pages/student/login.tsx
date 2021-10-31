@@ -25,11 +25,9 @@ export default function App() {
       const data = await res.json();
       if (data.errors) {
         console.log(data.errors);
-      }
-      if (data) {
+      }else {
         // location.assign("/");
         console.log({message:'Logging successfully'});
-        
         setCookie('user', data, );
       }
     } catch (err) {
