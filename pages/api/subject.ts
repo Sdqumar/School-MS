@@ -27,7 +27,6 @@ export async function getSubjects() {
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  
   const auth = req.cookies.user;
   
   if (auth) {
