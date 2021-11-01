@@ -3,12 +3,12 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import connectDB from "../../config/connectDB";
 
 type subjectValue = {
-  subject: string;
+  subjects: [String];
 };
 
 const subjectSchema = new Schema<subjectValue>({
-  subject: {
-    type: String,
+  subjects: {
+    type: [String],
     required: [true, "Please enter Subject name"],
     unique: true,
   },
@@ -28,7 +28,7 @@ export async function getSubjects() {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const auth = req.cookies.user;
-  
+
   if (auth) {
     if (req.method === "GET") {
       const data = await getSubjects();
@@ -36,20 +36,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     } else if (req.method === "POST") {
       try {
         const data = req.body;
-        
-        console.log(data);
-      const response = await subject.create({ ...data });
-      console.log(response);
 
-      res.status(201).json(response);
-    } catch (err) {
-    console.log(err);
-    
-      res.status(403).json({ error: "error creating subject" });
+        const response = await subject.findOneAndUpdate(
+          {},
+          { $addToSet: { subjects: data.subject } },
+          { upsert: true,new:true,lean:true },
+        )
+        console.log(response);
+
+       res.status(201).json(response);
+      } catch (err) {
+        console.log(err);
+
+        res.status(403).json({ error: "error creating subject" });
+      }
     }
-  };
-}else {
-  res.status(401).send("unauthorized access");
-}}
+  } else {
+    res.status(401).send("unauthorized access");
+  }
+};
 
 export default connectDB(handler);
