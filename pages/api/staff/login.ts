@@ -66,7 +66,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             const token = await createToken(user._id);
 
             setCookie(res, "jwt", token, cookieOptions);
-
+            res.setHeader('WWW-Authenticate', 'Basic');
             return res.status(200).send(JSON.stringify(user._id));
           }
           throw Error("incorrect password");

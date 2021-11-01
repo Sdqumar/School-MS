@@ -8,7 +8,6 @@ const Home: NextPage = () => {
       <div className={styles.container}>
         <h1>Homepage</h1>
 
-        <Link href="/api/auth/login">Auth0</Link>
       </div>
     );
 

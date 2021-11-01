@@ -2,7 +2,6 @@ import  mongoose,{Schema} from 'mongoose';
 import {isEmail} from 'validator'
 import argon2 from 'argon2'
 
-
 import {staff as staffValue } from '../../staff/signup'
 
 const staffSchema = new Schema<staffValue>({
@@ -63,19 +62,7 @@ staffSchema.pre('save', async function (next){
     next()
 })
 
-//static method to login user
-// userSchema.statics.login = async function(email,password){
-//     const user = await this.findOne({email})
-//     if(user){
-//         const auth = await argon2.verify(user.password,password)
-//         if(auth){
-//             return user
-//         }
 
-//         throw Error('incorrect password')
-//     }
-//     throw Error('incorrect email')
-// }
 
 
 export const staff = mongoose.models.staff|| mongoose.model('staff',staffSchema);

@@ -28,7 +28,7 @@ nav{
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 120px;
+  margin-bottom: 50px;
 }
 nav ul{
   display: flex;
@@ -141,4 +141,23 @@ footer{
   text-align: center;
   margin-top: 120px;
   color: #aaa;
+}
+
+section div{
+  border: 1px solid lightblue;
+  margin: 15px 10px;
+  width: fit-content;
+  min-width: 8rem;
+  padding: 10px;
+  text-align: center;
+font-weight: 500;
+}
+section a:hover{
+color: lightblue;
+}
+section h1{
+  font-size: 3rem;
+}
+section{
+  margin-left: 20px;
 }
