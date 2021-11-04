@@ -1,7 +1,18 @@
+import Navbar from '../components/Navbar'
 import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import '../components/Navbar.css'
+import '../components/table.css'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+import { CookiesProvider } from 'react-cookie';
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
+  return (
+    <CookiesProvider>
+      <Navbar />
+      <Component {...pageProps} />
+      </CookiesProvider>
+  )
 }
-export default MyApp
+
