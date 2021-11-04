@@ -1,6 +1,6 @@
-import { useMemo,useState } from "react";
+import React,{ useMemo,useState } from "react";
 import 'regenerator-runtime/runtime' 
-import { useTable,useSortBy,useGlobalFilter,useFilters,useAsyncDebounce } from "react-table";
+import { useTable,useSortBy,useGlobalFilter,useFilters,useAsyncDebounce,usePagination,useRowSelect } from "react-table";
 import MOCK_DATA from "../components/MOCK_DATA.json";
 
 
@@ -106,17 +106,54 @@ export default function BasicTable() {
     headerGroups,
     footerGroups,
     rows,
+    page,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageOptions,
     prepareRow,
     state,
-    setGlobalFilter
+    setPageSize,
+    setGlobalFilter,
+    selectedFlatRows,
+    allColumns,
+    getToggleHideAllColumnsProps
   } = useTable({
     columns,
     data,
     defaultColumn
-  },useFilters,useGlobalFilter, useSortBy,);
-const {globalFilter} =state
+  },useFilters,useGlobalFilter, useSortBy,usePagination,useRowSelect,
+  hooks => {
+    hooks.visibleColumns.push(columns => [
+      {
+        id: 'selection',
+        Header: ({ getToggleAllRowsSelectedProps }) => (
+          <Checkbox {...getToggleAllRowsSelectedProps()} />
+        ),
+        Cell: ({ row }) => <Checkbox {...row.getToggleRowSelectedProps()} />
+      },
+      ...columns
+    ])
+  });
+const {globalFilter,pageIndex,pageSize} =state
   return (
     <div>
+<div>
+    <Checkbox {...getToggleHideAllColumnsProps()}/> 
+    ToggleAll
+</div>
+{
+    allColumns.map(column=>(
+        <span key={column.id}>
+<label htmlFor={column.id}>
+    <input  type='checkbox' {...column.getToggleHiddenProps()}/>
+    {column.Header}
+</label>
+        </span>
+    ))
+}
+
         <GlobalFilter filter={globalFilter}
         setFilter={setGlobalFilter}/>
       <table {...getTableProps()}>
@@ -132,7 +169,7 @@ const {globalFilter} =state
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps}>
@@ -145,7 +182,7 @@ const {globalFilter} =state
             );
           })}
         </tbody>
-        <tfoot>
+        {/* <tfoot>
         {footerGroups.map((footerGroup) => (
             <tr {...footerGroup.getFooterGroupProps()}>
               {footerGroup.headers.map((column) => (
@@ -153,8 +190,38 @@ const {globalFilter} =state
               ))}
             </tr>
           ))}
-        </tfoot>
+        </tfoot> */}
       </table>
+      <pre>
+        <code>
+          {JSON.stringify(
+            {
+              selectedFlatRows: selectedFlatRows.map(row => row.original)
+            },
+            null,
+            2
+          )}
+        </code>
+      </pre>
+<div>
+    <span>
+        <select value={pageSize} onChange={e=>setPageSize(Number(e.target.value))}>
+{
+    [10,20,50].map(pageSize=>(
+        <option key={pageSize} value={pageSize}>show {pageSize}</option>
+    ))
+}
+        </select>
+    </span>
+<span>Page {' '}
+     <strong> {pageIndex +1} of   {pageOptions.length}</strong>
+</span>
+<div style={{display:'flex'}}>
+
+    <button onClick={previousPage} disabled={!canPreviousPage}>Previous</button>
+    <button onClick={nextPage} disabled={!canNextPage}>Next</button>
+</div>
+</div>
     </div>
   );
 }
@@ -178,3 +245,17 @@ return(
 )
 }
 
+export const Checkbox = React.forwardRef(({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef()
+    const resolvedRef = ref || defaultRef
+  
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate
+    }, [resolvedRef, indeterminate])
+  
+    return (
+      <>
+        <input type='checkbox' ref={resolvedRef} {...rest} style={{width:'20px'}} />
+      </>
+    )
+  })
