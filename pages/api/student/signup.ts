@@ -59,7 +59,6 @@ const handler = async (
 ) => {
    if (req.method === 'POST') {
   const data = req.body;
-console.log({data})
     
   try {
         const user = await student.create({...data });

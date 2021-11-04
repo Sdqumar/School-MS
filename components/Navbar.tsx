@@ -9,7 +9,7 @@ function Navbar() {
   useEffect(() => {
     const { user } = cookies;
     setUser(user);
-    console.log(user);
+    // console.log(user);
   }, [cookies]);
 
   const handleLogout = async () => {

@@ -22,6 +22,8 @@
     "react-cookie": "^4.1.1",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.18.0",
+    "react-table": "^7.7.0",
+    "regenerator-runtime": "^0.13.9",
     "validator": "^13.6.0"
   },
   "devDependencies": {

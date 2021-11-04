@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 console.log(req.headers);
 console.log(req.headers['authorization']);
 
-  return res.status(200).json({ message: "logout successfull" });
+  return res.status(202).json({ message: "logout successfull" });
 };
 
 export default handler;

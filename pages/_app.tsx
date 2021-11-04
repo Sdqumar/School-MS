@@ -1,6 +1,8 @@
 import Navbar from '../components/Navbar'
 import '../styles/globals.css'
 import '../components/Navbar.css'
+import '../components/table.css'
+
 import { CookiesProvider } from 'react-cookie';
 export default function App({
   Component,

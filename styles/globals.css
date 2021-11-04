@@ -55,7 +55,7 @@ form h2{
   margin-bottom: 40px;
 }
 form{
-  width: 360px;
+  width: 95vw;
   margin: 0 auto;
   padding: 30px;
   box-shadow: 1px 2px 3px rgba(0,0,0,0.1);
@@ -161,3 +161,31 @@ section h1{
 section{
   margin-left: 20px;
 }
+select,option{
+  padding: 10px 20px;
+}
+option{
+  padding: 10px 20px;
+  
+}
+
+.result{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.result label{
+  display: block;
+  margin: 0px;
+  margin-top: -10px;
+}
+.result div{
+  border: 0px ;
+  margin: 0px 5px;
+  padding: 3px;
+  min-width:3rem;
+}
+ .result input{
+  width: 100px;
+  text-align: center;
+} 

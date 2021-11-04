@@ -67,7 +67,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
             setCookie(res, "jwt", token, cookieOptions);
 
-            return res.status(200).send(JSON.stringify(user._id));
+            return res.status(201).send(JSON.stringify(user._id));
           }
           throw Error("incorrect password");
         }
