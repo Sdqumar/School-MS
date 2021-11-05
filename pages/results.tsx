@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getStaffs } from "./api/staff";
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
+import BasicTable from "../components/BasicTable";
+import { useEffect } from "hoist-non-react-statics/node_modules/@types/react";
 
 const className = [
   "Primary 1",
@@ -10,23 +12,16 @@ const className = [
   "Primary 4",
   "Primary 5",
   "Primary 6",
+  'SS 1'
 ];
 
 const subjects = [
   "English Language",
   " Mathematics",
+  
 ];
-// "Verbal Reasoning",
-// "Quantitative Reasoning",
-// "Social Studies",
-// "Vocational Aptitude",
-// "Health Education",
-// "Creative Arts",
-// "Agric Science",
-// "Home Economics",
-// "Civic Education",
-// "Handwriting",
-const term = ["First Term", "Second Term", "Third Term"];
+
+const term = ["First Term", "Second Term"];
 
 const studentName = [
   "Emmanuel Ayomide",
@@ -38,7 +33,7 @@ const studentName = [
   "Queen Isaac",
   "	Jessica Vincent",
 ];
-type subject = {
+export type subject = {
     name:string;
     firstCA: number;
     secondCA: number;
@@ -47,7 +42,9 @@ type subject = {
     grade: string;
     remark: string;
 }[]
-type result = {
+export type result = {
+  id:string;
+  year:number;
   result: string;
   studentName: string;
   term: string;
@@ -65,28 +62,60 @@ export default function Result({ data }) {
     getValues,
     formState: { errors },
   } = useForm<result>();
-  const submitHandler = async (formValues) => {
-    console.log(formValues);
-    // try {
 
-    //   const res = await fetch("/api/subject", {
-    //     method: "POST",
-    //     body: JSON.stringify(formValues),
-    //     headers: { "Content-Type": "application/json" },
-    //   });
-    //   const data = await res.json();
-    //   if (data.errors) {
-    //     console.log(data.errors);
-    //   }else {
-    //     // location.assign("/");
-    //     console.log(data);
+  const [subjectIndex,setSubjectIndex]=useState(0)
+const [resultComplete,setResultComplete]=useState(false)
+const [reviewResult,setReviewResult]=useState(false)
+const [showResultForm,setShowResultForm]=useState(false)
+const values = getValues();
 
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
+const handleResultReview=()=>{
+reviewResult && setReviewResult(false)
+!reviewResult && setReviewResult(true)
+}
+const submitHandler = async (formValues) => {
+console.log('submit');
+
+    try {
+
+      const res = await fetch("/api/result", {
+        method: "POST",
+        body: JSON.stringify(formValues),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if (data.errors) {
+        console.log(data.errors);
+      }else {
+        // location.assign("/");
+        console.log(data);
+
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
-const [subjectIndex,setSubjectIndex]=useState(0)
+const year = new Date().getFullYear();
+
+let id =''
+
+
+
+const handleShowResultForm=()=>{
+  let term ="01"
+  if(values.term ===  'Second Term'){
+    term='02'
+  }
+  console.log('sdsd');
+  let studentID = values?.studentName?.split(" ").map(item=> item.charAt(0) )
+  // studentID= studentID?.toString()?.replace(",", "");
+  // // let [class1st,class2nd]= values.class.split(" ").map(item=>item.slice(0,3))
+  // const classID= class1st +class2nd
+  // console.log(classID);
+  console.log(values);
+  
+setShowResultForm(true)
+}
 
 const setTotalScore=()=>{
     const values = getValues();
@@ -99,7 +128,6 @@ const setTotalScore=()=>{
     //@ts-expect-error
     const totalScore = parseInt(firstCA) + parseInt(secondCA)  +parseInt(examScore)
 
-    console.log(totalScore);
      setValue(`subject.${subjectIndex}.totalScore`
      , totalScore);
 
@@ -133,8 +161,6 @@ const setTotalScore=()=>{
         remark='Excellet'
      }
     
-    console.log(totalScore >=70 && totalScore <= 100);
-    console.log(grade,remark);
      setValue(`subject.${subjectIndex}.grade`
      , grade);
      setValue(`subject.${subjectIndex}.remark`
@@ -148,7 +174,22 @@ const setTotalScore=()=>{
     <section>
       <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
         <h4>Create a new Result</h4>
-
+        <input
+                {...register(`id`, {
+                    required: "Required",
+                })}
+                type="text"
+                defaultValue={id}
+                hidden
+                />
+        <input
+                {...register(`year`, {
+                    required: "Required",
+                })}
+                type="text"
+                defaultValue={year}
+                hidden
+                />
         <label>Class</label>
         <select
           {...register("class", {
@@ -190,9 +231,9 @@ const setTotalScore=()=>{
           ))}
         </select>
         {errors.studentName && <Errror message={errors.studentName.message} />}
-
-        {subjects.map((item,index) => (
-          <div className="result" key={item} onClick={()=>setSubjectIndex(index)}>
+{!showResultForm && <button onClick={handleShowResultForm}>Contiune</button>}
+         {showResultForm && subjects.map((item,index) => (
+               <div className="result" key={item} onClick={()=>setSubjectIndex(index)}>
             <label>{item}</label>
             <div>
 
@@ -276,11 +317,17 @@ const setTotalScore=()=>{
               )}
             </div>
           </div>
-        ))}
+        ))} 
 
-        <button>submit</button>
+{showResultForm &&  
+      <>
+      <button>submit</button>
+        <button onClick={handleResultReview}>Review</button>
+        </>}
       </form>
-    </section>
+{reviewResult&&
+      <BasicTable result={values.subject}/>
+}    </section>
   );
 }
 
