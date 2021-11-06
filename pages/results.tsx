@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { getStaffs } from "./api/staff";
 import { useForm } from "react-hook-form";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import BasicTable from "../components/BasicTable";
-import { useEffect } from "hoist-non-react-statics/node_modules/@types/react";
 
 const className = [
   "Primary 1",
@@ -17,7 +16,7 @@ const className = [
 
 const subjects = [
   "English Language",
-  " Mathematics",
+  // "Mathematics",
   
 ];
 
@@ -31,7 +30,7 @@ const studentName = [
   "Mubaraq Rahama",
   "David Williams",
   "Queen Isaac",
-  "	Jessica Vincent",
+  "Jessica Vincent",
 ];
 export type subject = {
     name:string;
@@ -67,57 +66,40 @@ export default function Result({ data }) {
 const [resultComplete,setResultComplete]=useState(false)
 const [reviewResult,setReviewResult]=useState(false)
 const [showResultForm,setShowResultForm]=useState(false)
-const values = getValues();
+
+ 
 
 const handleResultReview=()=>{
 reviewResult && setReviewResult(false)
 !reviewResult && setReviewResult(true)
 }
-const submitHandler = async (formValues) => {
-console.log('submit');
 
-    try {
-
-      const res = await fetch("/api/result", {
-        method: "POST",
-        body: JSON.stringify(formValues),
-        headers: { "Content-Type": "application/json" },
-      });
-      const data = await res.json();
-      if (data.errors) {
-        console.log(data.errors);
-      }else {
-        // location.assign("/");
-        console.log(data);
-
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
 const year = new Date().getFullYear();
-
-let id =''
-
+const values=getValues()
 
 
-const handleShowResultForm=()=>{
+const getResultId= async(formValues)=>{
   let term ="01"
-  if(values.term ===  'Second Term'){
+
+  if(formValues.term ===  'Second Term'){
     term='02'
   }
-  console.log('sdsd');
-  let studentID = values?.studentName?.split(" ").map(item=> item.charAt(0) )
-  // studentID= studentID?.toString()?.replace(",", "");
-  // // let [class1st,class2nd]= values.class.split(" ").map(item=>item.slice(0,3))
-  // const classID= class1st +class2nd
-  // console.log(classID);
-  console.log(values);
-  
+  let studentID:string[]|string = formValues.studentName?.split(" ").map(item=> item.charAt(0) )
+  studentID= studentID.toString()?.replace(",", "");
+  let [class1st,class2nd]= formValues.class.toUpperCase().split(" ").map(item=>item.slice(0,3))
+  const classID= class1st +class2nd
+  const id = `${year}/${term}/${classID}/${studentID}`
+return id
+
+
+}
+
+const handleShowResultForm=()=>{
 setShowResultForm(true)
 }
 
 const setTotalScore=()=>{
+
     const values = getValues();
     const firstCA =values.subject?.[subjectIndex].firstCA
     const secondCA =values.subject?.[subjectIndex].secondCA
@@ -133,7 +115,9 @@ const setTotalScore=()=>{
 
      let grade =''
      let remark= ''
-     if(totalScore >=29 && totalScore <= 0  ){
+     
+     if(totalScore >=0 && totalScore <= 29 ){
+       console.log(totalScore >=0 && totalScore <= 29 );
         grade = 'F'
         remark='Very Poor' 
     }
@@ -170,26 +154,38 @@ const setTotalScore=()=>{
     }
     
 }
+
+
+const submitHandler = async (formValues) => {
+const id =await   getResultId(formValues)
+
+
+  console.log({...formValues,id,year});
+  
+      try {
+  
+        const res = await fetch("/api/result", {
+          method: "POST",
+          body: JSON.stringify({...formValues,id,year}),
+          headers: { "Content-Type": "application/json" },
+        });
+        const data = await res.json();
+        if (data.errors) {
+          console.log(data.errors);
+        }else {
+          // location.assign("/");
+          console.log(data);
+  
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
   return (
     <section>
       <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
         <h4>Create a new Result</h4>
-        <input
-                {...register(`id`, {
-                    required: "Required",
-                })}
-                type="text"
-                defaultValue={id}
-                hidden
-                />
-        <input
-                {...register(`year`, {
-                    required: "Required",
-                })}
-                type="text"
-                defaultValue={year}
-                hidden
-                />
+     
         <label>Class</label>
         <select
           {...register("class", {
@@ -209,6 +205,7 @@ const setTotalScore=()=>{
           {...register("term", {
             required: "Required",
           })}
+
         >
           {term.map((item) => (
             <option value={item} key={item}>
@@ -253,6 +250,7 @@ const setTotalScore=()=>{
                 min="0" max="20"
                 type="number"
                 onBlur={setTotalScore}
+
               />
             </div>
             <div>
@@ -265,6 +263,7 @@ const setTotalScore=()=>{
                 type="number"
                 min="0" max="20"
                 onBlur={setTotalScore}
+
               />
             </div>
         
@@ -320,11 +319,16 @@ const setTotalScore=()=>{
         ))} 
 
 {showResultForm &&  
-      <>
-      <button>submit</button>
-        <button onClick={handleResultReview}>Review</button>
-        </>}
+<>
+      <button type='submit' >submit</button>
+ 
+  </>
+        }
       </form>
+      
+{showResultForm &&  
+        <button onClick={handleResultReview}>Review</button>
+        } 
 {reviewResult&&
       <BasicTable result={values.subject}/>
 }    </section>

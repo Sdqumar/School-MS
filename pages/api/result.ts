@@ -12,6 +12,11 @@ const resultSchema = new Schema<resultTypes>({
     type: String,
     required: [true, "Please enter class"],
   },
+  id: {
+    type: String,
+    required: [true, "Please enter id"],
+    unique:true
+  },
   term: {
     type: String,
     required: [true, "Please enter term"],
@@ -72,6 +77,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     } else if (req.method === "POST") {
       try {
         const data = req.body;
+console.log(data);
 
        const response = await result.create({...data})
         console.log(response);
