@@ -89,7 +89,7 @@ const getResultId= async(formValues)=>{
   let [class1st,class2nd]= formValues.class.toUpperCase().split(" ").map(item=>item.slice(0,3))
   const classID= class1st +class2nd
   const id = `${year}/${term}/${classID}/${studentID}`
-return id
+  return id
 
 
 }
@@ -160,13 +160,16 @@ const submitHandler = async (formValues) => {
 const id =await   getResultId(formValues)
 
 
-  console.log({...formValues,id,year});
+  const docName = year+formValues.term.replace(" ", "").toLowerCase();
+console.log(docName);
+
+  const doc = {...formValues,id,year}
   
       try {
   
         const res = await fetch("/api/result", {
           method: "POST",
-          body: JSON.stringify({...formValues,id,year}),
+          body: JSON.stringify({doc,docName}),
           headers: { "Content-Type": "application/json" },
         });
         const data = await res.json();

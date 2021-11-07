@@ -1,7 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import type { NextApiRequest, NextApiResponse } from "next";
-import connectDB from "../../config/connectDB";
-import { result as resultTypes } from "../results";
+
+import { result as resultTypes } from "../../results";
 
 const resultSchema = new Schema<resultTypes>({
   studentName: {
@@ -15,7 +14,7 @@ const resultSchema = new Schema<resultTypes>({
   id: {
     type: String,
     required: [true, "Please enter id"],
-    unique:true
+    unique: true,
   },
   term: {
     type: String,
@@ -55,43 +54,9 @@ const resultSchema = new Schema<resultTypes>({
   ],
 });
 
-const result =
-  mongoose.models.result || mongoose.model("result", resultSchema);
-
-export async function getResults() {
-  try {
-    const data = await result.find({});
-    return data;
-  } catch (err) {
-    return null;
-  }
-}
-
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const auth = req.cookies.user;
-
-  if (auth) {
-    if (req.method === "GET") {
-      const data = await getResults();
-      res.status(200).json(data);
-    } else if (req.method === "POST") {
-      try {
-        const data = req.body;
-console.log(data);
-
-       const response = await result.create({...data})
-        console.log(response);
-
-        res.status(201).json(response);
-      } catch (err) {
-        console.log(err);
-
-        res.status(403).json({ error: "error creating subject" });
-      }
-    }
-  } else {
-    res.status(401).send("unauthorized access");
-  }
+const result = (name) => {
+  return mongoose.models.name || mongoose.model(name, resultSchema, name);
 };
 
-export default connectDB(handler);
+export default  result
+
