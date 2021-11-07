@@ -8,10 +8,10 @@ return(
     <h1>Dashboard</h1>
 
     <div>
-        <Link href='/staffs'>Staffs</Link>
+        <Link href='/staff'>Staffs</Link>
     </div>
     <div>
-        <Link href='/students'>Students</Link>
+        <Link href='/student'>Students</Link>
     </div>
   
     <div>

@@ -1,14 +1,11 @@
 import result from "./model";
 
-
 import type { NextApiRequest, NextApiResponse } from "next";
 import connectDB from "../../../config/connectDB";
 
 export async function getResults() {
   try {
     const data = await result("2021secondterm").find({});
-    console.log(data);
-    console.log("sdsd");
 
     return data;
   } catch (err) {
@@ -26,10 +23,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     } else if (req.method === "POST") {
       try {
         const { doc, docName } = req.body;
-        console.log(doc, docName);
 
         const response = await result(docName).create({ ...doc });
-        console.log(response);
 
         res.status(201).json(response._id);
       } catch (err) {

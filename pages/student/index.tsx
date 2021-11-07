@@ -1,17 +1,17 @@
 import Link from "next/link";
-import { getStaffs } from "./api/staff";
+import { getStudents } from "../api/student";
 
-export default function Staffs({ data }) {
+export default function Students({ data }) {
 
   const res = JSON.parse(data);
 
   return (
     <section>
-      <h1>Staffs</h1>
+      <h1>Students</h1>
       <div>
-        <Link href="/staff/signup">Add New Staff</Link>
+        <Link href="/student/signup">Add New Student</Link>
       </div>
-    {!res && <h2>Error fatching staff list...</h2>}
+    {!res && <h2>Error fatching Students list...</h2>}
       <ul>
         { res && res.map((item) => {
           const name = `${item.firstName}  ${item.lastName}`;
@@ -28,7 +28,7 @@ export default function Staffs({ data }) {
 }
 
 export async function getStaticProps() {
-  let res = await getStaffs();
+  let res = await getStudents();
   let data = await JSON.stringify(res);
   
   return {

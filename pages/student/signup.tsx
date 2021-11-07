@@ -5,6 +5,7 @@ export type student = {
   firstName: string;
   lastName: string;
   middleName: string;
+  fullName:string;
   class: string;
   house: string;
   state: string;
@@ -27,6 +28,10 @@ export default function App() {
   const setPassword = () => {
     const { lastName } = getValues();
     setValue("password", lastName);
+  };
+  const setFullName = () => {
+    const { firstName,middleName,lastName } = getValues();
+    setValue("fullName", `${firstName} ${middleName} ${lastName}`);
   };
   const submitHandler = async (formValues: student) => {
     console.log(formValues);
@@ -83,8 +88,17 @@ export default function App() {
       <input
         {...register("middleName", { required: "Required" })}
         type="text"
+        onBlur={setFullName}
       />
       {errors.middleName && <Errror message={errors.middleName.message} />}
+      <label>Fullname</label>
+
+<input
+  {...register("fullName", { required: "Required" })}
+  type="text"
+  disabled
+/>
+{errors.fullName && <Errror message={errors.fullName.message} />}
 
       <label>Age</label>
 
