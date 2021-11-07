@@ -1,7 +1,7 @@
 import result from "./model";
+import connectDB from "../../../config/connectDB";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import connectDB from "../../../config/connectDB";
 
 export async function getResults() {
   try {

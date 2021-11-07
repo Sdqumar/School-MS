@@ -37,7 +37,7 @@ export default function App() {
     console.log(formValues);
 
     try {
-      const res = await fetch("/api/staff/signup", {
+      const res = await fetch("/api/student/signup", {
         method: "POST",
         body: JSON.stringify(formValues),
         headers: { "Content-Type": "application/json" },
