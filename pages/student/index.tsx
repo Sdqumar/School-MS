@@ -1,5 +1,41 @@
 import Link from "next/link";
+import { FilteringTable } from "../../components/FiltertingTable";
 import { getStudents } from "../api/student";
+
+
+const COLUMNS = [
+   
+  {
+    Header: 'No',
+    accessor: 'admissionNo',
+  },
+  {
+    Header: 'Full Name',
+    accessor: 'fullName',
+  },
+
+  {
+    Header: 'Class',
+    accessor: 'class',
+  },
+  // {
+  //   Header: 'Exam',
+  //   accessor: 'examScore',
+  // },
+  // {
+  //   Header: 'Total',
+  //   accessor:'totalScore'
+  // },
+  // {
+  //   Header: 'Grade',
+  //   accessor:'grade'
+  // },
+  // ,
+  // {
+  //   Header: 'Remark',
+  //   accessor: 'remark'
+  // },
+]
 
 export default function Students({ data }) {
 
@@ -12,17 +48,9 @@ export default function Students({ data }) {
         <Link href="/student/signup">Add New Student</Link>
       </div>
     {!res && <h2>Error fatching Students list...</h2>}
-      <ul>
-        { res && res.map((item) => {
-          const name = `${item.firstName}  ${item.lastName}`;
-          
-          return (
-            <li key={item.id}>
-              {name}
-            </li>
-          );
-        })}
-      </ul>
+        { res  &&
+        <FilteringTable tableData={res} COLUMNS={COLUMNS}/>
+        }
     </section>
   );
 }

@@ -11,20 +11,18 @@ const studentSchema = new Schema<studentValues>({
     required: [true, "Please enter admission number"],
     unique: true,
   },
-  firstName: {
+  fullName: {
     type: String,
-    required: [true, "Please enter firstname"],
+    required: [true, "Please enter fullName"],
   },
-  lastName: {
+  gender: {
     type: String,
-    required: [true, "Please enter lastName"],
+    required: [true, "Please enter gender"],
   },
-
-  //   class: {
-  //     type:String,
-  //     required:[ true, 'Please enter class'],
-  //   },
-
+  class: {
+    type: String,
+    required: [true, "Please enter class"],
+  },
   password: {
     type: String,
     required: [true, "Please enter a valid password"],
@@ -38,7 +36,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (process.env.NODE_ENV !== "production") {
     // const data= JSON.parse()
     try {
-      await student.collection.drop();
+      // await student.collection.drop();
       const user = await student.insertMany(studentMock);
       res.status(201).send("seed successfull");
     } catch (err) {

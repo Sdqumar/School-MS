@@ -5,8 +5,9 @@ import { student } from "./model";
 
 export async function getStudents() {
     try{
-  const staffs = await student.find({}).select("-password");
-  return staffs;
+  const res = await student.find({}).select("-password");
+  
+  return res;
 }
 catch(err){
     return null

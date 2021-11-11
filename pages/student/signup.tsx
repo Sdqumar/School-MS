@@ -12,6 +12,7 @@ export type student = {
   LGA: string;
   email: string;
   age: number;
+  gender:string;
   dateOfBirth: string;
   password: string;
 };
