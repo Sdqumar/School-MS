@@ -48,8 +48,11 @@ export type result = {
   subject: subject;
 };
 export default function Result({ data }) {
-    const res = JSON.parse(data);
+  
+  let res = JSON.parse(data);
 
+  const [names,setNames]=useState(null)
+  
   const {
     handleSubmit,
     register,
@@ -57,6 +60,20 @@ export default function Result({ data }) {
     getValues,
     formState: { errors },
   } = useForm<result>();
+  const values = getValues();
+
+  const handleChangeClass=(e)=>{
+     const currentClass = e.target.value
+    
+const studentNames = res.filter(item=> item.class === currentClass)    
+setNames(studentNames);
+
+  }
+
+  useEffect(()=>{
+    const studentNames = res.filter(item=> item.class === "Primary 1")    
+    setNames(studentNames);
+      },[])
 
   const [subjectIndex, setSubjectIndex] = useState(0);
   const [resultComplete, setResultComplete] = useState(false);
@@ -69,8 +86,7 @@ export default function Result({ data }) {
   };
 
   const year = new Date().getFullYear().toString();
-  const values = getValues();
-
+  
   const getResultId = async (formValues) => {
     let term = "01";
 
@@ -95,7 +111,6 @@ export default function Result({ data }) {
 
 
   const setTotalScore = () => {
-    const values = getValues();
     const firstCA = values.subject?.[subjectIndex].firstCA.toString();
     const secondCA = values.subject?.[subjectIndex].secondCA.toString();
     const examScore = values.subject?.[subjectIndex].examScore.toString();
@@ -176,6 +191,7 @@ export default function Result({ data }) {
           {...register("class", {
             required: "Required",
           })}
+          onChange={(e)=>handleChangeClass(e)}
         >
           {className.map((item) => (
             <option value={item} key={item}>
@@ -205,7 +221,7 @@ export default function Result({ data }) {
             required: "Required",
           })}
         >
-          {res.map((item) => (
+          {names?.map((item) => (
             <option value={item.admissionNo} key={item.admissionNo}>
               {item.fullName}
             </option>
