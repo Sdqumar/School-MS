@@ -15,7 +15,7 @@ return(
     </div>
   
     <div>
-        <Link href='/subjects'>Subjects</Link>
+        <Link href='/classes'>Classes</Link>
     </div>
     <div>
         <Link href='/results'>Results</Link>
