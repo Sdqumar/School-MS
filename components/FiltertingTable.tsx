@@ -7,7 +7,6 @@ export const FilteringTable = ({tableData,COLUMNS}) => {
   const columns = useMemo(() => COLUMNS, [])
   const data = useMemo(() => tableData, [])
 
- console.log(data);
  
 
   const {
@@ -80,14 +79,22 @@ export const GlobalFilter = ({ filter, setFilter }) => {
       setFilter(value || undefined)
     }, 1000)
     return (
-      <span>
-        Search:{' '}
-        <input
+      <span
+      style={{display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+    marginBottom:'10px'
+    }}
+      
+      >
+        <strong>Search:   
+</strong>        <input
           value={value || ''}
           onChange={e => {
             setValue(e.target.value);
             onChange(e.target.value);
           }}
+          style={{width:'30vw',marginLeft:'10px'}}
         />
       </span>
     )

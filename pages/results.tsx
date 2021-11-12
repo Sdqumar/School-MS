@@ -12,13 +12,12 @@ const className = [
   "Primary 6",
   "SS 1",
 ];
-
 const subjects = [
   "English Language",
-  // "Mathematics",
+  "Mathematics",
 ];
 
-const term = ["First Term", "Second Term"];
+const term = ["First Term", "Second Term","Third Term"];
 
 const studentName = [
   "Emmanuel Ayomide",
@@ -50,7 +49,6 @@ export type result = {
 };
 export default function Result({ data }) {
     const res = JSON.parse(data);
-console.log(res);
 
   const {
     handleSubmit,
@@ -79,6 +77,9 @@ console.log(res);
     if (formValues.term === "Second Term") {
       term = "02";
     }
+    if (formValues.term === "Third Term") {
+      term = "03";
+    }
     let studentID: string[] | string = formValues.studentName
       ?.split(" ")
       .map((item) => item.charAt(0));
@@ -95,14 +96,12 @@ console.log(res);
 
   const setTotalScore = () => {
     const values = getValues();
-    const firstCA = values.subject?.[subjectIndex].firstCA;
-    const secondCA = values.subject?.[subjectIndex].secondCA;
-    const examScore = values.subject?.[subjectIndex].examScore;
+    const firstCA = values.subject?.[subjectIndex].firstCA.toString();
+    const secondCA = values.subject?.[subjectIndex].secondCA.toString();
+    const examScore = values.subject?.[subjectIndex].examScore.toString();
 
     if (firstCA && secondCA && examScore) {
-      //@ts-expect-error
-      const totalScore =
-        parseInt(firstCA) + parseInt(secondCA) + parseInt(examScore);
+       const totalScore =  parseInt(firstCA) + parseInt(secondCA) + parseInt(examScore);
 
       setValue(`subject.${subjectIndex}.totalScore`, totalScore);
 
@@ -134,7 +133,7 @@ console.log(res);
 
       if (totalScore >= 70 && totalScore <= 100) {
         grade = "A";
-        remark = "Excellet";
+        remark = "Excellent";
       }
 
       setValue(`subject.${subjectIndex}.grade`, grade);
@@ -208,7 +207,7 @@ console.log(res);
         >
           {res.map((item) => (
             <option value={item.admissionNo} key={item.admissionNo}>
-              {item.lastName}
+              {item.fullName}
             </option>
           ))}
         </select>

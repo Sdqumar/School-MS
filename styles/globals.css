@@ -186,6 +186,6 @@ option{
   min-width:3rem;
 }
  .result input{
-  width: 100px;
+  max-width: 9rem;
   text-align: center;
 } 

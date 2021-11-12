@@ -33,7 +33,7 @@ export default function Students({ data }) {
 
   return (
     <section>
-      <h1>Students</h1>
+      <h1>Staffs</h1>
       <div>
         <Link href="/staff/signup">Add New Staff</Link>
       </div>
