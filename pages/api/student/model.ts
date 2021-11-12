@@ -21,6 +21,10 @@ const studentSchema = new Schema<studentValues>({
   },
   middleName: {
     type:String,
+    // required:[ true, 'Please enter middleName'],
+  },
+  fullName: {
+    type:String,
     required:[ true, 'Please enter middleName'],
   },
   age: {
@@ -29,7 +33,7 @@ const studentSchema = new Schema<studentValues>({
   },
   dateOfBirth: {
     type:String,
-    required:[ true, 'Please enter date of birth']
+    // required:[ true, 'Please enter date of birth']
   },
   class: {
     type:String,
@@ -37,15 +41,15 @@ const studentSchema = new Schema<studentValues>({
   },
   house: {
     type:String,
-    required:[ true, 'Please enter house'],
+    // required:[ true, 'Please enter house'],
   },
 state: {
   type:String,
-  required:[ true, 'Please enter state'],
+  // required:[ true, 'Please enter state'],
   },  
 LGA: {
   type:String,
-  required:[ true, 'Please enter LGA'],
+  // required:[ true, 'Please enter LGA'],
   },  
   email: {
     type: String,

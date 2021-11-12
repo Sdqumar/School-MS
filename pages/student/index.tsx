@@ -18,23 +18,15 @@ const COLUMNS = [
     Header: 'Class',
     accessor: 'class',
   },
-  // {
-  //   Header: 'Exam',
-  //   accessor: 'examScore',
-  // },
-  // {
-  //   Header: 'Total',
-  //   accessor:'totalScore'
-  // },
-  // {
-  //   Header: 'Grade',
-  //   accessor:'grade'
-  // },
-  // ,
-  // {
-  //   Header: 'Remark',
-  //   accessor: 'remark'
-  // },
+  {
+    Header: 'House',
+    accessor: 'house',
+  },
+  {
+    Header: 'Age',
+    accessor: 'age',
+  },
+  
 ]
 
 export default function Students({ data }) {

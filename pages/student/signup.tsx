@@ -99,7 +99,6 @@ export default function App() {
   type="text"
   disabled
 />
-{errors.fullName && <Errror message={errors.fullName.message} />}
 
       <label>Age</label>
 

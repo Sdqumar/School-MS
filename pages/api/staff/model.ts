@@ -22,6 +22,10 @@ const staffSchema = new Schema<staffValue>({
     type:String,
     // required:[ true, 'Please enter middleName'],
   },
+  fullName: {
+    type:String,
+    required:[ true, 'Please enter middleName'],
+  },
   age: {
     type:Number,
     // required:[ true, 'Please enter age'],

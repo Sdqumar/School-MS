@@ -12,6 +12,8 @@ export type staff = {
   age: number;
   dateOfBirth: string;
   password: string;
+  fullName:string;
+
 };
 
 export default function App() {
@@ -23,7 +25,10 @@ export default function App() {
     formState: { errors },
   } = useForm<staff>();
 
-
+  const setFullName = () => {
+    const { firstName,middleName,lastName } = getValues();
+    setValue("fullName", `${firstName} ${middleName} ${lastName}`);
+  };
   const submitHandler = async (formValues: staff) => {
     console.log(formValues);
 
@@ -77,9 +82,17 @@ export default function App() {
       <input
         {...register("middleName", { required: "Required" })}
         type="text"
+        onBlur={setFullName}
+
       />
       {errors.middleName && <Errror message={errors.middleName.message} />}
+      <label>Fullname</label>
 
+<input
+  {...register("fullName", { required: "Required" })}
+  type="text"
+  disabled
+/>
       <label>Age</label>
 
       <input {...register("age", { required: "Required" })} type="number" />

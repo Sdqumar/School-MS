@@ -1,28 +1,46 @@
 import Link from "next/link";
+import { FilteringTable } from "../../components/FiltertingTable";
 import { getStaffs } from "../api/staff";
 
-export default function Staffs({ data }) {
+
+const COLUMNS = [
+   
+  {
+    Header: 'Staff ID',
+    accessor: 'staffID',
+  },
+  {
+    Header: 'Full Name',
+    accessor: 'fullName',
+  },
+
+  {
+    Header: 'Level',
+    accessor: 'level',
+  },
+  {
+    Header: 'Email',
+    accessor: 'email',
+  },
+ 
+
+  
+]
+
+export default function Students({ data }) {
 
   const res = JSON.parse(data);
 
   return (
     <section>
-      <h1>Staffs</h1>
+      <h1>Students</h1>
       <div>
         <Link href="/staff/signup">Add New Staff</Link>
       </div>
-    {!res && <h2>Error fatching staff list...</h2>}
-      <ul>
-        { res && res.map((item) => {
-          const name = `${item.firstName}  ${item.lastName}`;
-          
-          return (
-            <li key={item.id}>
-              {name}
-            </li>
-          );
-        })}
-      </ul>
+    {!res && <h2>Error fatching Staffs list...</h2>}
+        { res  &&
+        <FilteringTable tableData={res} COLUMNS={COLUMNS}/>
+        }
     </section>
   );
 }
