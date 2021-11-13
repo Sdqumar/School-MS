@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import React, { useState, useEffect } from "react";
 import BasicTable from "../components/BasicTable";
 import { getStudents } from "./api/student";
+import classes from './api/classes.json'
+
 const className = [
   "Primary 1",
   "Primary 2",
@@ -52,6 +54,7 @@ export default function Result({ data }) {
   let res = JSON.parse(data);
 
   const [names,setNames]=useState(null)
+  const [subjects,setSubjects]=useState(null)
   
   const {
     handleSubmit,
@@ -66,12 +69,19 @@ export default function Result({ data }) {
      const currentClass = e.target.value
     
 const studentNames = res?.filter(item=> item.class === currentClass)    
+const [{subjects}] = classes?.filter(item=> item.name === currentClass)
+
+setSubjects(subjects)
 setNames(studentNames);
 
   }
 
   useEffect(()=>{
-    const studentNames = res?.filter(item=> item.class === "Primary 1")    
+    const values = getValues();
+    
+    const studentNames = res?.filter(item=> item.class === values.class)   
+const [{subjects}] = classes?.filter(item=> item.name === values.class)
+setSubjects(subjects)
     setNames(studentNames);
       },[])
 
@@ -215,6 +225,7 @@ setNames(studentNames);
       console.log(err);
     }
   };
+  
   return (
     <section>
       <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
@@ -227,9 +238,9 @@ setNames(studentNames);
           })}
           onChange={(e)=>handleChangeClass(e)}
         >
-          {className.map((item) => (
-            <option value={item} key={item}>
-              {item}
+          {classes.map((item) => (
+            <option value={item.name} key={item.name}>
+              {item.name}
             </option>
           ))}
         </select>
