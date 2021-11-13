@@ -1,17 +1,31 @@
 import Link from "next/link";
-import { getStaffs } from "./api/staff";
 import {  useForm } from "react-hook-form";
 import subjects from './api/subjects.json'
+import classes from './api/classes.json'
+import { useState } from 'react'
+import RowSelection from "../components/RowSelection";
 type classes={
   name:string;
   subjects:['']
 }
 
+
+const COLUMNS = [
+  {
+    Header: 'Class',
+    accessor: 'name',
+  },
+  {
+    Header: 'Subjects',
+    accessor: (originalRow) => 
+      originalRow.subjects.map(item=><span key={item}>{item}, </span>)
+      
+    ,
+  },
+]
+
 export default function Classes({ data }) {
 
- 
-  
-  
   const {
     handleSubmit,
     register,
@@ -68,13 +82,19 @@ export default function Classes({ data }) {
       console.log(err);
     }
   };
+
+const [showAdd,setShowAdd]=useState(false)
   return (
-    <div>
+    <section>
       <h1>Classes</h1>
-      <div >
+      <div onClick={()=>setShowAdd(true)}>
+       Add Class
+    </div>
+
+    {showAdd&&
+      <>
       <AddSubject/>
 
-      </div>
 
       <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
       <h4>Add Class</h4>
@@ -104,20 +124,12 @@ export default function Classes({ data }) {
       <span style={{cursor:'pointer'}} onClick={handleDelete}>Delete subject</span>
     </form>
 
+    </>
+}
+    <RowSelection TableData={classes} COLUMNS={COLUMNS}/>
      
-    {/* {!res && <h2>Error fatching staff list...</h2>}
-      {/* <ul>
-        { res && res.map((item) => {
-          const name = `${item.firstName}  ${item.lastName}`;
-          
-          return (
-            <li key={item.id}>
-              {name}
-            </li>
-          );
-        })}
-      </ul> */} 
-    </div>
+
+    </section>
   );
 }
 

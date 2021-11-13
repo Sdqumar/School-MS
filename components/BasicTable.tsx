@@ -1,45 +1,10 @@
 import React,{useMemo} from 'react'
 import { useTable } from 'react-table'
 
-const COLUMNS = [
-   
-  {
-    Header: 'Subject',
-    accessor: 'name',
-  },
-  {
-    Header: '1st CA',
-    accessor: 'firstCA',
-  },
-
-  {
-    Header: '2nd CA',
-    accessor: 'secondCA',
-  },
-  {
-    Header: 'Exam',
-    accessor: 'examScore',
-  },
-  {
-    Header: 'Total',
-    accessor:'totalScore'
-  },
-  {
-    Header: 'Grade',
-    accessor:'grade'
-  },
-  ,
-  {
-    Header: 'Remark',
-    accessor: 'remark'
-  },
-]
-
-
-export default function Table( {result }) {
+export default function Table( {TableData,COLUMNS }) {
   const columns = useMemo(() => COLUMNS, []);
-    const data = useMemo(() => result, []);
-
+    const data = useMemo(() => TableData, []);
+   
   const {
     getTableProps,
     getTableBodyProps,

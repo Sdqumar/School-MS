@@ -5,7 +5,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const path = process.cwd() + "/pages/api/classes.json";
 const className= req.body
   let classesJson = fs.readFileSync(path, "utf-8");
-console.log(className);
 
   let classes = JSON.parse(classesJson);
   if (req.method === "POST") {
@@ -23,15 +22,13 @@ console.log(className);
 
   if (req.method === "DELETE") {
     const data = req.body;
-    // console.log(data);
 
     const [newClasses] = data.map((i) =>
       classes.filter((item) => {
-        return item !== i;
+        return item.name !== i.name;
       })
     );
 
-    console.log(newClasses);
 
     classesJson = JSON.stringify(newClasses);
     fs.writeFileSync(path, classesJson, "utf-8");
