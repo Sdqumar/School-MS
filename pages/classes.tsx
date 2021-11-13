@@ -6,30 +6,31 @@ type classes={
   className:string;
   subjects:['']
 }
+const subjects = [
+  "English Language",
+  "Mathematics",
+  "Verbal Reasoning",
+  "Spelling",
+  "Quantitative Reasoning",
+  "Elementary Science",
+  "Social Studies",
+  "Vocational Aptitude",
+  "Health Education",
+  "Bible Knowledge",
+  "Languages",
+  "Creative Arts",
+  "Computer",
+  "Agric Science",
+  "Civic Education",
+  "Music",
+  "Moral Instruction",
+  "Handwriting",
+];
 
 export default function Classes({ data }) {
 
   // const res = JSON.parse(data);
-  const subjects = [
-    "English Language",
-    "Mathematics",
-    "Verbal Reasoning",
-    "Spelling",
-    "Quantitative Reasoning",
-    "Elementary Science",
-    "Social Studies",
-    "Vocational Aptitude",
-    "Health Education",
-    "Bible Knowledge",
-    "Languages",
-    "Creative Arts",
-    "Computer",
-    "Agric Science",
-    "Civic Education",
-    "Music",
-    "Moral Instruction",
-    "Handwriting",
-  ];
+  
   
   const {
     handleSubmit,
@@ -59,8 +60,12 @@ export default function Classes({ data }) {
     // }
   };
   return (
-    <section>
+    <div>
       <h1>Classes</h1>
+      <div >
+      <AddSubject/>
+
+      </div>
 
       <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
       <h4>Add Class</h4>
@@ -72,9 +77,10 @@ export default function Classes({ data }) {
         type="text"
       />
       {errors.className && <Errror message={errors.className.message} />}
-
+<br/>
+<br/>
           <h3>Subjects</h3>
-          <div >
+          <div>
           {
           subjects.map(
               (item) =><span key={item} style={{display:'flex',alignItems:'center',justifyContent:"space-between",width:'fit-content'}}> 
@@ -85,7 +91,6 @@ export default function Classes({ data }) {
             )
           }
         </div>
-
       <button>submit</button>
     </form>
 
@@ -102,7 +107,7 @@ export default function Classes({ data }) {
           );
         })}
       </ul> */} 
-    </section>
+    </div>
   );
 }
 
@@ -114,6 +119,35 @@ export default function Classes({ data }) {
 //     props: { data },
 //   };
 // }
+
+export const AddSubject=()=>{
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+  const submitHandler = async (formValues) => {
+    console.log(formValues.subject);
+     subjects.push(formValues.subject)
+    console.log(subjects);
+    
+    
+  }
+  return(
+    <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}  style={{float:'right',width:'300px',margin:'18px'}}>
+    <h4>Add Subject</h4>
+
+    <input
+      {...register("subject", {
+        required: "Required"
+      })}
+      type="text"
+    />
+    {errors.subject && <Errror message={errors.subject.message} />}
+    <button>submit</button>
+    </form>
+  )
+}
 
 type errorProps = {
     message?: string | undefined;
