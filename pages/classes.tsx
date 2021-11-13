@@ -3,41 +3,70 @@ import { getStaffs } from "./api/staff";
 import {  useForm } from "react-hook-form";
 import subjects from './api/subjects.json'
 type classes={
-  className:string;
+  name:string;
   subjects:['']
 }
 
 export default function Classes({ data }) {
 
-  // const res = JSON.parse(data);
+ 
   
   
   const {
     handleSubmit,
     register,
+    getValues,
     formState: { errors },
   } = useForm<classes>();
+
+
+
+  
+  const handleDelete= async ()=>{
+    const values= getValues()
+
+    const {subjects} =values
+   try {
+
+      const res = await fetch("/api/subject", {
+        method: "DELETE",
+        body: JSON.stringify(subjects),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if (data.errors) {
+        console.log(data.errors);
+      }else {
+        // location.assign("/");
+        console.log(data);
+        
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    
+  }
   const submitHandler = async (formValues) => {
 
     console.log(formValues);
-    // try {
+    try {
 
-    //   const res = await fetch("/api/subject", {
-    //     method: "POST",
-    //     body: JSON.stringify(formValues),
-    //     headers: { "Content-Type": "application/json" },
-    //   });
-    //   const data = await res.json();
-    //   if (data.errors) {
-    //     console.log(data.errors);
-    //   }else {
-    //     // location.assign("/");
-    //     console.log(data);
+      const res = await fetch("/api/class", {
+        method: "POST",
+        body: JSON.stringify(formValues),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if (data.errors) {
+        console.log(data.errors);
+      }else {
+        // location.assign("/");
+        console.log(data);
         
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <div>
@@ -51,12 +80,12 @@ export default function Classes({ data }) {
       <h4>Add Class</h4>
 
       <input
-        {...register("className", {
+        {...register("name", {
           required: "Required"
         })}
         type="text"
       />
-      {errors.className && <Errror message={errors.className.message} />}
+      {errors.name && <Errror message={errors.name.message} />}
 <br/>
 <br/>
           <h3>Subjects</h3>
@@ -72,6 +101,7 @@ export default function Classes({ data }) {
           }
         </div>
       <button>submit</button>
+      <span style={{cursor:'pointer'}} onClick={handleDelete}>Delete subject</span>
     </form>
 
      
