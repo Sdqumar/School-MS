@@ -1,31 +1,11 @@
 import Link from "next/link";
 import { getStaffs } from "./api/staff";
 import {  useForm } from "react-hook-form";
-
+import subjects from './api/subjects.json'
 type classes={
   className:string;
   subjects:['']
 }
-const subjects = [
-  "English Language",
-  "Mathematics",
-  "Verbal Reasoning",
-  "Spelling",
-  "Quantitative Reasoning",
-  "Elementary Science",
-  "Social Studies",
-  "Vocational Aptitude",
-  "Health Education",
-  "Bible Knowledge",
-  "Languages",
-  "Creative Arts",
-  "Computer",
-  "Agric Science",
-  "Civic Education",
-  "Music",
-  "Moral Instruction",
-  "Handwriting",
-];
 
 export default function Classes({ data }) {
 
@@ -128,8 +108,24 @@ export const AddSubject=()=>{
   } = useForm();
   const submitHandler = async (formValues) => {
     console.log(formValues.subject);
-     subjects.push(formValues.subject)
-    console.log(subjects);
+    try {
+
+      const res = await fetch("/api/subject", {
+        method: "POST",
+        body: JSON.stringify(formValues),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if (data.errors) {
+        console.log(data.errors);
+      }else {
+        // location.assign("/");
+        console.log(data);
+        
+      }
+    } catch (err) {
+      console.log(err);
+    }
     
     
   }
