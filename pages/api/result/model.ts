@@ -55,8 +55,9 @@ const resultSchema = new Schema<resultTypes>({
 });
 
 const result = (name) => {
-  return mongoose.models.name || mongoose.model(name, resultSchema, name);
-};
+  
+  return mongoose.models[name]|| mongoose.model(name, resultSchema);
+}
 
 export default  result
 

@@ -228,9 +228,7 @@ export default function Result({ data }) {
       if (data.errors) {
         console.log(data.errors);
       } else {
-        // location.assign("/");
-        console.log(data);
-        setShowResultTable(data)
+        setShowResultTable(data[0].subject)
       }
     } catch (err) {
       console.log(err);

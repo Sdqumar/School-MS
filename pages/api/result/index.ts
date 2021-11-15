@@ -3,17 +3,7 @@ import connectDB from "../../../config/connectDB";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
-export async function getResults(collectionName=2021,id) {
-  try {
-    console.log('getresult');
-    const data = await result(collectionName).find({id});
-console.log(data);
 
-    return data;
-  } catch (err) {
-    return null;
-  }
-}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const auth = req.cookies.user;
@@ -21,14 +11,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (auth) {
     if (req.method === "GET") {
       const doc  = req.body;
-      console.log(doc);
       
       const data = await getResults(doc.year,doc.id);
       res.status(200).json(data);
     } else if (req.method === "POST") {
       try {
         const { doc, docName } = req.body;
-console.log(doc,docName);
 
         const response = await result(docName).create({ ...doc });
 
