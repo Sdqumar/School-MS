@@ -1,6 +1,8 @@
 import create from "zustand";
+
+
 const useStore = create((set) => ({
- user: {},
+ user: null,
   setUser: (user) =>
     set({user}),
 }));

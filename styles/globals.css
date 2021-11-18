@@ -189,3 +189,23 @@ option{
   max-width: 9rem;
   text-align: center;
 } 
+
+main li {
+  border: 1px solid #B7CAF6;
+  width: 400px;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+}
+
+main li span:nth-child(1){
+  background-color: #192666;
+  color: #fff;
+  width: 150px;
+  text-align: center;
+  padding: 8px;
+}
+
+main li span:nth-child(2){
+margin-left: 10px;
+}

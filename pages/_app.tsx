@@ -18,7 +18,6 @@ export default function App({
   useEffect(() => {
     const { user } = cookies;
     setUser(user);
-    console.log(user);
   }, [cookies]);
 
   return (
