@@ -55,22 +55,23 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const user = await student.findOne({ admissionNo });
 
-      
-      
+      // console.log(user);
+
       if (user) {
         // const validPassword = await argon2.verify(password, password);
-        const validPassword =  password;
+        const validPassword = password;
         const validAdmissionNo = admissionNo === user.admissionNo;
-        console.log({validPassword});
-        console.log({validAdmissionNo});
-        
+
         if (validAdmissionNo) {
           if (validPassword) {
             const token = await createToken(user._id);
 
             setCookie(res, "jwt", token, cookieOptions);
 
-            return res.status(201).send(JSON.stringify(user._id));
+            let data = { ...user };
+            data = data._doc;
+            delete data.password;
+            return res.status(201).send(JSON.stringify(data));
           }
           throw Error("incorrect password");
         }

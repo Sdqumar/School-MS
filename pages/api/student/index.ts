@@ -5,9 +5,7 @@ import { student } from "./model";
 
 export async function getStudents(id?) {
     try{
-      let res = null
- id ?   res = await student.find({}).select("-password")
-  :  res = await student.find({}).select("-password");
+      let  res = await student.find({}).select("-password");
   
   return res;
 }

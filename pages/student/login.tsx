@@ -27,7 +27,7 @@ export default function App() {
         console.log(data.errors);
       }else {
         // location.assign("/");
-        console.log({message:'Logging successfully'});
+        console.log({message:'Logging successfully'},data);
         setCookie('user', data,{path :'/'} );
         
       }
