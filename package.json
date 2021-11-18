@@ -24,7 +24,8 @@
     "react-hook-form": "^7.18.0",
     "react-table": "^7.7.0",
     "regenerator-runtime": "^0.13.9",
-    "validator": "^13.6.0"
+    "validator": "^13.6.0",
+    "zustand": "^3.6.5"
   },
   "devDependencies": {
     "@types/react": "17.0.32",

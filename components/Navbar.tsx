@@ -1,17 +1,14 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
+import useStore from "./useStore";
 
 function Navbar() {
-  const [user, setUser] = useState(null);
-  const [cookies, removeCookie] = useCookies(["user"]);
+  const user = useStore((state) => state.user);
 
-  useEffect(() => {
-    const { user } = cookies;
-    setUser(user);
-    // console.log(user);
-  }, [cookies]);
+  const [,removeCookie] = useCookies(["user"]);
 
+ 
   const handleLogout = async () => {
     const res = await fetch("/api/signout");
     const data = await res.json();
