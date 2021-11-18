@@ -9,12 +9,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const auth = req.cookies.user;
 
   if (auth) {
-    if (req.method === "GET") {
-      const doc  = req.body;
-      
-      const data = await getResults(doc.year,doc.id);
-      res.status(200).json(data);
-    } else if (req.method === "POST") {
+   if (req.method === "POST") {
       try {
         const { doc, docName } = req.body;
 

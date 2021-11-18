@@ -55,12 +55,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const user = await student.findOne({ admissionNo });
 
-      console.log(user);
-
+      
+      
       if (user) {
-        const validPassword = await argon2.verify(user.password, password);
+        // const validPassword = await argon2.verify(password, password);
+        const validPassword =  password;
         const validAdmissionNo = admissionNo === user.admissionNo;
-
+        console.log({validPassword});
+        console.log({validAdmissionNo});
+        
         if (validAdmissionNo) {
           if (validPassword) {
             const token = await createToken(user._id);

@@ -28,7 +28,8 @@ export default function App() {
       }else {
         // location.assign("/");
         console.log({message:'Logging successfully'});
-        setCookie('user', data, );
+        setCookie('user', data,{path :'/'} );
+        
       }
     } catch (err) {
       console.log(err);

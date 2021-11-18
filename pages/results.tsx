@@ -213,14 +213,11 @@ export default function Result({ data }) {
     }
   };
 
-  
   const submitFindHandler = async (formValues) => {
-     const id = await getResultId(formValues);
-// id=JSON.stringify(id)
-    
-    
+    const id = await getResultId(formValues);
+
     try {
-      const res = await fetch("/api/result/"+year+'/'+id, {
+      const res = await fetch("/api/result/" + year + "/" + id, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -228,17 +225,19 @@ export default function Result({ data }) {
       if (data.errors) {
         console.log(data.errors);
       } else {
-        setShowResultTable(data[0].subject)
+        setShowResultTable(data[0].subject);
       }
     } catch (err) {
       console.log(err);
     }
   };
   const [createResult, setCreateResult] = useState(false);
-const [showResultTable,setShowResultTable]=useState(null)
+  const [showResultTable, setShowResultTable] = useState(null);
   useEffect(() => {
     const studentNames = res?.filter((item) => item.class === classes[0].name);
-    const[{ subjects}] = classes?.filter((item) => item.name === classes[0].name);
+    const [{ subjects }] = classes?.filter(
+      (item) => item.name === classes[0].name
+    );
     setSubjects(subjects);
     setNames(studentNames);
   }, []);
@@ -250,10 +249,11 @@ const [showResultTable,setShowResultTable]=useState(null)
           <Link href="#">Create a new Result</Link>
         </div>
       )}
-     
       {createResult && (
         <form
-          onSubmit={handleSubmit((formValues) => submitCreateHandler(formValues))}
+          onSubmit={handleSubmit((formValues) =>
+            submitCreateHandler(formValues)
+          )}
         >
           <h4>Create a new Result</h4>
 
@@ -409,9 +409,7 @@ const [showResultTable,setShowResultTable]=useState(null)
       {reviewResult && (
         <BasicTable TableData={values.subject} COLUMNS={COLUMNS} />
       )}{" "}
-
-
-{!createResult && (
+      {!createResult && (
         <form
           onSubmit={handleSubmit((formValues) => submitFindHandler(formValues))}
         >
@@ -423,14 +421,13 @@ const [showResultTable,setShowResultTable]=useState(null)
               required: "Required",
             })}
           >
-            {[2021,2022,2023,2024,2025].map((item) => (
+            {[2021, 2022, 2023, 2024, 2025].map((item) => (
               <option value={item} key={item}>
                 {item}
               </option>
             ))}
           </select>
           {errors.year && <Errror message={errors.year.message} />}
-
 
           <label>Class</label>
           <select
@@ -479,8 +476,9 @@ const [showResultTable,setShowResultTable]=useState(null)
           <button>Find Result</button>
         </form>
       )}{" "}
-
-      {showResultTable && <BasicTable  TableData={showResultTable} COLUMNS={COLUMNS}/>}
+      {showResultTable && (
+        <BasicTable TableData={showResultTable} COLUMNS={COLUMNS} />
+      )}
     </section>
   );
 }

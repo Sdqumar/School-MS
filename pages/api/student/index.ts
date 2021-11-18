@@ -3,9 +3,11 @@ import jwt from "jsonwebtoken";
 import connectDB from "../../../config/connectDB";
 import { student } from "./model";
 
-export async function getStudents() {
+export async function getStudents(id?) {
     try{
-  const res = await student.find({}).select("-password");
+      let res = null
+ id ?   res = await student.find({}).select("-password")
+  :  res = await student.find({}).select("-password");
   
   return res;
 }
