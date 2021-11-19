@@ -209,3 +209,7 @@ main li span:nth-child(1){
 main li span:nth-child(2){
 margin-left: 10px;
 }
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
