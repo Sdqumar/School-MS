@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { getStudents } from "../api/student";
 import { useState, useEffect } from "react";
-import useStore from "../..//components/useStore";
+import useStore from "../../components/useStore";
 import Image from 'next/image'
 export default function dashboard() {
   const user = useStore((state) => state.user);
-  console.log(user);
 
   return (
     <div style={{ display: "flex" }}>
@@ -27,13 +25,7 @@ export default function dashboard() {
         </div>
       </section>
 
-      <main
-        style={{
-          alignSelf: "center",
-          border: "1px #B7CAF6 solid",
-          marginTop:'3.5rem',
-          display:'flex'
-        }}
+      <main className="align-center border-2 border-blue-300 border-solid flex mt-14  h-"
       >
         <ul>
           <li>
@@ -70,7 +62,8 @@ export default function dashboard() {
         src="/avatar.jpg"
         alt="Picture of the author"
         width={180}
-        height={50}
+        height={30}
+        className=""
       />
       </main>
     </div>

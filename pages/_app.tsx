@@ -1,6 +1,5 @@
 import Navbar from '../components/Navbar'
 import '../styles/globals.css'
-import '../components/Navbar.css'
 import '../components/table.css'
 import useStore from "../components/useStore";
 import { CookiesProvider } from 'react-cookie';
@@ -13,7 +12,7 @@ export default function App({
 }) {
 
   const setUser = useStore((state) => state.setUser);
-  const [cookies, removeCookie] = useCookies(["user"]);
+  const [cookies] = useCookies(["user"]);
 
   useEffect(() => {
     const { user } = cookies;
