@@ -1,70 +1,43 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import useStore from "../../components/useStore";
-import Image from 'next/image'
-export default function dashboard() {
+import Image from "next/image";
+import SideNavBar from "../../components/SideNavBar";
+
+export default function StudentDashboard() {
   const user = useStore((state) => state.user);
+  const navData = ["Staff", "Student", "Classes", "Results"];
 
+ const  userProfile=[
+   {name:'Admission-No',value:user?.admissionNo},
+   {name:'Full-Name',value:user?.fullName},
+   {name:'Class',value:user?.class},
+   {name:'House',value:user?.house},
+   {name:'Age',value:user?.age},
+  ]
   return (
-    <div style={{ display: "flex" }}>
-      <section>
-        <h1>Dashboard</h1>
+    <div className="flex h-screen">
+      <SideNavBar navData={navData} />
 
-        <div>
-          <Link href="/staff">Result</Link>
-        </div>
-        <div>
-          <Link href="/student">Profile </Link>
-        </div>
+      <main className=" align-center border-2 border-blue-300 border-solid flex mt-14  h-44">
+          <div className="flex flex-col">
+        {
 
-        <div>
-          <Link href="/classes">Receipt</Link>
-        </div>
-        <div>
-          <Link href="/results">Payment</Link>
-        </div>
-      </section>
-
-      <main className="align-center border-2 border-blue-300 border-solid flex mt-14  h-"
-      >
-        <ul>
-          <li>
-            <span>Admission-No  </span>
-            <span>{user?.admissionNo}</span>
-          </li>
-          <li>
-            <span>Full-Name  </span>
-            <span>{user?.fullName}</span>
-          </li>
-          <li>
-            <span>Class </span>
-            <span>
-            {user?.class}
-
-            </span>
-          </li>
-          <li>
-            <span>House  </span>
-            <span>
-            {user?.house}
-
-            </span>
-          </li>
-          <li>
-            <span>Age  </span>
-            <span>
-            {user?.age}
-
-            </span>
-          </li>
-        </ul>
+          userProfile.map(item=>(
+            <div className="flex children:w-40 h-screen bg-gray-100 font-medium">
+              <span className="text-center  bg-blue-200     
+                 border-solid  border-b-2 last:border-0">{item.name}</span>
+              <span className="ml-3">{item.value}</span>
+            </div>
+          ))
+        }
+          </div>
         <Image
-        src="/avatar.jpg"
-        alt="Picture of the author"
-        width={180}
-        height={30}
-        className=""
-      />
+          src="/avatar.jpg"
+          alt="Picture of the author"
+          width={180}
+          height={30}
+        />
       </main>
     </div>
   );
