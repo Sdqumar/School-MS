@@ -53,7 +53,7 @@ export default function StudentDashboard() {
         </section>
         <section className="mt-14">
           {
-            <Form />
+            <Form  user={user?.fullName}/>
           }
         </section>
       </main>
@@ -61,14 +61,14 @@ export default function StudentDashboard() {
   );
 }
 
-export function Form() {
+export function Form({user}) {
+  
   const {
     handleSubmit,
     register,
     getValues,
     formState: { errors },
   } = useForm<result>();
-  const values = getValues();
 
   const term = ["First Term", "Second Term", "Third Term"];
   const className = [
@@ -80,9 +80,57 @@ export function Form() {
     "Primary 6",
     "SS 1",
   ];
+  const [showResultTable, setShowResultTable] = useState(null);
+
+  const getResultId = async (values) => {
+    let term = "01";
+
+    if (values.term === "Second Term") {
+      term = "02";
+    }
+    if (values.term === "Third Term") {
+      term = "03";
+    }
+    let studentID: string[] | string = user
+      ?.split(" ")
+      .map((item) => item.charAt(0));
+    studentID = studentID.toString()?.replace(",", "");
+    let [class1st, class2nd] = values.class
+      .toUpperCase()
+      .split(" ")
+      .map((item) => item.slice(0, 3));
+    const classID = class1st + class2nd;
+    const id = `${values.year}-${term}-${classID}-${studentID}`;
+    
+    return id;
+  };
+
+const handleForm= async(values)=>{
+  console.log(values)
+
+
+  const id = await getResultId(values);
+
+    try {
+      const res = await fetch("/api/result/" + values.year + "/" + id, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if (data.errors) {
+        console.log(data.errors);
+      } else {
+        console.log(data);
+        
+        setShowResultTable(data[0].subject);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+}
 
   return (
-    <form onSubmit={handleSubmit((formValues) => console.log(formValues))}>
+    <form onSubmit={handleSubmit((formValues) => handleForm(formValues))}>
       <h4 className="text-3xl mb-4">Find Result</h4>
 
       <label className="text-2xl mx-3">Year</label>
