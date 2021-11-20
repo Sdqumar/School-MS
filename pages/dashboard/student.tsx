@@ -106,7 +106,7 @@ export function Form({user}) {
   };
 
 const handleForm= async(values)=>{
-  console.log(values)
+  // console.log(values)
 
 
   const id = await getResultId(values);
@@ -117,6 +117,7 @@ const handleForm= async(values)=>{
         headers: { "Content-Type": "application/json" },
       });
       const data = await res.json();
+      
       if (data.errors) {
         console.log(data.errors);
       } else {
