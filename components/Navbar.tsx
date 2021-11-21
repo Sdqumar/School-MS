@@ -17,7 +17,7 @@ function Navbar() {
     console.log("cookie removed");
   };
   return (
-    <nav className="font-medium w-2/4 text-2xl  shadow-md  text-gray-500 h-full">
+    <nav className="font-medium w-2/4 text-2xl  shadow-md  text-gray-500">
       <ul className="flex justify-around py-4 px-4">
         <li>
           <Link href="/">

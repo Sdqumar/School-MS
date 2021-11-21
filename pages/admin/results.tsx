@@ -5,30 +5,12 @@ import BasicTable from "../../components/BasicTable";
 import { getStudents } from "../api/student";
 import classes from "../api/classes.json";
 import COLUMNS from "../../components/utils/resultColums";
+import FindResult from "../../components/findResult";
 
-const className = [
-  "Primary 1",
-  "Primary 2",
-  "Primary 3",
-  "Primary 4",
-  "Primary 5",
-  "Primary 6",
-  "SS 1",
-];
-const subjects = ["English Language", "Mathematics"];
+
 
 const term = ["First Term", "Second Term", "Third Term"];
 
-const studentName = [
-  "Emmanuel Ayomide",
-  "Idris zainab",
-  "Muhammed Ummu",
-  "lateef Abike",
-  "Mubaraq Rahama",
-  "David Williams",
-  "Queen Isaac",
-  "Jessica Vincent",
-];
 export type subject = {
   name: string;
   firstCA: number;
@@ -183,25 +165,7 @@ export default function Result({ data }) {
     }
   };
 
-  const submitFindHandler = async (formValues) => {
-    const id = await getResultId(formValues);
-
-    try {
-      const res = await fetch("/api/result/" + year + "/" + id, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      const data = await res.json();
-      if (data.errors) {
-        console.log(data.errors);
-      } else {
-        setShowResultTable(data.subject);
-        
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+ 
   const [createResult, setCreateResult] = useState(false);
   const [showResultTable, setShowResultTable] = useState(null);
   useEffect(() => {
@@ -381,71 +345,8 @@ export default function Result({ data }) {
         <BasicTable TableData={values.subject} COLUMNS={COLUMNS} />
       )}{" "}
       {!createResult && (
-        <form
-          onSubmit={handleSubmit((formValues) => submitFindHandler(formValues))}
-        >
-          <h4>Find Result</h4>
-
-          <label>Year</label>
-          <select
-            {...register("year", {
-              required: "Required",
-            })}
-          >
-            {[2021, 2022, 2023, 2024, 2025].map((item) => (
-              <option value={item} key={item}>
-                {item}
-              </option>
-            ))}
-          </select>
-          {errors.year && <Errror message={errors.year.message} />}
-
-          <label>Class</label>
-          <select
-            {...register("class", {
-              required: "Required",
-            })}
-            onChange={(e) => handleChangeClass(e)}
-          >
-            {classes.map((item) => (
-              <option value={item.name} key={item.name}>
-                {item.name}
-              </option>
-            ))}
-          </select>
-          {errors.class && <Errror message={errors.class.message} />}
-
-          <label>Term</label>
-          <select
-            {...register("term", {
-              required: "Required",
-            })}
-          >
-            {term.map((item) => (
-              <option value={item} key={item}>
-                {item}
-              </option>
-            ))}
-          </select>
-          {errors.term && <Errror message={errors.term.message} />}
-
-          <label>Student Name</label>
-          <select
-            {...register("studentName", {
-              required: "Required",
-            })}
-          >
-            {names?.map((item) => (
-              <option value={item.fullName} key={item.admissionNo}>
-                {item.fullName}
-              </option>
-            ))}
-          </select>
-          {errors.studentName && (
-            <Errror message={errors.studentName.message} />
-          )}
-          <button>Find Result</button>
-        </form>
+       
+       <FindResult names={names}/>
       )}{" "}
       {showResultTable && (
         <BasicTable TableData={showResultTable} COLUMNS={COLUMNS} />

@@ -1,31 +1,27 @@
 import Link from "next/link";
-import {  useForm } from "react-hook-form";
-import subjects from '../api/subjects.json'
-import classes from '../api/classes.json'
-import { useState } from 'react'
+import { useForm } from "react-hook-form";
+import subjects from "../api/subjects.json";
+import classes from "../api/classes.json";
+import { useState } from "react";
 import RowSelection from "../../components/RowSelection";
-type classes={
-  name:string;
-  subjects:['']
-}
-
+type classes = {
+  name: string;
+  subjects: [""];
+};
 
 const COLUMNS = [
   {
-    Header: 'Class',
-    accessor: 'name',
+    Header: "Class",
+    accessor: "name",
   },
   {
-    Header: 'Subjects',
-    accessor: (originalRow) => 
-      originalRow.subjects.map(item=><span key={item}>{item}, </span>)
-      
-    ,
+    Header: "Subjects",
+    accessor: (originalRow) =>
+      originalRow.subjects.map((item) => <span key={item}>{item}, </span>),
   },
-]
+];
 
 export default function Classes({ data }) {
-
   const {
     handleSubmit,
     register,
@@ -33,15 +29,11 @@ export default function Classes({ data }) {
     formState: { errors },
   } = useForm<classes>();
 
+  const handleDelete = async () => {
+    const values = getValues();
 
-
-  
-  const handleDelete= async ()=>{
-    const values= getValues()
-
-    const {subjects} =values
-   try {
-
+    const { subjects } = values;
+    try {
       const res = await fetch("/api/subject", {
         method: "DELETE",
         body: JSON.stringify(subjects),
@@ -50,21 +42,17 @@ export default function Classes({ data }) {
       const data = await res.json();
       if (data.errors) {
         console.log(data.errors);
-      }else {
+      } else {
         // location.assign("/");
         console.log(data);
-        
       }
     } catch (err) {
       console.log(err);
     }
-    
-  }
+  };
   const submitHandler = async (formValues) => {
-
     console.log(formValues);
     try {
-
       const res = await fetch("/api/class", {
         method: "POST",
         body: JSON.stringify(formValues),
@@ -73,62 +61,69 @@ export default function Classes({ data }) {
       const data = await res.json();
       if (data.errors) {
         console.log(data.errors);
-      }else {
+      } else {
         // location.assign("/");
         console.log(data);
-        
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-const [showAdd,setShowAdd]=useState(false)
+  const [showAdd, setShowAdd] = useState(false);
   return (
     <section>
       <h1>Classes</h1>
-      <div onClick={()=>setShowAdd(true)}>
-       Add Class
-    </div>
+      <div onClick={() => setShowAdd(true)}>Add Class</div>
 
-    {showAdd&&
-      <>
-      <AddSubject/>
+      {showAdd && (
+        <>
+          <AddSubject />
 
+          <form
+            onSubmit={handleSubmit((formValues) => submitHandler(formValues))}
+          >
+            <h4>Add Class</h4>
 
-      <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
-      <h4>Add Class</h4>
+            <input
+              {...register("name", {
+                required: "Required",
+              })}
+              type="text"
+            />
+            {errors.name && <Errror message={errors.name.message} />}
+            <br />
+            <br />
+            <h3>Subjects</h3>
+            <div>
+              {subjects.map((item) => (
+                <span
+                  key={item}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "fit-content",
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    value={item}
+                    {...register("subjects")}
+                  />
 
-      <input
-        {...register("name", {
-          required: "Required"
-        })}
-        type="text"
-      />
-      {errors.name && <Errror message={errors.name.message} />}
-<br/>
-<br/>
-          <h3>Subjects</h3>
-          <div>
-          {
-          subjects.map(
-              (item) =><span key={item} style={{display:'flex',alignItems:'center',justifyContent:"space-between",width:'fit-content'}}> 
-                 <input type="checkbox" value={item}     {...register("subjects")} />
-                 
-                 <strong style={{marginLeft:'10px'}}>
-                 {item}</strong></span>
-            )
-          }
-        </div>
-      <button>submit</button>
-      <span style={{cursor:'pointer'}} onClick={handleDelete}>Delete subject</span>
-    </form>
-
-    </>
-}
-    <RowSelection TableData={classes} COLUMNS={COLUMNS}/>
-     
-
+                  <strong style={{ marginLeft: "10px" }}>{item}</strong>
+                </span>
+              ))}
+            </div>
+            <button>submit</button>
+            <span style={{ cursor: "pointer" }} onClick={handleDelete}>
+              Delete subject
+            </span>
+          </form>
+        </>
+      )}
+      <RowSelection TableData={classes} COLUMNS={COLUMNS} />
     </section>
   );
 }
@@ -136,13 +131,13 @@ const [showAdd,setShowAdd]=useState(false)
 // export async function getStaticProps() {
 //   let res = await getStaffs();
 //   let data = await JSON.stringify(res);
-  
+
 //   return {
 //     props: { data },
 //   };
 // }
 
-export const AddSubject=()=>{
+export const AddSubject = () => {
   const {
     handleSubmit,
     register,
@@ -151,7 +146,6 @@ export const AddSubject=()=>{
   const submitHandler = async (formValues) => {
     console.log(formValues.subject);
     try {
-
       const res = await fetch("/api/subject", {
         method: "POST",
         body: JSON.stringify(formValues),
@@ -160,36 +154,36 @@ export const AddSubject=()=>{
       const data = await res.json();
       if (data.errors) {
         console.log(data.errors);
-      }else {
+      } else {
         // location.assign("/");
         console.log(data);
-        
       }
     } catch (err) {
       console.log(err);
     }
-    
-    
-  }
-  return(
-    <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}  style={{float:'right',width:'300px',margin:'18px'}}>
-    <h4>Add Subject</h4>
+  };
+  return (
+    <form
+      onSubmit={handleSubmit((formValues) => submitHandler(formValues))}
+      style={{ float: "right", width: "300px", margin: "18px" }}
+    >
+      <h4>Add Subject</h4>
 
-    <input
-      {...register("subject", {
-        required: "Required"
-      })}
-      type="text"
-    />
-    {errors.subject && <Errror message={errors.subject.message} />}
-    <button>submit</button>
+      <input
+        {...register("subject", {
+          required: "Required",
+        })}
+        type="text"
+      />
+      {errors.subject && <Errror message={errors.subject.message} />}
+      <button>submit</button>
     </form>
-  )
-}
+  );
+};
 
 type errorProps = {
-    message?: string | undefined;
-  };
-  export function Errror({ message }: errorProps) {
-    return <p>{message}</p>;
-  }
+  message?: string | undefined;
+};
+export function Errror({ message }: errorProps) {
+  return <p>{message}</p>;
+}
