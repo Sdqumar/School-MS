@@ -5,6 +5,9 @@ import Image from "next/image";
 import SideNavBar from "../../components/SideNavBar";
 import { useForm } from "react-hook-form";
 import Select from "../../components/utils/Select";
+import BasicTable from "../../components/BasicTable";
+
+import COLUMNS from "../../components/utils/resultColums";
 
 export type result = {
   id: string;
@@ -66,7 +69,6 @@ export function Form({user}) {
   const {
     handleSubmit,
     register,
-    getValues,
     formState: { errors },
   } = useForm<result>();
 
@@ -106,7 +108,6 @@ export function Form({user}) {
   };
 
 const handleForm= async(values)=>{
-  // console.log(values)
 
 
   const id = await getResultId(values);
@@ -121,16 +122,16 @@ const handleForm= async(values)=>{
       if (data.errors) {
         console.log(data.errors);
       } else {
-        console.log(data);
-        
-        setShowResultTable(data[0].subject);
+        setShowResultTable(data?.subject);
       }
     } catch (err) {
       console.log(err);
     }
 }
 
+
   return (
+    <>
     <form onSubmit={handleSubmit((formValues) => handleForm(formValues))}>
       <h4 className="text-3xl mb-4">Find Result</h4>
 
@@ -181,6 +182,13 @@ const handleForm= async(values)=>{
 <br/>
       <button  className="bg-blue-400 hover:bg-blue-200 mt-3 ml-4 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page" > Find Result</button>
     </form>
+
+    <div>
+    {showResultTable && (
+        <BasicTable TableData={showResultTable} COLUMNS={COLUMNS} />
+      )}
+    </div>
+    </>
   );
 }
 
