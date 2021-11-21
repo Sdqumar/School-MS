@@ -5,7 +5,7 @@ import useStore from "./useStore";
 function Navbar() {
   const user = useStore((state) => state.user);
 
-  const [,removeCookie] = useCookies(["user"]);
+  const [, removeCookie] = useCookies(["user"]);
 
   const handleLogout = async () => {
     const res = await fetch("/api/signout");
@@ -17,9 +17,9 @@ function Navbar() {
     console.log("cookie removed");
   };
   return (
-    <nav className="font-medium w-2/4 text-2xl  shadow-md  text-gray-500 ">
+    <nav className="font-medium w-2/4 text-2xl  shadow-md  text-gray-500 h-full">
       <ul className="flex justify-around py-4 px-4">
-        <li >
+        <li>
           <Link href="/">
             <a>Home</a>
           </Link>
