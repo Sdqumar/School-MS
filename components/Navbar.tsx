@@ -25,7 +25,7 @@ function Navbar() {
           </Link>
         </li>
         <li>
-          <Link href="/dashboard">
+          <Link href="/admin">
             <a>Dashboard</a>
           </Link>
         </li>

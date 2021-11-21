@@ -1,4 +1,4 @@
-import Navbar from '../components/Navbar'
+import Navbar from "../components/Navbar";
 import '../styles/globals.css'
 import '../components/table.css'
 import useStore from "../components/useStore";

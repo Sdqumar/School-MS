@@ -1,9 +1,9 @@
 import Link from "next/link";
 import {  useForm } from "react-hook-form";
-import subjects from './api/subjects.json'
-import classes from './api/classes.json'
+import subjects from '../api/subjects.json'
+import classes from '../api/classes.json'
 import { useState } from 'react'
-import RowSelection from "../components/RowSelection";
+import RowSelection from "../../components/RowSelection";
 type classes={
   name:string;
   subjects:['']

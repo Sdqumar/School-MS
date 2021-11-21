@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import React, { useState, useEffect } from "react";
-import BasicTable from "../components/BasicTable";
-import { getStudents } from "./api/student";
-import classes from "./api/classes.json";
-import COLUMNS from "../components/utils/resultColums";
+import BasicTable from "../../components/BasicTable";
+import { getStudents } from "../api/student";
+import classes from "../api/classes.json";
+import COLUMNS from "../../components/utils/resultColums";
 
 const className = [
   "Primary 1",

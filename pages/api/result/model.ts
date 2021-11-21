@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-import { result as resultTypes } from "../../results";
+import { result as resultTypes } from "../../admin/results";
 
 const resultSchema = new Schema<resultTypes>({
   studentName: {
