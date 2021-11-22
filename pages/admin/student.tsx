@@ -34,6 +34,7 @@ export default function Students({ data }) {
   const res = JSON.parse(data);
 
   return (
+    
     <section>
       <h1>Students</h1>
       <div>

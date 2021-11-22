@@ -7,7 +7,7 @@ export default function SideNavBar({navData}){
     const pathname=router.pathname 
     
 return(
-    <div className=" bg-gray-100 w-48 shadow-lg mr-14 pt-5 h-full " >
+    <div className=" bg-gray-100 w-48 shadow-lg mr-14 pt-5 h-screen " >
     {
         navData.map(item=>{
             const url =`${pathname}/${item.replace(' ','-').toLowerCase()}`

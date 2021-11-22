@@ -178,6 +178,7 @@ export default function Result({ data }) {
   }, []);
 
   return (
+    
     <section>
       {!createResult && (
         <div onClick={() => setCreateResult(true)}>
@@ -345,9 +346,11 @@ export default function Result({ data }) {
         <BasicTable TableData={values.subject} COLUMNS={COLUMNS} />
       )}{" "}
       {!createResult && (
-       
-       <FindResult names={names}/>
-      )}{" "}
+       <div className="mt-5">
+
+         <FindResult names={names}/>
+       </div>
+      )}
       {showResultTable && (
         <BasicTable TableData={showResultTable} COLUMNS={COLUMNS} />
       )}

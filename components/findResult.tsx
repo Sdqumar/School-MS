@@ -74,7 +74,8 @@ export default function FindResult({user,names}:FindResult){
             headers: { "Content-Type": "application/json" },
           });
           const data = await res.json();
-          
+console.log(data);
+
           if (data.errors) {
             console.log(data.errors);
           } else {
@@ -84,6 +85,8 @@ export default function FindResult({user,names}:FindResult){
           console.log(err);
         }
     }
+
+    
     
     return(
         <div>
