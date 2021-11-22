@@ -15,7 +15,7 @@ export default function Form() {
         <ProfileReview user={user} />
         <div className="mt-7">
 
-        <FindResult user={user.fullName}/>
+        <FindResult user={user?.fullName}/>
         </div>
       </div>
     </main>
