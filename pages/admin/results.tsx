@@ -179,7 +179,7 @@ export default function Result({ data }) {
 
   return (
     
-    <section className="ml-8 mt-5">
+    <section className="mx-5 mt-5 p-4">
       {!createResult && (
         <div onClick={() => setCreateResult(true)}>
           <h2 className="text-2xl border border-blue-200 w-max p-2 cursor-pointer hover:bg-gray-50">Create a new Result</h2>
@@ -247,8 +247,8 @@ export default function Result({ data }) {
                 key={item}
                 onClick={() => setSubjectIndex(index)}
               >
-                <label>{item}</label>
                 <div>
+                <label className="mt-5">{item}</label>
                   <input
                     {...register(`subject.${index}.name`, {
                       required: "Required",
@@ -257,6 +257,9 @@ export default function Result({ data }) {
                     defaultValue={item}
                     hidden
                   />
+                </div>
+<section>                  <div>
+
                   <label>1st CA</label>
                   <input
                     {...register(`subject.${index}.firstCA`, {
@@ -268,6 +271,7 @@ export default function Result({ data }) {
                     onBlur={setTotalScore}
                   />
                 </div>
+                
                 <div>
                   <label>2st CA</label>
 
@@ -283,7 +287,7 @@ export default function Result({ data }) {
                 </div>
 
                 <div>
-                  <label>Exam </label>
+                  <label>Exam</label>
 
                   <input
                     {...register(`subject.${index}.examScore`, {
@@ -321,6 +325,7 @@ export default function Result({ data }) {
                   <label>Remark</label>
 
                   <input
+                  className="grade"
                     {...register(`subject.${index}.remark`, {
                       required: "Required",
                     })}
@@ -331,6 +336,8 @@ export default function Result({ data }) {
                     <Errror message={errors.studentName.message} />
                   )}
                 </div>
+                </section>
+
               </div>
             ))}
 

@@ -94,9 +94,8 @@ export default function FindResult({ user, names }: FindResult) {
       <form onSubmit={handleSubmit((formValues) => handleForm(formValues))}>
         <h4 className="text-3xl mb-4">Find Result</h4>
 
-        <label className="text-2xl mx-3">Year</label>
+        <label >Year</label>
         <select
-          className="border-2 ml-3 w-24"
           {...register("year", {
             required: "Required",
           })}
@@ -109,9 +108,8 @@ export default function FindResult({ user, names }: FindResult) {
         </select>
         {errors.year && <Errror message={errors.year.message} />}
 
-        <label className="text-2xl mx-3">Class</label>
+        <label >Class</label>
         <select
-          className="border-2 ml-3 w-24"
           {...register("class", {
             required: "Required",
           })}
@@ -124,9 +122,8 @@ export default function FindResult({ user, names }: FindResult) {
         </select>
         {errors.class && <Errror message={errors.class.message} />}
 
-        <label className="text-2xl mx-3">Term</label>
+        <label >Term</label>
         <select
-          className="border-2  w-24"
           {...register("term", {
             required: "Required",
           })}
@@ -138,13 +135,11 @@ export default function FindResult({ user, names }: FindResult) {
           ))}
         </select>
         {errors.term && <Errror message={errors.term.message} />}
-        <br />
 
         {!user && (
           <>
-            <label className="text-2xl mx-3">Student Name</label>
+            <label >Student Name</label>
             <select
-              className="border-2  w-24"
               {...register("studentName", {
                 required: "Required",
               })}
@@ -160,11 +155,8 @@ export default function FindResult({ user, names }: FindResult) {
             )}
           </>
         )}
-        <button
-          className="bg-blue-400 hover:bg-blue-200 mt-3 ml-4 text-white px-3 py-2 rounded-md text-sm font-medium"
-          aria-current="page"
-        >
-          {" "}
+        <button>
+          
           Find Result
         </button>
       </form>
