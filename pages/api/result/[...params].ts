@@ -10,10 +10,8 @@ try {
     if (req.method === "GET") {
       const year = req.query.params[0].toString();
       const id =  req.query.params[1];
-      console.log(year,id);
       
       const [data] = await result(year).find({ id })
-console.log(data);
 
       if (data) {
         res.status(200).json(data);

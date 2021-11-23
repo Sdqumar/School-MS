@@ -179,10 +179,10 @@ export default function Result({ data }) {
 
   return (
     
-    <section>
+    <section className="ml-8 mt-5">
       {!createResult && (
         <div onClick={() => setCreateResult(true)}>
-          <Link href="#">Create a new Result</Link>
+          <h2 className="text-2xl border border-blue-200 w-max p-2 cursor-pointer hover:bg-gray-50">Create a new Result</h2>
         </div>
       )}
       {createResult && (
@@ -191,8 +191,8 @@ export default function Result({ data }) {
             submitCreateHandler(formValues)
           )}
         >
-          <h4>Create a new Result</h4>
-
+          <h4 className="text-2xl mb-4 font-medium">Create a new Result</h4>
+            
           <label>Class</label>
           <select
             {...register("class", {

@@ -1,12 +1,36 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
+
+select{
+    display: block;
+    border: 1px solid black;
+    width: 10rem;
+    padding: 0.3rem;
+    margin:  0.5rem 0;
+}
+label{
+    font-size: 1.28rem;
+}
+input{
+    display: inline-block;
+    border: 1px solid black;
+}
+button{
+    background-color:#679ef0;
+    border-radius: 15px;
+    padding: 7px;
+    color: white;
+    margin-top: 0.5rem;
+}
+.result{
+    display: flex;
+    align-items: center;
+}
+.result div{
+    margin-left: 1rem;
+    display:flex;
+    flex-direction: column
+}
+
+
 @import "tailwindcss/utilities";
-
-.left{
-    float: left;
-}
-
-.right{
-    float: right;
-    justify-content: space-between;
-}
