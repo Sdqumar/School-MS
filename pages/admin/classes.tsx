@@ -73,8 +73,10 @@ export default function Classes({ data }) {
   const [showAdd, setShowAdd] = useState(false);
   return (
     <section>
+      <div className="ml-4">
       <h1>Classes</h1>
-      <div onClick={() => setShowAdd(true)}>Add Class</div>
+      <div className="link" onClick={() => setShowAdd(true)}>Add Class</div>
+      </div>
 
       {showAdd && (
         <>
@@ -83,7 +85,7 @@ export default function Classes({ data }) {
           <form
             onSubmit={handleSubmit((formValues) => submitHandler(formValues))}
           >
-            <h4>Add Class</h4>
+            <h4 >Add Class</h4>
 
             <input
               {...register("name", {

@@ -33,10 +33,15 @@ export default function Students({ data }) {
 
   return (
     <section>
+      <div className="ml-8">
+
       <h1>Staffs</h1>
-      <div>
+      <div className="link">
         <Link href="/staff/signup">Add New Staff</Link>
       </div>
+      </div>
+        
+
     {!res && <h2>Error fatching Staffs list...</h2>}
         { res  &&
         <FilteringTable tableData={res} COLUMNS={COLUMNS}/>

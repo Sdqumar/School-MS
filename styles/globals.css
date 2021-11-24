@@ -1,79 +1,77 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
-h1, h2, h3, h4, ul, li, a, p, input, label, button, div, footer{
-    margin: 0;
-    padding: 0;
-    font-family: 'Quicksand', sans-serif;
-    color: #444;
-  }
-  form h2{
-    font-size: 2.4em;
-    font-weight: 900;
-    margin-bottom: 40px;
-  }
-  form{
-    width: 100%;
-    margin: 1rem;
-    padding: 30px;
-    box-shadow: 1px 2px 3px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    background: white;
-  }
-  input{
-    padding: 10px 12px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    font-size: 1em;
-    max-width: 100%;
-    /* padding: 100px; */
-  }
-  label{
-    display: block;
-    margin: 10px 0 10px;
-    font-size: 1.3rem;
-  }
-select{
-    display: block;
-    border: 1px solid black;
-    width: 10rem;
-    padding: 0.4rem 1rem;
-    min-width: fit-content;
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+* {
+  font-family: "Quicksand", sans-serif;
+  color: #444;
 }
-button{
-    margin-top: 30px;
-    border-radius: 36px;
-    background: #FEE996;
-    border:0;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 1em;
-    display: block;
-    padding: 10px 16px;
-    letter-spacing: 2px;
-  }
-.result{
-    display: flex;
-    align-items: center;
-    width: 50rem;
-    justify-content: space-between;
+input {
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 1em;
+  max-width: 100%;
+  /* padding: 100px; */
 }
-.result input{
-    width: 4rem;
-    padding: 8px 0;
-    text-align: center;
+label {
+  display: block;
+  margin: 10px 0 10px;
+  font-size: 1.3rem;
 }
-.result .grade{
-width: 10rem;
+select {
+  display: block;
+  border: 1px solid black;
+  width: 10rem;
+  padding: 0.4rem 1rem;
+  min-width: fit-content;
 }
-.result div{
-    margin-left: 1rem;
-    display:flex;
-    flex-direction: column;
-    justify-self: end;
+
+.result {
+  display: flex;
+  align-items: center;
+  width: 50rem;
+  justify-content: space-between;
 }
-.result section{
-display: flex
+.result input {
+  width: 4rem;
+  padding: 8px 0;
+  text-align: center;
+}
+.result .grade {
+  width: 10rem;
+}
+.result div {
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-self: end;
+}
+.result section {
+  display: flex;
 }
 
 @import "tailwindcss/utilities";
+
+@layer base {
+  h1 {
+    @apply text-4xl font-medium my-4;
+  }
+
+  h2 {
+    @apply text-3xl font-medium;
+  }
+  button {
+    @apply border-0 block font-bold text-sm mt-8 py-2 px-4 uppercase
+        rounded-full
+        bg-[#FEE996]
+        tracking-widest;
+  }
+
+  form {
+    @apply bg-white my-5 mb-8 mx-auto p-8
+  rounded-lg shadow-lg;
+  }
+  .link {
+    @apply border border-blue-200 max-w-max py-2 px-4 my-4 cursor-pointer;
+}
+}
