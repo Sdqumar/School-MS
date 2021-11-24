@@ -1,11 +1,7 @@
 import React from "react";
 import {  useForm } from "react-hook-form";
 import { useCookies } from 'react-cookie';
-import useStore from "../../components/useStore";
-// const useStore = create(set => ({
-//   bears: 0,
-//   increasePopulation: (bears) => set(state => ({ ...state, bears })),
-// }))
+
 type student = {
   password: string;
   admissionNo: string;
@@ -13,21 +9,8 @@ type student = {
 
 
 
-// export function BearCounter() {
-//   const bears = useStore(state => state.bears)
-//   const increasePopulation = useStore(state => state.increasePopulation)
-
-//   return (
-//   <>
-//   <h1>{bears} around here ...</h1>
-    
-//     <button onClick={()=>increasePopulation(10)}>one up</button>
-//     </>
-//     )
-// }
 
 export default function App() {
-  const setUser = useStore((state) => state.setUser);
 
   
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
@@ -60,7 +43,6 @@ export default function App() {
 
   return (
     <>
-    <button onClick={()=>setUser(10)}>one up</button>
     <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
       <h2>Portal Sign In </h2>
 
