@@ -77,14 +77,17 @@ export const GlobalFilter = ({ filter, setFilter }) => {
     <div
     className="mb-2 flex justify-center place-items-center"
     >
+
       <strong className="mr-2">Search:</strong>{" "}
       <input
+      className="w-60"
         value={value || ""}
         onChange={(e) => {
           setValue(e.target.value);
           onChange(e.target.value);
         }}
-      />
+        
+        />
     </div>
   );
 };

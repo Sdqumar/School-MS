@@ -79,42 +79,40 @@ export default function Classes({ data }) {
       </div>
 
       {showAdd && (
-        <>
-          <AddSubject />
+        <div className="flex w-full">
+         
 
           <form
             onSubmit={handleSubmit((formValues) => submitHandler(formValues))}
-          >
-            <h4 >Add Class</h4>
+         className="flex-grow"
+         >
+            <div className="w-48">
 
+            <h4>Add Class</h4>
             <input
               {...register("name", {
                 required: "Required",
               })}
               type="text"
-            />
+              />
             {errors.name && <Errror message={errors.name.message} />}
-            <br />
-            <br />
-            <h3>Subjects</h3>
-            <div>
+
+              </div>
+            <h3 className="mt-8 font-medium text-xl">Subjects</h3>
+            <div className="flex flex-col   ">
               {subjects.map((item) => (
                 <span
                   key={item}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    width: "fit-content",
-                  }}
+                 className="flex   items-center "
                 >
                   <input
+                  className="w-auto mr-9"
                     type="checkbox"
                     value={item}
                     {...register("subjects")}
                   />
 
-                  <strong style={{ marginLeft: "10px" }}>{item}</strong>
+                  <strong className=" whitespace-nowrap">{item}</strong>
                 </span>
               ))}
             </div>
@@ -123,21 +121,16 @@ export default function Classes({ data }) {
               Delete subject
             </span>
           </form>
-        </>
+          <AddSubject />
+
+        </div>
       )}
       <RowSelection TableData={classes} COLUMNS={COLUMNS} />
     </section>
   );
 }
 
-// export async function getStaticProps() {
-//   let res = await getStaffs();
-//   let data = await JSON.stringify(res);
 
-//   return {
-//     props: { data },
-//   };
-// }
 
 export const AddSubject = () => {
   const {
@@ -167,7 +160,7 @@ export const AddSubject = () => {
   return (
     <form
       onSubmit={handleSubmit((formValues) => submitHandler(formValues))}
-      style={{ float: "right", width: "300px", margin: "18px" }}
+className="h-48"
     >
       <h4>Add Subject</h4>
 
