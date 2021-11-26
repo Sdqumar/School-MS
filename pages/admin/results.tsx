@@ -7,8 +7,6 @@ import classes from "../api/classes.json";
 import COLUMNS from "../../components/utils/resultColums";
 import FindResult from "../../components/findResult";
 
-
-
 const term = ["First Term", "Second Term", "Third Term"];
 
 export type subject = {
@@ -90,8 +88,6 @@ export default function Result({ data }) {
     return id;
   };
 
-  
-
   const setTotalScore = () => {
     const firstCA = values.subject?.[subjectIndex].firstCA.toString();
     const secondCA = values.subject?.[subjectIndex].secondCA.toString();
@@ -107,7 +103,6 @@ export default function Result({ data }) {
       let remark = "";
 
       if (totalScore >= 0 && totalScore <= 29) {
-        console.log(totalScore >= 0 && totalScore <= 29);
         grade = "F";
         remark = "Very Poor";
       }
@@ -143,7 +138,6 @@ export default function Result({ data }) {
     const id = await getResultId(formValues);
 
     const docName = year;
-    console.log(docName);
 
     const doc = { ...formValues, id, year };
 
@@ -165,7 +159,6 @@ export default function Result({ data }) {
     }
   };
 
- 
   const [createResult, setCreateResult] = useState(false);
   const [showResultTable, setShowResultTable] = useState(null);
   useEffect(() => {
@@ -178,11 +171,12 @@ export default function Result({ data }) {
   }, []);
 
   return (
-    
     <section className="mx-5 mt-5 p-4">
       {!createResult && (
         <div onClick={() => setCreateResult(true)}>
-          <h2 className="text-2xl border border-blue-200 w-max p-2 cursor-pointer hover:bg-gray-50">Create a new Result</h2>
+          <h2 className="text-2xl border border-blue-200 w-max p-2 cursor-pointer hover:bg-gray-50">
+            Create a new Result
+          </h2>
         </div>
       )}
       {createResult && (
@@ -192,7 +186,7 @@ export default function Result({ data }) {
           )}
         >
           <h4 className="text-2xl mb-4 font-medium">Create a new Result</h4>
-            
+
           <label>Class</label>
           <select
             {...register("class", {
@@ -248,7 +242,7 @@ export default function Result({ data }) {
                 onClick={() => setSubjectIndex(index)}
               >
                 <div>
-                <label className="mt-5">{item}</label>
+                  <label className="mt-5">{item}</label>
                   <input
                     {...register(`subject.${index}.name`, {
                       required: "Required",
@@ -258,86 +252,84 @@ export default function Result({ data }) {
                     hidden
                   />
                 </div>
-<section>                  <div>
+                <section>
+                  {" "}
+                  <div>
+                    <label>1st CA</label>
+                    <input
+                      {...register(`subject.${index}.firstCA`, {
+                        required: "Required",
+                      })}
+                      min="0"
+                      max="20"
+                      type="number"
+                      onBlur={setTotalScore}
+                    />
+                  </div>
+                  <div>
+                    <label>2st CA</label>
 
-                  <label>1st CA</label>
-                  <input
-                    {...register(`subject.${index}.firstCA`, {
-                      required: "Required",
-                    })}
-                    min="0"
-                    max="20"
-                    type="number"
-                    onBlur={setTotalScore}
-                  />
-                </div>
-                
-                <div>
-                  <label>2st CA</label>
+                    <input
+                      {...register(`subject.${index}.secondCA`, {
+                        required: "Required",
+                      })}
+                      type="number"
+                      min="0"
+                      max="20"
+                      onBlur={setTotalScore}
+                    />
+                  </div>
+                  <div>
+                    <label>Exam</label>
 
-                  <input
-                    {...register(`subject.${index}.secondCA`, {
-                      required: "Required",
-                    })}
-                    type="number"
-                    min="0"
-                    max="20"
-                    onBlur={setTotalScore}
-                  />
-                </div>
+                    <input
+                      {...register(`subject.${index}.examScore`, {
+                        required: "Required",
+                      })}
+                      type="number"
+                      min="0"
+                      max="60"
+                      onBlur={setTotalScore}
+                    />
+                  </div>
+                  <div>
+                    <label>Total</label>
 
-                <div>
-                  <label>Exam</label>
+                    <input
+                      {...register(`subject.${index}.totalScore`, {
+                        required: "Required",
+                      })}
+                      type="number"
+                      min="0"
+                      max="100"
+                    />
+                  </div>
+                  <div>
+                    <label>Grade</label>
 
-                  <input
-                    {...register(`subject.${index}.examScore`, {
-                      required: "Required",
-                    })}
-                    type="number"
-                    min="0"
-                    max="60"
-                    onBlur={setTotalScore}
-                  />
-                </div>
-                <div>
-                  <label>Total</label>
+                    <input
+                      {...register(`subject.${index}.grade`, {
+                        required: "Required",
+                      })}
+                      type="text"
+                    />
+                  </div>
+                  <div>
+                    <label>Remark</label>
 
-                  <input
-                    {...register(`subject.${index}.totalScore`, {
-                      required: "Required",
-                    })}
-                    type="number"
-                    min="0"
-                    max="100"
-                  />
-                </div>
-                <div>
-                  <label>Grade</label>
+                    <input
+                      className="grade"
+                      {...register(`subject.${index}.remark`, {
+                        required: "Required",
+                      })}
+                      type="text"
+                    />
 
-                  <input
-                    {...register(`subject.${index}.grade`, {
-                      required: "Required",
-                    })}
-                    type="text"
-                  />
-                </div>
-                <div>
-                  <label>Remark</label>
-
-                  <input
-                  className="grade"
-                    {...register(`subject.${index}.remark`, {
-                      required: "Required",
-                    })}
-                    type="text"
-                  />
-
-                  {errors.studentName && (
-                    <Errror message={errors.studentName.message} />
-                  )}
-                </div>
+                    {errors.studentName && (
+                      <Errror message={errors.studentName.message} />
+                    )}
+                  </div>
                 </section>
-
               </div>
             ))}
 
@@ -353,10 +345,9 @@ export default function Result({ data }) {
         <BasicTable TableData={values.subject} COLUMNS={COLUMNS} />
       )}{" "}
       {!createResult && (
-       <div className="mt-5">
-
-         <FindResult names={names}/>
-       </div>
+        <div className="mt-5">
+          <FindResult names={names} />
+        </div>
       )}
       {showResultTable && (
         <BasicTable TableData={showResultTable} COLUMNS={COLUMNS} />

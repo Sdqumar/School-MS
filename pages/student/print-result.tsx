@@ -1,5 +1,5 @@
 import useStore from "../../components/useStore";
-import SideNavBar from "../../components/SideNavBar";
+import SideNavBar from "../../components/StudentSideBar";
 import ProfileReview from "../../components/profileReview";
 import FindResult from "../../components/findResult";
 
@@ -11,7 +11,7 @@ export default function Form() {
   return (
     <main className="flex min-h-full">
       <div>
-        <SideNavBar navData={navData} />
+        <SideNavBar />
       </div>
       <div className="mx-auto">
         <ProfileReview user={user} />

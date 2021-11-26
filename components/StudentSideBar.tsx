@@ -1,14 +1,12 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 
-export default function SideNavBar({ navData }) {
-  const router = useRouter();
-  const pathname = router.pathname;
-
+export default function SideNavBar() {
+  const navData = ["Profile", "Print result", "Print recipt", "Payment"];
   return (
     <div className=" bg-gray-100 w-full shadow-lg mr-14 pt-5 h-screen ">
       {navData.map((item) => {
-        const url = `${pathname}/${item.replace(" ", "-").toLowerCase()}`;
+        const url = `/student/${item.replace(" ", "-").toLowerCase()}/`;
+
         return (
           <Link href={url} key={item}>
             <a
