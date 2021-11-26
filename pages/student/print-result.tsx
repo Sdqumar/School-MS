@@ -10,12 +10,13 @@ export default function Form() {
 
   return (
     <main className="flex min-h-full">
-      <SideNavBar navData={navData} />
       <div>
+        <SideNavBar navData={navData} />
+      </div>
+      <div className="mx-auto">
         <ProfileReview user={user} />
-        <div className="mt-7">
-
-        <FindResult user={user?.fullName}/>
+        <div className="mt-7 ">
+          <FindResult user={user?.fullName} />
         </div>
       </div>
     </main>
