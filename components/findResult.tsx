@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import BasicTable from "./BasicTable";
 import COLUMNS from "./utils/resultColums";
@@ -14,14 +14,15 @@ export type result = {
 type student = {
   admissionNo: string;
   fullName: string;
+  class: string;
 };
 
 type FindResult = {
   user?: string;
-  names?: student[];
+  data?: student[];
 };
 
-export default function FindResult({ user, names }: FindResult) {
+export default function FindResult({ user, data }: FindResult) {
   const {
     handleSubmit,
     register,
@@ -89,12 +90,25 @@ export default function FindResult({ user, names }: FindResult) {
     }
   };
 
+  const [names, setNames] = useState(null);
+
+  const handleChangeClass = (e) => {
+    const currentClass = e.target.value;
+
+    const studentNames = data?.filter((item) => item.class === currentClass);
+    setNames(studentNames);
+  };
+  useEffect(() => {
+    const studentNames = data?.filter((item) => item.class === className[0]);
+    setNames(studentNames);
+  }, []);
+
   return (
     <div>
       <form onSubmit={handleSubmit((formValues) => handleForm(formValues))}>
         <h4 className="text-3xl mb-4">Find Result</h4>
 
-        <label >Year</label>
+        <label>Year</label>
         <select
           {...register("year", {
             required: "Required",
@@ -108,11 +122,12 @@ export default function FindResult({ user, names }: FindResult) {
         </select>
         {errors.year && <Errror message={errors.year.message} />}
 
-        <label >Class</label>
+        <label>Class</label>
         <select
           {...register("class", {
             required: "Required",
           })}
+          onChange={handleChangeClass}
         >
           {className.map((item) => (
             <option value={item} key={item}>
@@ -122,7 +137,7 @@ export default function FindResult({ user, names }: FindResult) {
         </select>
         {errors.class && <Errror message={errors.class.message} />}
 
-        <label >Term</label>
+        <label>Term</label>
         <select
           {...register("term", {
             required: "Required",
@@ -138,7 +153,7 @@ export default function FindResult({ user, names }: FindResult) {
 
         {!user && (
           <>
-            <label >Student Name</label>
+            <label>Student Name</label>
             <select
               {...register("studentName", {
                 required: "Required",
@@ -155,10 +170,7 @@ export default function FindResult({ user, names }: FindResult) {
             )}
           </>
         )}
-        <button>
-          
-          Find Result
-        </button>
+        <button>Find Result</button>
       </form>
 
       <div className="mt-7">

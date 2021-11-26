@@ -346,7 +346,7 @@ export default function Result({ data }) {
       )}{" "}
       {!createResult && (
         <div className="mt-5">
-          <FindResult names={names} />
+          <FindResult data={res} />
         </div>
       )}
       {showResultTable && (
