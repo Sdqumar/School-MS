@@ -18,7 +18,7 @@ type student = {
 };
 
 type FindResult = {
-  user?: string;
+  user?: student;
   data?: student[];
 };
 
@@ -56,7 +56,7 @@ export default function FindResult({ user, data }: FindResult) {
     studentID = studentID.toString()?.replace(",", "");
 
     if (user) {
-      studentID = user?.split(" ").map((item) => item.charAt(0));
+      studentID = user?.fullName?.split(" ").map((item) => item.charAt(0));
       studentID = studentID.toString()?.replace(",", "");
     }
 
@@ -92,11 +92,15 @@ export default function FindResult({ user, data }: FindResult) {
 
   const [names, setNames] = useState(null);
 
-  const handleChangeClass = (e) => {
-    const currentClass = e.target.value;
+  const defaultClass = () => {};
 
-    const studentNames = data?.filter((item) => item.class === currentClass);
-    setNames(studentNames);
+  const handleChangeClass = (e) => {
+    if (!user) {
+      const currentClass = e.target.value;
+
+      const studentNames = data?.filter((item) => item.class === currentClass);
+      setNames(studentNames);
+    }
   };
   useEffect(() => {
     const studentNames = data?.filter((item) => item.class === className[0]);
@@ -127,7 +131,8 @@ export default function FindResult({ user, data }: FindResult) {
           {...register("class", {
             required: "Required",
           })}
-          onChange={() => !user && handleChangeClass}
+          defaultValue={user?.class}
+          onChange={handleChangeClass}
         >
           {className.map((item) => (
             <option value={item} key={item}>
