@@ -127,7 +127,7 @@ export default function FindResult({ user, data }: FindResult) {
           {...register("class", {
             required: "Required",
           })}
-          onChange={handleChangeClass}
+          onChange={() => !user && handleChangeClass}
         >
           {className.map((item) => (
             <option value={item} key={item}>
