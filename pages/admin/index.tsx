@@ -1,21 +1,14 @@
-import SideNavBar from "../../components/SideNavBar"
+import AdminNavBar from "../../components/AdminSideBar";
 
-export default function Dashboard (){
-
-const navData=['Staff','Student','Classes','Results']
-
-return(
-  <div className="flex min-h-full">
-    <div>
-
-    <SideNavBar navData={navData}/>
+export default function Dashboard() {
+  return (
+    <div className="flex min-h-full">
+      <div>
+        <AdminNavBar />
+      </div>
+      <main className="ml-6">
+        <h1 className="text-gray-700 text-5xl mt-8  font-medium">Dashboard</h1>
+      </main>
     </div>
-    <main className="ml-6">
-      <h1 className="text-gray-700 text-5xl mt-8  font-medium">Dashboard</h1>
-
-    </main>
-     </div>
-
-      
-)
+  );
 }

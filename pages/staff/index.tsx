@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import useStore from "../../components/useStore";
 import Image from "next/image";
-import SideNavBar from "../../components/SideNavBar";
+import SideNavBar from "../../components/StudentSideBar";
 import { useForm } from "react-hook-form";
 import Select from "../../components/utils/Select";
 import BasicTable from "../../components/BasicTable";
@@ -18,7 +18,7 @@ export type result = {
 };
 export default function StudentDashboard() {
   const user = useStore((state) => state.user);
-  const navData = ["Profile", "Print result", "Print recipt", "Payment",];
+  const navData = ["Profile", "Print result", "Print recipt", "Payment"];
 
   const userProfile = [
     { name: "Admission-No", value: user?.admissionNo },
@@ -54,18 +54,13 @@ export default function StudentDashboard() {
             height={30}
           />
         </section>
-        <section className="mt-14">
-          {
-            <Form  user={user?.fullName}/>
-          }
-        </section>
+        <section className="mt-14">{<Form user={user?.fullName} />}</section>
       </main>
     </div>
   );
 }
 
-export function Form({user}) {
-  
+export function Form({ user }) {
   const {
     handleSubmit,
     register,
@@ -103,14 +98,12 @@ export function Form({user}) {
       .map((item) => item.slice(0, 3));
     const classID = class1st + class2nd;
     const id = `${values.year}-${term}-${classID}-${studentID}`;
-    
+
     return id;
   };
 
-const handleForm= async(values)=>{
-
-
-  const id = await getResultId(values);
+  const handleForm = async (values) => {
+    const id = await getResultId(values);
 
     try {
       const res = await fetch("/api/result/" + values.year + "/" + id, {
@@ -118,7 +111,7 @@ const handleForm= async(values)=>{
         headers: { "Content-Type": "application/json" },
       });
       const data = await res.json();
-      
+
       if (data.errors) {
         console.log(data.errors);
       } else {
@@ -127,67 +120,72 @@ const handleForm= async(values)=>{
     } catch (err) {
       console.log(err);
     }
-}
-
+  };
 
   return (
     <>
-    <form onSubmit={handleSubmit((formValues) => handleForm(formValues))}>
-      <h4 className="text-3xl mb-4">Find Result</h4>
+      <form onSubmit={handleSubmit((formValues) => handleForm(formValues))}>
+        <h4 className="text-3xl mb-4">Find Result</h4>
 
-      <label className="text-2xl mx-3">Year</label>
-      <select
-        className="border-2 ml-3 w-24"
-        {...register("year", {
-          required: "Required",
-        })}
-      >
-        {[2021, 2022, 2023, 2024, 2025].map((item) => (
-          <option value={item} key={item}>
-            {item}
-          </option>
-        ))}
-      </select>
-      {errors.year && <Errror message={errors.year.message} />}
+        <label className="text-2xl mx-3">Year</label>
+        <select
+          className="border-2 ml-3 w-24"
+          {...register("year", {
+            required: "Required",
+          })}
+        >
+          {[2021, 2022, 2023, 2024, 2025].map((item) => (
+            <option value={item} key={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+        {errors.year && <Errror message={errors.year.message} />}
 
-      <label className="text-2xl mx-3">Class</label>
-      <select
-       className="border-2 ml-3 w-24"
-        {...register("class", {
-          required: "Required",
-        })}
-      >
-        {className.map((item) => (
-          <option value={item} key={item}>
-            {item}
-          </option>
-        ))}
-      </select>
-      {errors.class && <Errror message={errors.class.message} />}
+        <label className="text-2xl mx-3">Class</label>
+        <select
+          className="border-2 ml-3 w-24"
+          {...register("class", {
+            required: "Required",
+          })}
+        >
+          {className.map((item) => (
+            <option value={item} key={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+        {errors.class && <Errror message={errors.class.message} />}
 
-      <label className="text-2xl mx-3">Term</label>
-      <select
-       className="border-2  w-24"
-        {...register("term", {
-          required: "Required",
-        })}
-      >
-        {term.map((item) => (
-          <option value={item} key={item}>
-            {item}
-          </option>
-        ))}
-      </select>
-      {errors.term && <Errror message={errors.term.message} />}
-<br/>
-      <button  className="bg-blue-400 hover:bg-blue-200 mt-3 ml-4 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page" > Find Result</button>
-    </form>
+        <label className="text-2xl mx-3">Term</label>
+        <select
+          className="border-2  w-24"
+          {...register("term", {
+            required: "Required",
+          })}
+        >
+          {term.map((item) => (
+            <option value={item} key={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+        {errors.term && <Errror message={errors.term.message} />}
+        <br />
+        <button
+          className="bg-blue-400 hover:bg-blue-200 mt-3 ml-4 text-white px-3 py-2 rounded-md text-sm font-medium"
+          aria-current="page"
+        >
+          {" "}
+          Find Result
+        </button>
+      </form>
 
-    <div className="mt-7">
-    {showResultTable && (
-        <BasicTable TableData={showResultTable} COLUMNS={COLUMNS} />
-      )}
-    </div>
+      <div className="mt-7">
+        {showResultTable && (
+          <BasicTable TableData={showResultTable} COLUMNS={COLUMNS} />
+        )}
+      </div>
     </>
   );
 }

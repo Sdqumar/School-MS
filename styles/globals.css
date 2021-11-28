@@ -68,10 +68,10 @@ select {
   }
 
   form {
-    @apply bg-white my-5 mb-8  p-8
-  rounded-lg shadow-lg max-w-xl;
+    @apply bg-gray-50 my-5 mb-8 mx-auto p-8
+  rounded-lg shadow-lg;
   }
   .link {
     @apply border border-blue-200 max-w-max py-2 px-4 my-4 cursor-pointer;
-}
+  }
 }
