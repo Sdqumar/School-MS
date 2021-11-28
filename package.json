@@ -14,6 +14,8 @@
     "argon2": "^0.28.2",
     "axios": "^0.24.0",
     "cookie-parser": "^1.4.5",
+    "flutterwave-node-v3": "^1.0.9",
+    "flutterwave-react-v3": "^1.1.0",
     "mongodb": "3.5.9",
     "mongoose": "^6.0.12",
     "next": "11.1.2",
