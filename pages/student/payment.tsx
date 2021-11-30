@@ -1,7 +1,6 @@
 import useStore from "../../components/useStore";
 import SideNavBar from "../../components/StudentSideBar";
 import ProfileReview from "../../components/profileReview";
-import FindResult from "../../components/findResult";
 
 export default function Form() {
 
@@ -15,7 +14,7 @@ export default function Form() {
       <div className="mx-auto">
         <ProfileReview user={user} />
         <div className="mt-7 ">
-          <FindResult user={user} />
+         <h3>First Term School fees</h3>
         </div>
       </div>
     </main>
