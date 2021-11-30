@@ -74,4 +74,10 @@ select {
   .link {
     @apply border border-blue-200 max-w-max py-2 px-4 my-4 cursor-pointer;
   }
+  .payment div{
+    @apply flex font-medium
+  }
+  .payment div span:nth-child(1){
+    @apply w-40 py-2 pl-3 mr-3 bg-blue-200 
+  }
 }
