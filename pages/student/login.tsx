@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useCookies } from "react-cookie";
 import Success from "../../components/utils/success";
 import Error from "../../components/utils/Error";
-import Head from "next/head";
+import Spinner from "../../components/utils/Spinner";
 type student = {
   password: string;
   admissionNo: string;
@@ -13,6 +13,7 @@ export default function App() {
   const [, setCookie] = useCookies(["user"]);
   const [success, setSucess] = useState("hidden");
   const [error, setError] = useState("hidden");
+  const [loading, setLoading] = useState("hidden");
 
   const {
     handleSubmit,
@@ -20,6 +21,7 @@ export default function App() {
     formState: { errors },
   } = useForm<student>();
   const submitHandler = async (formValues) => {
+    setLoading("block")
     try {
       const res = await fetch("/api/student/login", {
         method: "POST",
@@ -42,10 +44,13 @@ export default function App() {
       console.log(err);
       setError("block");
     }
+    setLoading("hidden")
+
   };
 
   return (
     <>
+
       <form
         onSubmit={handleSubmit((formValues) => submitHandler(formValues))}
         className="w-96"
@@ -75,7 +80,9 @@ export default function App() {
         />
         {errors.password && <Errror message={errors.password.message} />}
 
-        <button>submit</button>
+        <button className="flex">
+        <Spinner className={loading}/> submit</button>   
+
       </form>
     </>
   );
