@@ -2,47 +2,42 @@ import useStore from "../../components/useStore";
 import SideNavBar from "../../components/StudentSideBar";
 import ProfileReview from "../../components/profileReview";
 import Image from "next/image";
-import { usePaystackPayment } from 'react-paystack';
-
+import { usePaystackPayment } from "react-paystack";
 
 export default function Form() {
   const user = useStore((state) => state.user);
-console.log(user);
 
-
-const payment={
-    amount:50000,
-    charges:150,
-    type:"First Term Fees (2020 academic session)",
-    total:50150
-
-}
+  const payment = {
+    amount: 50000,
+    charges: 150,
+    type: "First Term Fees (2020 academic session)",
+    total: 50150,
+  };
   const config = {
-    reference: (new Date()).getTime().toString(),
+    reference: new Date().getTime().toString(),
     email: user?.email,
     amount: payment.total * 100,
-    publicKey:"pk_test_cc89c527520c2442c1e462c3128f57442882a3ca",
-};
+    publicKey: "pk_test_cc89c527520c2442c1e462c3128f57442882a3ca",
+  };
 
-
-const onSuccess = (reference) => {
+  const onSuccess = (reference) => {
     console.log(reference);
   };
-  
+
   const onClose = () => {
-    console.log('closed')
-  }
+    console.log("closed");
+  };
   const initializePayment = usePaystackPayment(config);
-const makePayment=()=>{
-        initializePayment(onSuccess, onClose)
-}
+  const makePayment = () => {
+    initializePayment(onSuccess, onClose);
+  };
 
   return (
     <main className="flex min-h-full">
       <div>
         <SideNavBar />
       </div>
-      <div className="mx-auto">
+      <div className="mx-auto w-1/2">
         <ProfileReview user={user} />
         <div className="mt-7 mx-4">
           <h2>Payment preview</h2>
@@ -72,14 +67,16 @@ const makePayment=()=>{
             </div>
           </div>
           <div className="my-4 m-auto ">
-          <Image
-            src="/paystackcard.png"
-            alt="Picture of the author"
-            width={350}
-            height={120}
-          />
+            <Image
+              src="/paystackcard.png"
+              alt="Picture of the author"
+              width={350}
+              height={120}
+            />
           </div>
-        <button onClick={makePayment} className="mb-10 m-auto">make payment</button>
+          <button onClick={makePayment} className="mb-10 m-auto">
+            make payment
+          </button>
         </div>
       </div>
     </main>

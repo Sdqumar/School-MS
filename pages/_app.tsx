@@ -6,10 +6,7 @@ import { CookiesProvider } from "react-cookie";
 import { useCookies } from "react-cookie";
 import { useState, useEffect } from "react";
 
-export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}) {
+export default function App({Component}) {
   const setUser = useStore((state) => state.setUser);
   const [cookies] = useCookies(["user"]);
 
@@ -19,11 +16,9 @@ export default function App({
   }, [cookies]);
 
   return (
-    <CookiesProvider>
       <div className="flex flex-col h-screen ">
         <Navbar />
-        <Component {...pageProps} />
+        <Component />
       </div>
-    </CookiesProvider>
   );
 }
