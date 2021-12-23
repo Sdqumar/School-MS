@@ -1,11 +1,11 @@
 import Link from "next/link";
 
 export default function SideNavBar() {
-  const navData = ["Profile", "Print result", "Print recipt", "Payment"];
+  const navData = ["Profile", "Print Result", "Print Recipt", "Payment"];
   return (
     <div className=" bg-gray-100 w-full shadow-lg mr-14 pt-5 h-screen ">
       {navData.map((item) => {
-        const url = `/student/${item.replace(" ", "-").toLowerCase()}/`;
+        const url = `/student/${item.replace(" ", "")}/`;
 
         return (
           <Link href={url} key={item}>

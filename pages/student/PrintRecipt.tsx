@@ -1,13 +1,13 @@
 import useStore from "../../components/useStore";
 import SideNavBar from "../../components/StudentSideBar";
 import ProfileReview from "../../components/profileReview";
-import FindResult from "../../components/findResult";
+import Link from "next/link";
+import FindRecipt from "../../components/findRecipt";
 
-export default function Form() {
+export default function PrintRecipt() {
+    const user = useStore((state) => state.user);
 
-  const user = useStore((state) => state.user);
-
-  return (
+    return (
     <main className="flex min-h-full">
       <div>
         <SideNavBar />
@@ -15,7 +15,8 @@ export default function Form() {
       <div className="mx-auto">
         <ProfileReview user={user} />
         <div className="mt-7 ">
-          <FindResult user={user} />
+        <FindRecipt user={user} />
+
         </div>
       </div>
     </main>
