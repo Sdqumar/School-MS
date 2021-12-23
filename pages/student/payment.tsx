@@ -7,17 +7,41 @@ import { usePaystackPayment } from "react-paystack";
 export default function Form() {
   const user = useStore((state) => state.user);
 
+const Term ="First"
   const payment = {
     amount: 50000,
     charges: 150,
-    type: "First Term Fees (2020 academic session)",
+    type: Term + " Term Fees (2020 academic session)",
     total: 50150,
+
   };
   const config = {
     reference: new Date().getTime().toString(),
     email: user?.email,
     amount: payment.total * 100,
     publicKey: "pk_test_cc89c527520c2442c1e462c3128f57442882a3ca",
+    "metadata":{
+      ...user,
+      term:Term+" term",
+      "custom_fields":[
+        {
+          "display_name":"Name",
+          "variable_name":"Name",
+          "value":user.fullName
+        },
+        {
+          "display_name":"Admission No",
+          "variable_name":"Admission No",
+          "value":user.admissionNo
+        },
+        {
+          "display_name":"Class",
+          "variable_name":"Class",
+          "value":user.class
+        },
+       
+      ]
+    }
   };
 
   const onSuccess = (reference) => {
