@@ -53,7 +53,7 @@ export default function FindResult({ user, data }: FindResult) {
     let studentID: string[] | string = values?.studentName
       ?.split(" ")
       .map((item) => item.charAt(0));
-    studentID = studentID.toString()?.replace(",", "");
+    studentID = studentID?.toString()?.replace(",", "");
 
     if (user) {
       studentID = user?.fullName?.split(" ").map((item) => item.charAt(0));
