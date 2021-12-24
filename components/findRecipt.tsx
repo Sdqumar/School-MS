@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import BasicTable from "./BasicTable";
+import getResultId from "./utils/getStudntId";
 import COLUMNS from "./utils/resultColums";
 
 export type result = {
@@ -40,42 +41,15 @@ export default function FindRecipt({ user, data }: FindResult) {
     "SS 1",
   ];
   const [showResultTable, setShowResultTable] = useState(null);
-
-  const getResultId = async (values) => {
-    let term = "01";
-
-    if (values.term === "Second Term") {
-      term = "02";
-    }
-    if (values.term === "Third Term") {
-      term = "03";
-    }
-    let studentID: string[] | string = values?.studentName
-      ?.split(" ")
-      .map((item) => item.charAt(0));
-    studentID = studentID?.toString()?.replace(",", "");
-
-    if (user) {
-      studentID = user?.fullName?.split(" ").map((item) => item.charAt(0));
-      studentID = studentID.toString()?.replace(",", "");
-    }
-
-    let [class1st, class2nd] = values.class
-      .toUpperCase()
-      .split(" ")
-      .map((item) => item.slice(0, 3));
-    const classID = class1st + class2nd;
-    const id = `${values.year}-${term}-${classID}-${studentID}`;
-
-    return id;
-  };
-
+  
+  
   const handleForm = async (values) => {
-    const id = await getResultId(values);
+    const id = await getResultId(values,user);
 
     try {
-      const res = await fetch("/api/result/" + values.year + "/" + id, {
-        method: "GET",
+      const res = await fetch("/api/student/recipt", {
+        method: "POST",
+        body: JSON.stringify(id,values.year),
         headers: { "Content-Type": "application/json" },
       });
       const data = await res.json();

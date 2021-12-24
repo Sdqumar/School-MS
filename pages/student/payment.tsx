@@ -3,45 +3,59 @@ import SideNavBar from "../../components/StudentSideBar";
 import ProfileReview from "../../components/profileReview";
 import Image from "next/image";
 import { usePaystackPayment } from "react-paystack";
+import getResultId from "../../components/utils/getStudntId";
 
 export default function Form() {
   const user = useStore((state) => state.user);
+  const Term = "First Term";
+  const year = 2021;
 
-const Term ="First"
   const payment = {
     amount: 50000,
     charges: 150,
-    type: Term + " Term Fees (2020 academic session)",
+    type: Term + " Fees (2020 academic session)",
     total: 50150,
-
   };
+
+let id   
+if (user) {
+  
+  const values = {
+    term: Term,
+    year: year,
+    class: user.class,
+  };
+  id = getResultId(values, user);
+  console.log(user);
+  
+}
   const config = {
     reference: new Date().getTime().toString(),
     email: user?.email,
     amount: payment.total * 100,
     publicKey: "pk_test_cc89c527520c2442c1e462c3128f57442882a3ca",
-    "metadata":{
+    metadata: {
+      id,
       ...user,
-      term:Term+" term",
-      "custom_fields":[
+      term: Term + " term",
+      custom_fields: [
         {
-          "display_name":"Name",
-          "variable_name":"Name",
-          "value":user.fullName
+          display_name: "Name",
+          variable_name: "Name",
+          value: user?.fullName,
         },
         {
-          "display_name":"Admission No",
-          "variable_name":"Admission No",
-          "value":user.admissionNo
+          display_name: "Admission No",
+          variable_name: "Admission No",
+          value: user?.admissionNo,
         },
         {
-          "display_name":"Class",
-          "variable_name":"Class",
-          "value":user.class
+          display_name: "Class",
+          variable_name: "Class",
+          value: user?.class,
         },
-       
-      ]
-    }
+      ],
+    },
   };
 
   const onSuccess = (reference) => {
