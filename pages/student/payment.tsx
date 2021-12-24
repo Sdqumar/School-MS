@@ -3,7 +3,6 @@ import SideNavBar from "../../components/StudentSideBar";
 import ProfileReview from "../../components/profileReview";
 import Image from "next/image";
 import { usePaystackPayment } from "react-paystack";
-import getResultId from "../../components/utils/getStudntId";
 
 export default function Form() {
   const user = useStore((state) => state.user);
@@ -17,25 +16,12 @@ export default function Form() {
     total: 50150,
   };
 
-let id   
-if (user) {
-  
-  const values = {
-    term: Term,
-    year: year,
-    class: user.class,
-  };
-  id = getResultId(values, user);
-  console.log(user);
-  
-}
   const config = {
     reference: new Date().getTime().toString(),
     email: user?.email,
     amount: payment.total * 100,
     publicKey: "pk_test_cc89c527520c2442c1e462c3128f57442882a3ca",
     metadata: {
-      id,
       ...user,
       term: Term + " term",
       custom_fields: [

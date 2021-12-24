@@ -16,6 +16,7 @@ type student = {
   admissionNo: string;
   fullName: string;
   class: string;
+  _id:number
 };
 
 type FindResult = {
@@ -43,13 +44,13 @@ export default function FindRecipt({ user, data }: FindResult) {
   const [showResultTable, setShowResultTable] = useState(null);
   
   
+  console.log(user);
   const handleForm = async (values) => {
-    const id = await getResultId(values,user);
-
+        
     try {
       const res = await fetch("/api/student/recipt", {
         method: "POST",
-        body: JSON.stringify(id,values.year),
+        body: JSON.stringify({studentId:user._id}),
         headers: { "Content-Type": "application/json" },
       });
       const data = await res.json();
