@@ -1,10 +1,20 @@
 import useStore from "../../components/useStore";
 import SideNavBar from "../../components/StudentSideBar";
 import ProfileReview from "../../components/profileReview";
+import CreatePDF from "../../components/createPDF";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import dynamic from 'next/dynamic'
+import { PDFDownloadLink } from "@react-pdf/renderer";
+
 
 export default function PrintRecipt() {
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
   const user = useStore((state) => state.user);
   const [recipts, setRecipts] = useState(null);
   useEffect(() => {
@@ -67,6 +77,11 @@ export default function PrintRecipt() {
             );
           })}
         </table>
+        {isClient && (
+        <PDFDownloadLink document={<CreatePDF />} fileName="fee_acceptance.pdf">
+  {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download now!')}
+</PDFDownloadLink>
+        )}
       </div>
     </main>
   );
