@@ -41,10 +41,8 @@ export default function PrintRecipt() {
       </div>
       <div className="mx-auto">
         <ProfileReview user={user} />
-        <div>
-          <h3>List of Recipts</h3>
-        </div>
-            <h3 className="w-[100%]">
+          <h3 className="mt-3 text-center">List of Recipts</h3>
+            <h3 className="w-[100%] mt-2 text-center ">
               Click on any of the payment description below to generate recipt
             </h3>
         <table>
