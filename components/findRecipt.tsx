@@ -41,7 +41,6 @@ export default function FindRecipt({ user, data }: FindResult) {
     "Primary 6",
     "SS 1",
   ];
-  const [showResultTable, setShowResultTable] = useState(null);
   
   
   console.log(user);
@@ -58,7 +57,6 @@ export default function FindRecipt({ user, data }: FindResult) {
       if (data.errors) {
         console.log(data.errors);
       } else {
-        setShowResultTable(data?.subject);
       }
     } catch (err) {
       console.log(err);
@@ -150,14 +148,10 @@ export default function FindRecipt({ user, data }: FindResult) {
             )}
           </>
         )}
-        <button>Find Result</button>
+        <button>Find Recipt</button>
       </form>
 
-      <div className="mt-7">
-        {showResultTable && (
-          <BasicTable TableData={showResultTable} COLUMNS={COLUMNS} />
-        )}
-      </div>
+      
     </div>
   );
 }
