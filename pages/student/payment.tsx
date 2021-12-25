@@ -23,7 +23,7 @@ export default function Form() {
     publicKey: "pk_test_cc89c527520c2442c1e462c3128f57442882a3ca",
     metadata: {
       ...user,
-      term: Term + " term",
+      ...payment,
       custom_fields: [
         {
           display_name: "Name",

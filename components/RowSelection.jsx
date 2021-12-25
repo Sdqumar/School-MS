@@ -91,11 +91,8 @@ export default function Table( {TableData,COLUMNS }) {
 
 
 
-  type checkbox={
-    indeterminate:string 
-  }
 
-export const Checkbox = React.forwardRef(({ indeterminate, ...rest }:checkbox, ref) => {
+export const Checkbox = React.forwardRef(({ indeterminate, ...rest }, ref) => {
     const defaultRef = React.useRef()
     const resolvedRef = ref || defaultRef
   
