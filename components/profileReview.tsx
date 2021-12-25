@@ -11,7 +11,7 @@ export default function ProfileReview({ user }) {
 
   return (
     <main>
-      <section className=" align-center border border-blue-300 border-solid flex mt-14 h-44 max-w-lg">
+      <section className=" align-center border border-blue-300 border-solid flex mt-5 h-44 max-w-lg">
         <div className="flex flex-col">
           {userProfile.map((item) => (
             <div
