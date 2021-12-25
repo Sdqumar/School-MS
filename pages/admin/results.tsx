@@ -28,6 +28,8 @@ export type result = {
   subject: subject;
 };
 export default function Result({ data }) {
+  console.log(data);
+  
   let res = JSON.parse(data);
 
   const [names, setNames] = useState(null);
@@ -358,10 +360,10 @@ export default function Result({ data }) {
 
 export async function getStaticProps() {
   let res = await getStudents();
-  let data = await JSON.stringify(res);
+  let data =  JSON.stringify(res);
 
   return {
-    props: { data },
+    props: {data}
   };
 }
 

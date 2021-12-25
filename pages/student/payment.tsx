@@ -96,6 +96,7 @@ export default function Form() {
               alt="Picture of the author"
               width={350}
               height={120}
+              priority
             />
           </div>
           <button onClick={makePayment} className="mb-10 m-auto">
