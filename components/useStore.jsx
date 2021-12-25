@@ -6,7 +6,7 @@ const useStore = create((set) => ({
   recipt:null,
   setRecipt: (recipt) => set({ recipt }),
   result:null,
-  setResult: (recipt) => set({ result }),
+  setResult: (result) => set({ result }),
 }));
 
 export default useStore;

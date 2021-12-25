@@ -1,20 +1,14 @@
 import useStore from "../../components/useStore";
 import SideNavBar from "../../components/StudentSideBar";
 import ProfileReview from "../../components/profileReview";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-
+import useLocalStorage from "../../components/hooks/useLocalStorage";
 
 export default function PrintRecipt() {
- 
   const user = useStore((state) => state.user);
-  const recipt = useStore((state) => state.recipt);
-  const setRecipt = useStore((state) => state.setRecipt);
-
-  const router= useRouter()
-  
   const [recipts, setRecipts] = useState(null);
+  const [value, setValue] = useLocalStorage("recipt",null );
+  
   useEffect(() => {
     const getRecipts = async () => {
       try {
@@ -34,15 +28,13 @@ export default function PrintRecipt() {
       }
     };
 
-    getRecipts();
+user &&    getRecipts();
   }, []);
 
-  const handlePrintRecipt=(recipt)=>{
-    setRecipt(recipt);
-    
-    window.open('./reciptView', "_blank")
-  
-  }
+  const handlePrintRecipt = (recipt) => {
+   setValue(recipt)
+     window.open("./reciptView", "_blank");
+  };
 
   return (
     <main className="flex min-h-full">
@@ -51,10 +43,10 @@ export default function PrintRecipt() {
       </div>
       <div className="mx-auto">
         <ProfileReview user={user} />
-          <h3 className="mt-3 text-center">List of Recipts</h3>
-            <h3 className="w-[100%] mt-2 text-center ">
-              Click on any of the payment description below to generate recipt
-            </h3>
+        <h3 className="mt-3 text-center">List of Recipts</h3>
+        <h3 className="w-[100%] mt-2 text-center ">
+          Click on any of the payment description below to generate recipt
+        </h3>
         <table>
           <tr>
             <td className="w-2">S/N</td>
@@ -68,7 +60,10 @@ export default function PrintRecipt() {
             const year = item.data.paidAt.split("-")[0];
 
             return (
-              <tr className="cursor-pointer" onClick={()=>handlePrintRecipt(item)}>
+              <tr
+                className="cursor-pointer"
+                onClick={() => handlePrintRecipt(item)}
+              >
                 <td>{index + 1}</td>
                 <td>{className}</td>
                 <td>{term}</td>
@@ -77,7 +72,6 @@ export default function PrintRecipt() {
             );
           })}
         </table>
-       
       </div>
     </main>
   );
