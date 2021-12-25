@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useForm } from "react-hook-form";
 import React, { useState, useEffect } from "react";
 import BasicTable from "../../components/BasicTable";
@@ -28,7 +27,6 @@ export type result = {
   subject: subject;
 };
 export default function Result({ data }) {
-  console.log(data);
   
   let res = JSON.parse(data);
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export default function SideNavBar() {
-  const navData = ["Staff", "Student", "Classes", "Results"];
+  const navData = ["Staff", "Student", "Classes", "Results","Payment"];
 
   return (
     <div className=" bg-gray-100 w-full shadow-lg mr-14 pt-5 h-screen ">
