@@ -1,21 +1,19 @@
 import useStore from "../../components/useStore";
 import SideNavBar from "../../components/StudentSideBar";
 import ProfileReview from "../../components/profileReview";
-import CreatePDF from "../../components/createPDF";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import dynamic from 'next/dynamic'
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { useRouter } from "next/router";
 
 
 export default function PrintRecipt() {
-  const [isClient, setIsClient] = useState(false)
-
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
-
+ 
   const user = useStore((state) => state.user);
+  const recipt = useStore((state) => state.recipt);
+  const setRecipt = useStore((state) => state.setRecipt);
+
+  const router= useRouter()
+  
   const [recipts, setRecipts] = useState(null);
   useEffect(() => {
     const getRecipts = async () => {
@@ -40,8 +38,10 @@ export default function PrintRecipt() {
   }, []);
 
   const handlePrintRecipt=(recipt)=>{
-
-    console.log(recipt);
+    setRecipt(recipt);
+    
+    window.open('./reciptView', "_blank")
+  
   }
 
   return (
@@ -77,11 +77,7 @@ export default function PrintRecipt() {
             );
           })}
         </table>
-        {isClient && (
-        <PDFDownloadLink document={<CreatePDF />} fileName="fee_acceptance.pdf">
-  {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download now!')}
-</PDFDownloadLink>
-        )}
+       
       </div>
     </main>
   );

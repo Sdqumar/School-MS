@@ -2,9 +2,8 @@ import Navbar from "../components/Navbar";
 import "../styles/globals.css";
 import "../components/table.css";
 import useStore from "../components/useStore";
-import { CookiesProvider } from "react-cookie";
 import { useCookies } from "react-cookie";
-import { useState, useEffect } from "react";
+import {  useEffect } from "react";
 
 export default function App({Component}) {
   const setUser = useStore((state) => state.setUser);
