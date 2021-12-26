@@ -6,7 +6,7 @@ import { getStudents } from "../api/student";
 const COLUMNS = [
    
   {
-    Header: 'No',
+    Header: 'Admission No',
     accessor: 'admissionNo',
   },
   {
@@ -35,7 +35,7 @@ export default function Students({ data }) {
 
   return (
     
-    <section>
+    <section className="mx-10 mb-4">
       <div className="ml-3">
 
       <h1>Students</h1>
