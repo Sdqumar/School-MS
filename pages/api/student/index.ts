@@ -5,9 +5,8 @@ import { student } from "./model";
 
 export async function getStudents(id?) {
     try{
-      let  res = await student.find({}).select("-password");
-  
-  return res;
+        let  res = await student.find({}).select("-password");
+        return res;
 }
 catch(err){
     return null
@@ -17,8 +16,10 @@ catch(err){
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const auth = req.cookies.user;
+  
   if (auth) {
     const data = await getStudents();
+    
     res.status(200).json(data);
   } else {
     res.status(401).send("unauthorized access");
