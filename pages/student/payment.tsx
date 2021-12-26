@@ -84,14 +84,13 @@ data && setPayment({...data,term:Payment.term})
   };
 
   return (
-    payment && recipt &&
     <main className="flex min-h-full">
       <div>
         <SideNavBar />
       </div>
       <div className="mx-auto w-1/2">
         <ProfileReview user={user} />
-       { recipt ? 
+       { recipt || !payment? 
 
       <h2 className="mt-9 text-center">No Outstanding Payment</h2>
       :
