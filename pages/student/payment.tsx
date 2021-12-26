@@ -3,19 +3,13 @@ import SideNavBar from "../../components/StudentSideBar";
 import ProfileReview from "../../components/profileReview";
 import Image from "next/image";
 import { usePaystackPayment } from "react-paystack";
+import Payment from "../api/payment.json";
 
 export default function Form() {
+  const payment=Payment
   const user = useStore((state) => state.user);
-  const Term = "First Term";
-  const year = 2021;
-
-  const payment = {
-    amount: 50000,
-    charges: 150,
-    type: Term + " Fees (2020 academic session)",
-    total: 50150,
-  };
-
+ 
+ Payment
   const config = {
     reference: new Date().getTime().toString(),
     email: user?.email,

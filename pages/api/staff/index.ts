@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import jwt from "jsonwebtoken";
 import connectDB from "../../../config/connectDB";
 import { staff } from "./model";
 

@@ -1,34 +1,72 @@
 import classes from "../api/classes.json";
 import { useForm } from "react-hook-form";
 import React, { useState, useEffect } from "react";
+import BasicTable from "../../components/BasicTable";
 
 const term = ["First Term", "Second Term", "Third Term"];
+
+
+const COLUMNS = [
+    {
+      Header: "Class",
+      accessor: "class.name",
+    },
+   
+    {
+      Header: "Amount",
+      accessor: "class.amount",
+    },
+    {
+      Header: "Charges",
+      accessor: "charges",
+    },
+    {
+      Header: "Total",
+      accessor: "class.total",
+    },
+   
+  ];
+
 
 type payment = {
   year: number;
   term: string;
-  class: { name:string;
-    amount: number }[];
+  charges: number;
+  class: { 
+      name: string;
+     total: number; 
+     amount: number }[];
 };
 
 export default function Payment() {
-  const handleForm = async(values) => {
 
-    try {
-        const res = await fetch("/api/payment", {
-          method: "POST",
-          body: JSON.stringify(values),
-          headers: { "Content-Type": "application/json" },
-        });
-        const data = await res.json();
-        if (data.errors) {
-          console.log(data.errors);
-        } else {
-          console.log(data);
-        }
-      } catch (err) {
-        console.log(err);
-      }    
+
+const [preview,setPreview]=useState(null)
+
+  const handleForm = async (values) => {
+values.class.forEach((item,index)=>{
+    setValue(`class.${index}.total`, Number(item.amount) + Number(values.charges))
+})
+
+console.log(values);
+
+    setPreview(values);
+    
+    // try {
+    //     const res = await fetch("/api/payment", {
+    //       method: "POST",
+    //       body: JSON.stringify(values),
+    //       headers: { "Content-Type": "application/json" },
+    //     });
+    //     const data = await res.json();
+    //     if (data.errors) {
+    //       console.log(data.errors);
+    //     } else {
+    //       console.log(data);
+    //     }
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
   };
 
   const {
@@ -39,6 +77,7 @@ export default function Payment() {
     formState: { errors },
   } = useForm<payment>();
   const values = getValues();
+
 
   return (
     <div className="m-5">
@@ -78,8 +117,8 @@ export default function Payment() {
         {errors.term && <Errror message={errors.term.message} />}
 
         {classes.map((item, index) => {
-         setValue(`class.${index}.name`, item.name)
-         return (
+          setValue(`class.${index}.name`, item.name);
+          return (
             <div className="flex items-center" key={item.name}>
               <label className="mt-5">{item.name}</label>
               <input
@@ -92,8 +131,23 @@ export default function Payment() {
             </div>
           );
         })}
-        <button>save</button>
+        <div className="flex items-center">
+          <label className="mt-5">Processing Fees</label>
+          <input
+            {...register("charges", {
+              required: "Required",
+            })}
+            type="number"
+            className="w-60 ml-5 h-10"
+          />
+        </div>
+
+        <button>preview</button>
       </form>
+
+      {preview && (
+        <BasicTable TableData={preview} COLUMNS={COLUMNS} />
+      )}
     </div>
   );
 }
