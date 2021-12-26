@@ -7,16 +7,35 @@ const term = ["First Term", "Second Term", "Third Term"];
 type payment = {
   year: number;
   term: string;
-  class: { name: string }[];
+  class: { name:string;
+    amount: number }[];
 };
 
 export default function Payment() {
-  const handleForm = (values) => {};
+  const handleForm = async(values) => {
+
+    try {
+        const res = await fetch("/api/payment", {
+          method: "POST",
+          body: JSON.stringify(values),
+          headers: { "Content-Type": "application/json" },
+        });
+        const data = await res.json();
+        if (data.errors) {
+          console.log(data.errors);
+        } else {
+          console.log(data);
+        }
+      } catch (err) {
+        console.log(err);
+      }    
+  };
 
   const {
     handleSubmit,
     register,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm<payment>();
   const values = getValues();
@@ -59,17 +78,15 @@ export default function Payment() {
         {errors.term && <Errror message={errors.term.message} />}
 
         {classes.map((item, index) => {
-          return (
-            <div className="flex items-center">
+         setValue(`class.${index}.name`, item.name)
+         return (
+            <div className="flex items-center" key={item.name}>
               <label className="mt-5">{item.name}</label>
               <input
-                {...register(`class.${index}.name`, {
+                {...register(`class.${index}.amount`, {
                   required: "Required",
                 })}
                 type="number"
-                min="0.01"
-                step="0.01"
-                max="2500"
                 className="w-60 ml-5 h-10"
               />
             </div>
