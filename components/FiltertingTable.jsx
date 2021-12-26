@@ -58,26 +58,23 @@ export const FilteringTable = ({ tableData, COLUMNS }) => {
   const handleDelete = async () => {
     const values = selectedFlatRows.map((row) => row.original);
 
-    console.log(values);
-
-    // try {
-
-    //   const res = await fetch("/api/class", {
-    //     method: "DELETE",
-    //     body: JSON.stringify(values),
-    //     headers: { "Content-Type": "application/json" },
-    //   });
-    //   const data = await res.json();
-    //   if (data.errors) {
-    //     console.log(data.errors);
-    //   }else {
-    //     // location.assign("/");
-    //     console.log(data);
-
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const res = await fetch("/api/student", {
+        method: "DELETE",
+        body: JSON.stringify(values),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.errors) {
+        console.log(data.errors);
+      } else {
+        // location.assign("/");
+        console.log(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -134,8 +131,8 @@ export const FilteringTable = ({ tableData, COLUMNS }) => {
         </button>
       </div>
       <div className="flex children:mr-5">
-        <button onClick={handleDelete}>Promote</button>
-        <button onClick={handleDelete}>Demote</button>
+        {/* <button onClick={handleDelete}>Promote</button> */}
+        {/* <button onClick={handleDelete}>Demote</button> */}
         <button onClick={handleDelete}>Delete</button>
       </div>
     </>
