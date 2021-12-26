@@ -5,70 +5,74 @@ import BasicTable from "../../components/BasicTable";
 
 const term = ["First Term", "Second Term", "Third Term"];
 
-
 const COLUMNS = [
-    {
-      Header: "Class",
-      accessor: "class.name",
-    },
-   
-    {
-      Header: "Amount",
-      accessor: "class.amount",
-    },
-    {
-      Header: "Charges",
-      accessor: "charges",
-    },
-    {
-      Header: "Total",
-      accessor: "class.total",
-    },
-   
-  ];
+  {
+    Header: "Class",
+    accessor: "name",
+  },
 
+  {
+    Header: "Amount",
+    accessor: (row) => `₦ ${Number(row.amount).toLocaleString()}`,
+  },
+  {
+    Header: "Charges",
+    accessor: (row) => `₦ ${Number(row.charges).toLocaleString()}`,
+  },
+  {
+    Header: "Total",
+    accessor: (row) => `₦ ${Number(row.total).toLocaleString()}`,
+    
+  },
+];
 
 type payment = {
   year: number;
   term: string;
   charges: number;
-  class: { 
-      name: string;
-     total: number; 
-     amount: number }[];
+  class: {
+    name: string;
+    total: number;
+    amount: number;
+    charges: number;
+  }[];
 };
 
 export default function Payment() {
+  const [preview, setPreview] = useState(null);
+
+  const handleForm = async (values:payment) => {
+    values.class.forEach((item, index) => {
+      setValue(
+        `class.${index}.total`,
+        Number(item.amount) + Number(values.charges)
+      );
+      setValue(`class.${index}.charges`, Number(values.charges));
+    });
 
 
-const [preview,setPreview]=useState(null)
+    setPreview(null);
+    setPreview(values.class);
 
-  const handleForm = async (values) => {
-values.class.forEach((item,index)=>{
-    setValue(`class.${index}.total`, Number(item.amount) + Number(values.charges))
-})
-
-console.log(values);
-
-    setPreview(values);
     
-    // try {
-    //     const res = await fetch("/api/payment", {
-    //       method: "POST",
-    //       body: JSON.stringify(values),
-    //       headers: { "Content-Type": "application/json" },
-    //     });
-    //     const data = await res.json();
-    //     if (data.errors) {
-    //       console.log(data.errors);
-    //     } else {
-    //       console.log(data);
-    //     }
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
   };
-
+const handleSave=async()=>{
+try {
+        const res = await fetch("/api/payment", {
+          method: "POST",
+          body: JSON.stringify(values),
+          headers: { "Content-Type": "application/json" },
+        });
+        const data = await res.json();
+        if (data.errors) {
+          console.log(data.errors);
+        } else {
+          console.log(data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+}
   const {
     handleSubmit,
     register,
@@ -77,7 +81,6 @@ console.log(values);
     formState: { errors },
   } = useForm<payment>();
   const values = getValues();
-
 
   return (
     <div className="m-5">
@@ -145,9 +148,8 @@ console.log(values);
         <button>preview</button>
       </form>
 
-      {preview && (
-        <BasicTable TableData={preview} COLUMNS={COLUMNS} />
-      )}
+      {preview && <BasicTable TableData={preview} COLUMNS={COLUMNS} />}
+          <button className="mb-10" onClick={handleSave}>save</button>
     </div>
   );
 }

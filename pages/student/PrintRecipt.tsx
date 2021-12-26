@@ -46,7 +46,8 @@ user &&    getRecipts();
         <h3 className="mt-3 text-center">List of Recipts</h3>
         <h3 className="w-[100%] mt-2 text-center ">
           Click on any of the payment description below to generate recipt
-        </h3>
+        </h3>{
+        recipts &&
         <table>
           <tr>
             <td className="w-2">S/N</td>
@@ -71,7 +72,7 @@ user &&    getRecipts();
               </tr>
             );
           })}
-        </table>
+        </table>}
       </div>
     </main>
   );

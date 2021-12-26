@@ -12,7 +12,7 @@ export default function Table({ TableData, COLUMNS }) {
     });
 
   return (
-    <div className="pb-10">
+    <div >
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (

@@ -3,17 +3,50 @@ import SideNavBar from "../../components/StudentSideBar";
 import ProfileReview from "../../components/profileReview";
 import Image from "next/image";
 import { usePaystackPayment } from "react-paystack";
-import Payment from "../api/payment.json";
+import Payment from '../api/payment.json'
+import { useEffect } from "react";
+import { useState } from "react";
+
 
 export default function Form() {
-  const payment=Payment
-  const user = useStore((state) => state.user);
+
+
+const user = useStore((state) => state.user);
+const [payment,setPayment]=useState(null)
+const [recipt, setRecipt] = useState(null);
+
+useEffect(()=>{
+  const getRecipts = async () => {
+    try {
+      const res = await fetch("/api/student/recipt", {
+        method: "POST",
+        body: JSON.stringify({ studentId: user._id }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const [data] = await res.json();
+      setRecipt(data);
+      if (data.errors) {
+        console.log(data.errors);
+      } else {
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+user &&    getRecipts();
+
+
+
+  const [data] = Payment.class.filter(item=>item.name === user?.class)
+data && setPayment({...data,term:Payment.term})
+},[user])
  
- Payment
+
   const config = {
     reference: new Date().getTime().toString(),
     email: user?.email,
-    amount: payment.total * 100,
+    amount: payment?.total * 100,
     publicKey: "pk_test_cc89c527520c2442c1e462c3128f57442882a3ca",
     metadata: {
       ...user,
@@ -51,12 +84,17 @@ export default function Form() {
   };
 
   return (
+    payment && recipt &&
     <main className="flex min-h-full">
       <div>
         <SideNavBar />
       </div>
       <div className="mx-auto w-1/2">
         <ProfileReview user={user} />
+       { recipt ? 
+
+      <h2 className="mt-9 text-center">No Outstanding Payment</h2>
+      :
         <div className="mt-7 mx-4">
           <h2>Payment preview</h2>
           <p className="my-4">
@@ -69,19 +107,19 @@ export default function Form() {
             <h3 className="font-medium text-center text-lg">Current Charges</h3>
             <div>
               <span>Payment Type</span>
-              <span>{payment.type}</span>
+              <span>{payment.term}  Fees (2020 academic session)</span>
             </div>
             <div>
               <span>Amount</span>
-              <span>{payment.amount}</span>
+              <span>₦ {Number(payment?.amount).toLocaleString()}</span>
             </div>
             <div>
               <span>Processing Fees</span>
-              <span>{payment.charges}</span>
+              <span>₦ {Number(payment?.charges).toLocaleString()}</span>
             </div>
             <div>
               <span>Total Amount</span>
-              <span>{payment.total}</span>
+              <span>₦ {Number(payment.total).toLocaleString()}</span>
             </div>
           </div>
           <div className="my-4 m-auto ">
@@ -96,7 +134,7 @@ export default function Form() {
           <button onClick={makePayment} className="mb-10 m-auto">
             make payment
           </button>
-        </div>
+        </div>}
       </div>
     </main>
   );
