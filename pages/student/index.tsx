@@ -4,6 +4,7 @@ import ProfileReview from "../../components/profileReview";
 
 export default function Index() {
   const user = useStore((state) => state.user);
+console.log(user);
 
   return (
     <main className="flex min-h-full">

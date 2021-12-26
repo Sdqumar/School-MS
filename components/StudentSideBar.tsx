@@ -5,7 +5,14 @@ export default function SideNavBar() {
   return (
     <div className=" bg-gray-100 w-full shadow-lg mr-14 pt-5 h-screen ">
       {navData.map((item) => {
-        const url = `/student/${item.replace(" ", "")}/`;
+        let url
+        if(item=== 'Profile'){
+          url = '/student/'
+        }else{
+
+           url = `/student/${item.replace(" ", "")}/`;
+        }
+        
 
         return (
           <Link href={url} key={item}>
