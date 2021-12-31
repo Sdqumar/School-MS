@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import Errror from "../../components/global/Error";
 export type student = {
   admissionNo: string;
   firstName: string;
@@ -56,18 +57,19 @@ export default function App() {
   };
 
   return (
+    <div className="max-w-screen-md m-auto">
     <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
-      <h2>Student Sign Up</h2>
+   
+      <h1 className="-mt-3">Student Registration</h1>
+      <h3 className="-mt-2">Register a New Student</h3>
       <label>Admission Number</label>
-
       <input
         {...register("admissionNo", { required: "Required" })}
         type="text"
       />
       {errors.admissionNo && <Errror message={errors.admissionNo.message} />}
 
-      <label>Firstname</label>
-
+      <label>First Name</label>
       <input
         {...register("firstName", { required: "Required" })}
         type="text"
@@ -75,7 +77,7 @@ export default function App() {
       />
       {errors.firstName && <Errror message={errors.firstName.message} />}
 
-      <label>Lastname</label>
+      <label>Last Name</label>
 
       <input
         {...register("lastName", { required: "Required" })}
@@ -84,7 +86,7 @@ export default function App() {
       />
       {errors.lastName && <Errror message={errors.lastName.message} />}
 
-      <label>Middlename</label>
+      <label>Middle Name</label>
 
       <input
         {...register("middleName", { required: "Required" })}
@@ -92,7 +94,7 @@ export default function App() {
         onBlur={setFullName}
       />
       {errors.middleName && <Errror message={errors.middleName.message} />}
-      <label>Fullname</label>
+      <label>Full Name</label>
 
 <input
   {...register("fullName", { required: "Required" })}
@@ -138,18 +140,12 @@ export default function App() {
       <input {...register("email")} type="email" />
       {errors.email && <Errror message={errors.email.message} />}
 
-      <label>password</label>
+      <label>Password</label>
 
       <input {...register("password")} type="text" disabled={true} />
       {errors.state && <Errror message={errors.password.message} />}
-      <button>submit</button>
+      <button>Submit</button>
     </form>
+    </div>
   );
-}
-
-type errorProps = {
-  message?: string | undefined;
-};
-export function Errror({ message }: errorProps) {
-  return <p>{message}</p>;
 }

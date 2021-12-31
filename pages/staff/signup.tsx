@@ -57,7 +57,7 @@ export default function App() {
 
     <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
       <h1 className="-mt-3">Staff Registration</h1>
-      
+      <h3 className="-mt-2">Register a New Staff</h3>
       <label> Staff ID</label>
       <input
         {...register("staffID", { required: "Required" })}
