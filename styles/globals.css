@@ -1,23 +1,9 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
-* {
-  font-family: "Quicksand", sans-serif;
-  color: #444;
-}
-input {
-  padding: 10px 12px;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-  font-size: 1em;
-  width: 100%;
-  /* padding: 100px; */
-}
-label {
-  display: block;
-  margin: 10px 0 10px;
-  font-size: 1.3rem;
-}
+
+
+
 select {
   display: block;
   border: 1px solid black;
@@ -61,15 +47,20 @@ select {
     @apply text-3xl font-medium;
   }
   button {
-    @apply border-0 block font-bold text-sm mt-8 py-2 px-4 uppercase
-        rounded-full
-        bg-[#FEE996]
+    @apply border-0 block font-semibold text-sm mt-8 py-2 px-4 text-white
+        bg-[#005cff]
         tracking-widest;
+  }
+  input{
+    @apply border border-black px-6 py-2 w-80
+  }
+  label{
+    @apply block text-xl py-2
   }
 
   form {
-    @apply bg-gray-50 my-5 mb-8 mx-auto p-8
-  rounded-lg shadow-lg;
+    @apply  my-5 mx-2 p-8
+  rounded-lg shadow-2xl;
   }
   .link {
     @apply border border-blue-200 max-w-max py-2 px-4 my-4 cursor-pointer;

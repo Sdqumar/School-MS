@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import Errror from "../../components/global/Error";
+
 export type staff = {
-    staffID: string;
+  staffID: string;
   firstName: string;
   lastName: string;
   middleName: string;
@@ -12,7 +14,7 @@ export type staff = {
   age: number;
   dateOfBirth: string;
   password: string;
-  fullName:string;
+  fullName: string;
 
 };
 
@@ -26,7 +28,7 @@ export default function App() {
   } = useForm<staff>();
 
   const setFullName = () => {
-    const { firstName,middleName,lastName } = getValues();
+    const { firstName, middleName, lastName } = getValues();
     setValue("fullName", `${firstName} ${middleName} ${lastName}`);
   };
   const submitHandler = async (formValues: staff) => {
@@ -51,17 +53,19 @@ export default function App() {
   };
 
   return (
-    <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
-      <h2>Staff Sign Up</h2>
-      <label> staff ID</label>
+    <div className="max-w-screen-md m-auto">
 
+    <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
+      <h1 className="-mt-3">Staff Registration</h1>
+      
+      <label> Staff ID</label>
       <input
         {...register("staffID", { required: "Required" })}
         type="text"
       />
-      {errors. staffID && <Errror message={errors. staffID.message} />}
+      {errors.staffID && <Errror message={errors.staffID.message} />}
 
-      <label>Firstname</label>
+      <label>First Name</label>
 
       <input
         {...register("firstName", { required: "Required" })}
@@ -69,7 +73,7 @@ export default function App() {
       />
       {errors.firstName && <Errror message={errors.firstName.message} />}
 
-      <label>Lastname</label>
+      <label>Last Name</label>
 
       <input
         {...register("lastName", { required: "Required" })}
@@ -77,7 +81,7 @@ export default function App() {
       />
       {errors.lastName && <Errror message={errors.lastName.message} />}
 
-      <label>Middlename</label>
+      <label>Middle Name</label>
 
       <input
         {...register("middleName", { required: "Required" })}
@@ -86,13 +90,13 @@ export default function App() {
 
       />
       {errors.middleName && <Errror message={errors.middleName.message} />}
-      <label>Fullname</label>
+      <label>Full Name</label>
 
-<input
-  {...register("fullName", { required: "Required" })}
-  type="text"
-  disabled
-/>
+      <input
+        {...register("fullName", { required: "Required" })}
+        type="text"
+        disabled
+      />
       <label>Age</label>
 
       <input {...register("age", { required: "Required" })} type="number" />
@@ -111,7 +115,7 @@ export default function App() {
       <input {...register("level", { required: "Required" })} type="text" />
       {errors.level && <Errror message={errors.level.message} />}
 
-      
+
       <label>State</label>
 
       <input {...register("state", { required: "Required" })} type="text" />
@@ -124,21 +128,17 @@ export default function App() {
 
       <label>Email</label>
 
-      <input {...register("email",{ required: "Required" })} type="email" />
+      <input {...register("email", { required: "Required" })} type="email" />
       {errors.email && <Errror message={errors.email.message} />}
 
-      <label>password</label>
+      <label>Password</label>
 
-      <input {...register("password")} type="text"  />
+      <input {...register("password")} type="text" />
       {errors.state && <Errror message={errors.password.message} />}
-      <button>submit</button>
+      <button>Submit</button>
     </form>
+    </div>
+
   );
 }
 
-type errorProps = {
-  message?: string | undefined;
-};
-export function Errror({ message }: errorProps) {
-  return <p>{message}</p>;
-}
