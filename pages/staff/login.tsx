@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import {  useForm } from "react-hook-form";
 import { useCookies } from 'react-cookie';
 import Errror from "../../components/global/Error";
+import Spinner from "../../components/utils/Spinner";
 
 type staff = {
   password: string;
@@ -16,6 +17,7 @@ export default function App() {
     formState: { errors },
   } = useForm<staff>();
   const submitHandler = async (formValues) => {
+    setLoading(true)
 
     try {
       const res = await fetch("/api/staff/login", {
@@ -31,11 +33,18 @@ export default function App() {
         console.log({message:'Logging successfully'});
         
         setCookie('user', data,{path:'/'} );
+    setLoading(false)
+
       }
     } catch (err) {
       console.log(err);
+    setLoading(false)
+
     }
+    setLoading(false)
+
   };
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className="max-w-screen-md mx-auto">
@@ -61,7 +70,10 @@ export default function App() {
       />
       {errors.password && <Errror message={errors.password.message} />}
 
-      <button>Submit</button>
+      <button className="flex">
+          <Spinner loading={loading} /> Submit
+          </button>
+
     </form>
     </div>
   );

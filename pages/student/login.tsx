@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import Success from "../../components/utils/success";
 import Error from "../../components/utils/Error";
 import Spinner from "../../components/utils/Spinner";
+import Errror from "../../components/global/Error";
 type student = {
   password: string;
   admissionNo: string;
@@ -13,7 +14,7 @@ export default function App() {
   const [, setCookie] = useCookies(["user"]);
   const [success, setSucess] = useState("hidden");
   const [error, setError] = useState("hidden");
-  const [loading, setLoading] = useState("hidden");
+  const [loading, setLoading] = useState(false);
 
   const {
     handleSubmit,
@@ -21,7 +22,7 @@ export default function App() {
     formState: { errors },
   } = useForm<student>();
   const submitHandler = async (formValues) => {
-    setLoading("block")
+    setLoading(true)
     try {
       const res = await fetch("/api/student/login", {
         method: "POST",
@@ -39,12 +40,16 @@ export default function App() {
         setTimeout(() => {
           location.assign("/");
         }, 1000);
+        setLoading(false)
+
       }
     } catch (err) {
       console.log(err);
       setError("block");
+      setLoading(false)
+
     }
-    setLoading("hidden")
+    setLoading(false)
 
   };
 
@@ -80,16 +85,12 @@ export default function App() {
         {errors.password && <Errror message={errors.password.message} />}
 
         <button className="flex">
-          <Spinner className={loading} /> Submit</button>
+          <Spinner loading={loading} /> Submit
+          </button>
 
       </form>
     </div>
   );
 }
 
-type errorProps = {
-  message?: string | undefined;
-};
-export function Errror({ message }: errorProps) {
-  return <p>{message}</p>;
-}
+

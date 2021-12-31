@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Errror from "../../components/global/Error";
+import Spinner from "../../components/utils/Spinner";
 
 export type staff = {
   staffID: string;
@@ -26,13 +27,15 @@ export default function App() {
     getValues,
     formState: { errors },
   } = useForm<staff>();
+  const [loading, setLoading] = useState(false);
 
   const setFullName = () => {
     const { firstName, middleName, lastName } = getValues();
     setValue("fullName", `${firstName} ${middleName} ${lastName}`);
   };
   const submitHandler = async (formValues: staff) => {
-    console.log(formValues);
+    setLoading(true)
+
 
     try {
       const res = await fetch("/api/staff/signup", {
@@ -43,11 +46,14 @@ export default function App() {
       const data = await res.json();
       if (data.errors) {
         console.log(data.errors);
+        setLoading(false)
       }
       if (data.user) {
+        setLoading(false)
         console.log(data);
       }
     } catch (err) {
+      setLoading(false)
       console.log(err);
     }
   };
@@ -134,7 +140,10 @@ export default function App() {
 
         <input {...register("password")} type="text" />
         {errors.state && <Errror message={errors.password.message} />}
-        <button>Submit</button>
+        <button className="flex">
+          <Spinner loading={loading} /> Submit
+        </button>
+
       </form>
     </div>
 
