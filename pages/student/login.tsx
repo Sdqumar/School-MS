@@ -49,13 +49,12 @@ export default function App() {
   };
 
   return (
-    <>
-
+    <div className="max-w-screen-md mx-auto">
       <form
         onSubmit={handleSubmit((formValues) => submitHandler(formValues))}
         className="w-96"
       >
-        <h2>Portal Sign In </h2>
+        <h2>Login to Portal </h2>
         <Success className={`mt-5 ${success}`} text="Login successfully" />
         <Error
           className={`mt-5 ${error}`}
@@ -81,10 +80,10 @@ export default function App() {
         {errors.password && <Errror message={errors.password.message} />}
 
         <button className="flex">
-        <Spinner className={loading}/> submit</button>   
+          <Spinner className={loading} /> Submit</button>
 
       </form>
-    </>
+    </div>
   );
 }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import {  useForm } from "react-hook-form";
 import { useCookies } from 'react-cookie';
+import Errror from "../../components/global/Error";
 
 type staff = {
   password: string;
@@ -37,8 +38,10 @@ export default function App() {
   };
 
   return (
+    <div className="max-w-screen-md mx-auto">
+
     <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
-      <h2>Staff Sign In Portal</h2>
+      <h2 className="-mt-2">Staff Login to Portal</h2>
 
       <label>Staff ID</label>
 
@@ -58,14 +61,8 @@ export default function App() {
       />
       {errors.password && <Errror message={errors.password.message} />}
 
-      <button>submit</button>
+      <button>Submit</button>
     </form>
+    </div>
   );
-}
-
-type errorProps = {
-  message?: string | undefined;
-};
-export function Errror({ message }: errorProps) {
-  return <p>{message}</p>;
 }

@@ -53,90 +53,89 @@ export default function App() {
   };
 
   return (
-    <div className="max-w-screen-md m-auto">
+    <div className="max-w-screen-md mx-auto">
+      <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
+        <h1 className="-mt-3">Staff Registration</h1>
+        <h3 className="-mt-2">Register a New Staff</h3>
+        <label> Staff ID</label>
+        <input
+          {...register("staffID", { required: "Required" })}
+          type="text"
+        />
+        {errors.staffID && <Errror message={errors.staffID.message} />}
 
-    <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
-      <h1 className="-mt-3">Staff Registration</h1>
-      <h3 className="-mt-2">Register a New Staff</h3>
-      <label> Staff ID</label>
-      <input
-        {...register("staffID", { required: "Required" })}
-        type="text"
-      />
-      {errors.staffID && <Errror message={errors.staffID.message} />}
+        <label>First Name</label>
 
-      <label>First Name</label>
+        <input
+          {...register("firstName", { required: "Required" })}
+          type="text"
+        />
+        {errors.firstName && <Errror message={errors.firstName.message} />}
 
-      <input
-        {...register("firstName", { required: "Required" })}
-        type="text"
-      />
-      {errors.firstName && <Errror message={errors.firstName.message} />}
+        <label>Last Name</label>
 
-      <label>Last Name</label>
+        <input
+          {...register("lastName", { required: "Required" })}
+          type="text"
+        />
+        {errors.lastName && <Errror message={errors.lastName.message} />}
 
-      <input
-        {...register("lastName", { required: "Required" })}
-        type="text"
-      />
-      {errors.lastName && <Errror message={errors.lastName.message} />}
+        <label>Middle Name</label>
 
-      <label>Middle Name</label>
+        <input
+          {...register("middleName", { required: "Required" })}
+          type="text"
+          onBlur={setFullName}
 
-      <input
-        {...register("middleName", { required: "Required" })}
-        type="text"
-        onBlur={setFullName}
+        />
+        {errors.middleName && <Errror message={errors.middleName.message} />}
+        <label>Full Name</label>
 
-      />
-      {errors.middleName && <Errror message={errors.middleName.message} />}
-      <label>Full Name</label>
+        <input
+          {...register("fullName", { required: "Required" })}
+          type="text"
+          disabled
+        />
+        <label>Age</label>
 
-      <input
-        {...register("fullName", { required: "Required" })}
-        type="text"
-        disabled
-      />
-      <label>Age</label>
+        <input {...register("age", { required: "Required" })} type="number" />
+        {errors.age && <Errror message={errors.age.message} />}
 
-      <input {...register("age", { required: "Required" })} type="number" />
-      {errors.age && <Errror message={errors.age.message} />}
+        <label>Date of Birth</label>
 
-      <label>Date of Birth</label>
+        <input
+          {...register("dateOfBirth", { required: "Required" })}
+          type="date"
+        />
+        {errors.dateOfBirth && <Errror message={errors.dateOfBirth.message} />}
 
-      <input
-        {...register("dateOfBirth", { required: "Required" })}
-        type="date"
-      />
-      {errors.dateOfBirth && <Errror message={errors.dateOfBirth.message} />}
+        <label>Level</label>
 
-      <label>Level</label>
-
-      <input {...register("level", { required: "Required" })} type="text" />
-      {errors.level && <Errror message={errors.level.message} />}
+        <input {...register("level", { required: "Required" })} type="text" />
+        {errors.level && <Errror message={errors.level.message} />}
 
 
-      <label>State</label>
+        <label>State</label>
 
-      <input {...register("state", { required: "Required" })} type="text" />
-      {errors.state && <Errror message={errors.state.message} />}
+        <input {...register("state", { required: "Required" })} type="text" />
+        {errors.state && <Errror message={errors.state.message} />}
 
-      <label>LGA</label>
+        <label>LGA</label>
 
-      <input {...register("LGA", { required: "Required" })} type="text" />
-      {errors.LGA && <Errror message={errors.LGA.message} />}
+        <input {...register("LGA", { required: "Required" })} type="text" />
+        {errors.LGA && <Errror message={errors.LGA.message} />}
 
-      <label>Email</label>
+        <label>Email</label>
 
-      <input {...register("email", { required: "Required" })} type="email" />
-      {errors.email && <Errror message={errors.email.message} />}
+        <input {...register("email", { required: "Required" })} type="email" />
+        {errors.email && <Errror message={errors.email.message} />}
 
-      <label>Password</label>
+        <label>Password</label>
 
-      <input {...register("password")} type="text" />
-      {errors.state && <Errror message={errors.password.message} />}
-      <button>Submit</button>
-    </form>
+        <input {...register("password")} type="text" />
+        {errors.state && <Errror message={errors.password.message} />}
+        <button>Submit</button>
+      </form>
     </div>
 
   );
