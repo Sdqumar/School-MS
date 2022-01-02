@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Errror from "../../components/global/Error";
+import Input from "../../components/global/input";
 import Spinner from "../../components/utils/Spinner";
 
 export type staff = {
@@ -63,83 +64,78 @@ export default function App() {
       <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
         <h1 className="-mt-3">Staff Registration</h1>
         <h3 className="-mt-2">Register a New Staff</h3>
-        <label> Staff ID</label>
-        <input
-          {...register("staffID", { required: "Required" })}
-          type="text"
+
+        <Input
+          register={register}
+          name="staffId"
+          label="Staff ID"
+          errors={errors}
         />
-        {errors.staffID && <Errror message={errors.staffID.message} />}
-
-        <label>First Name</label>
-
-        <input
-          {...register("firstName", { required: "Required" })}
-          type="text"
+        <Input
+          register={register}
+          name="firstName"
+          label="First Name"
+          errors={errors}
         />
-        {errors.firstName && <Errror message={errors.firstName.message} />}
-
-        <label>Last Name</label>
-
-        <input
-          {...register("lastName", { required: "Required" })}
-          type="text"
+        <Input
+          register={register}
+          name="lastName"
+          label="Last Name"
+          errors={errors}
         />
-        {errors.lastName && <Errror message={errors.lastName.message} />}
-
-        <label>Middle Name</label>
-
-        <input
-          {...register("middleName", { required: "Required" })}
-          type="text"
+        <Input
+          register={register}
+          name="middleName"
+          label="Middle Name"
           onBlur={setFullName}
-
+          errors={errors}
         />
-        {errors.middleName && <Errror message={errors.middleName.message} />}
-        <label>Full Name</label>
-
-        <input
-          {...register("fullName", { required: "Required" })}
-          type="text"
-          disabled
+        <Input
+          register={register}
+          name="level"
+          label="level"
+          errors={errors}
         />
-        <label>Age</label>
+        <Input
+          register={register}
+          name="LGA"
+          label="LGA"
+          errors={errors}
+        />
+        <Input
+          register={register}
+          name="email"
+          label="Email"
+          errors={errors}
+        />
+        <Input
+          register={register}
+          name="age"
+          label="Age"
+          type="number"
+          errors={errors}
+        />
+        <Input
+          register={register}
+          name="password"
+          label="Password"
+          errors={errors} />
 
-        <input {...register("age", { required: "Required" })} type="number" />
-        {errors.age && <Errror message={errors.age.message} />}
-
-        <label>Date of Birth</label>
-
-        <input
-          {...register("dateOfBirth", { required: "Required" })}
+        <Input
+          register={register}
+          name="dateOfBirth"
+          label="Date of Birth"
           type="date"
+          errors={errors} />
+
+        <Input
+          register={register}
+          name="fullName"
+          label="FullName"
+          errors={errors}
+          disabled={true}
         />
-        {errors.dateOfBirth && <Errror message={errors.dateOfBirth.message} />}
 
-        <label>Level</label>
-
-        <input {...register("level", { required: "Required" })} type="text" />
-        {errors.level && <Errror message={errors.level.message} />}
-
-
-        <label>State</label>
-
-        <input {...register("state", { required: "Required" })} type="text" />
-        {errors.state && <Errror message={errors.state.message} />}
-
-        <label>LGA</label>
-
-        <input {...register("LGA", { required: "Required" })} type="text" />
-        {errors.LGA && <Errror message={errors.LGA.message} />}
-
-        <label>Email</label>
-
-        <input {...register("email", { required: "Required" })} type="email" />
-        {errors.email && <Errror message={errors.email.message} />}
-
-        <label>Password</label>
-
-        <input {...register("password")} type="text" />
-        {errors.state && <Errror message={errors.password.message} />}
         <button className="flex">
           <Spinner loading={loading} /> Submit
         </button>
