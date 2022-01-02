@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useCookies } from 'react-cookie';
-import Errror from "../../components/global/Error";
-import Spinner from "../../components/utils/Spinner";
 import ButtonSpinner from "../../components/global/buttonSpinner";
 import Input from "../../components/global/input";
 
@@ -30,17 +28,16 @@ export default function App() {
       const data = await res.json();
       if (data.errors) {
         console.log(data.errors);
-      }else {
-        // location.assign("/");
-        console.log({message:'Logging successfully'});
-        
-        setCookie('user', data,{path:'/'} );
-    setLoading(false)
+      } else {
+        console.log({ message: 'Logging successfully' });
+
+        setCookie('user', data, { path: '/' });
+        setLoading(false)
 
       }
     } catch (err) {
       console.log(err);
-    setLoading(false)
+      setLoading(false)
 
     }
     setLoading(false)
@@ -51,25 +48,25 @@ export default function App() {
   return (
     <div className="max-w-screen-md mx-auto">
 
-    <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}
-    
-    >
-      <h2 className="-mt-2">Staff Login to Portal</h2>
-<div className="mt-5"></div>
-<Input
+      <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}
+
+      >
+        <h2 className="-mt-2">Staff Login to Portal</h2>
+        <div className="mt-5"></div>
+        <Input
           register={register}
           name="staffID"
           label="Staff ID"
           errors={errors}
         />
- <Input
+        <Input
           register={register}
           name="password"
           label="Password"
           type="password"
           errors={errors} />
-<ButtonSpinner loading={loading} />
-    </form>
+        <ButtonSpinner loading={loading} />
+      </form>
     </div>
   );
 }

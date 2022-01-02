@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import ButtonSpinner from "../../components/global/buttonSpinner";
 import Errror from "../../components/global/Error";
+import Input from "../../components/global/input";
 export type student = {
   admissionNo: string;
   firstName: string;
   lastName: string;
   middleName: string;
-  fullName:string;
+  fullName: string;
   class: string;
   house: string;
   state: string;
   LGA: string;
   email: string;
   age: number;
-  gender:string;
+  gender: string;
   dateOfBirth: string;
   password: string;
 };
@@ -27,15 +29,21 @@ export default function App() {
     formState: { errors },
   } = useForm<student>();
 
+
+  const [loading, setLoading] = useState(false);
+
   const setPassword = () => {
     const { lastName } = getValues();
     setValue("password", lastName);
   };
   const setFullName = () => {
-    const { firstName,middleName,lastName } = getValues();
+
+    const { firstName, middleName, lastName } = getValues();
     setValue("fullName", `${firstName} ${middleName} ${lastName}`);
   };
+  
   const submitHandler = async (formValues: student) => {
+    setLoading(true)
     console.log(formValues);
 
     try {
@@ -54,98 +62,106 @@ export default function App() {
     } catch (err) {
       console.log(err);
     }
+    setLoading(false)
+
   };
 
   return (
     <div className="max-w-screen-md m-auto">
-    <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
-   
-      <h1 className="-mt-3">Student Registration</h1>
-      <h3 className="-mt-2">Register a New Student</h3>
-      <label>Admission Number</label>
-      <input
-        {...register("admissionNo", { required: "Required" })}
-        type="text"
-      />
-      {errors.admissionNo && <Errror message={errors.admissionNo.message} />}
+      <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
 
-      <label>First Name</label>
-      <input
-        {...register("firstName", { required: "Required" })}
-        type="text"
-        onBlur={setPassword}
-      />
-      {errors.firstName && <Errror message={errors.firstName.message} />}
+        <h1 className="-mt-3">Student Registration</h1>
+        <h3 className="-mt-2">Register a New Student</h3>
+        <Input
+          register={register}
+          name="admissionNo"
+          label="Admission Number"
+          errors={errors}
+        />
+        <Input
+          register={register}
+          name="firstName"
+          label="First Name"
+          errors={errors}
+        />
+        <Input
+          register={register}
+          name="lastName"
+          label="Last Name"
+          errors={errors}
+          onBlur={setPassword}
+        />
+        <Input
+          register={register}
+          name="middleName"
+          label="Middle Name"
+          onBlur={setFullName}
+          errors={errors}
+        />
+        <Input
+          register={register}
+          name="fullName"
+          label="Full Name"
+          errors={errors}
+          disabled={true}
+        />
 
-      <label>Last Name</label>
+        <Input
+          register={register}
+          name="age"
+          label="Age"
+          type="number"
+          errors={errors}
+        />
 
-      <input
-        {...register("lastName", { required: "Required" })}
-        type="text"
-        onBlur={setPassword}
-      />
-      {errors.lastName && <Errror message={errors.lastName.message} />}
+        <Input
+          register={register}
+          name="dateOfBirth"
+          label="Date of Birth"
+          type="date"
+          errors={errors} />
 
-      <label>Middle Name</label>
+        <Input
+          register={register}
+          name="class"
+          label="Class"
+          errors={errors} />
+        <Input
+          register={register}
+          name="house"
+          label="House"
+          errors={errors} />
+        <Input
+          register={register}
+          name="state"
+          label="State"
+          errors={errors} />
+        <Input
+          register={register}
+          name="LGA"
+          label="LGA"
+          errors={errors}
+        />
+        <Input
+          register={register}
+          name="email"
+          label="Email"
+          type="email"
+          errors={errors}
+        />
+        <Input
+          register={register}
+          name="password"
+          label="Password"
+          type="password"
+          errors={errors}
+          disabled={true}
+           />
 
-      <input
-        {...register("middleName", { required: "Required" })}
-        type="text"
-        onBlur={setFullName}
-      />
-      {errors.middleName && <Errror message={errors.middleName.message} />}
-      <label>Full Name</label>
 
-<input
-  {...register("fullName", { required: "Required" })}
-  type="text"
-  disabled
-/>
 
-      <label>Age</label>
-
-      <input {...register("age", { required: "Required" })} type="number" />
-      {errors.age && <Errror message={errors.age.message} />}
-
-      <label>Date of Birth</label>
-
-      <input
-        {...register("dateOfBirth", { required: "Required" })}
-        type="date"
-      />
-      {errors.dateOfBirth && <Errror message={errors.dateOfBirth.message} />}
-
-      <label>Class</label>
-
-      <input {...register("class", { required: "Required" })} type="text" />
-      {errors.class && <Errror message={errors.class.message} />}
-
-      <label>House</label>
-
-      <input {...register("house", { required: "Required" })} type="text" />
-      {errors.house && <Errror message={errors.house.message} />}
-
-      <label>State</label>
-
-      <input {...register("state", { required: "Required" })} type="text" />
-      {errors.state && <Errror message={errors.state.message} />}
-
-      <label>LGA</label>
-
-      <input {...register("LGA", { required: "Required" })} type="text" />
-      {errors.LGA && <Errror message={errors.LGA.message} />}
-
-      <label>Email</label>
-
-      <input {...register("email")} type="email" />
-      {errors.email && <Errror message={errors.email.message} />}
-
-      <label>Password</label>
-
-      <input {...register("password")} type="text" disabled={true} />
-      {errors.state && <Errror message={errors.password.message} />}
-      <button>Submit</button>
-    </form>
+        <ButtonSpinner loading={loading} />
+      </form>
     </div>
   );
 }

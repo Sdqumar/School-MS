@@ -5,6 +5,8 @@ import Success from "../../components/utils/success";
 import Error from "../../components/utils/Error";
 import Spinner from "../../components/utils/Spinner";
 import Errror from "../../components/global/Error";
+import Input from "../../components/global/input";
+import ButtonSpinner from "../../components/global/buttonSpinner";
 type student = {
   password: string;
   admissionNo: string;
@@ -22,6 +24,8 @@ export default function App() {
     formState: { errors },
   } = useForm<student>();
   const submitHandler = async (formValues) => {
+    setError("hidden");
+    setSucess("hidden");
     setLoading(true)
     try {
       const res = await fetch("/api/student/login", {
@@ -66,27 +70,19 @@ export default function App() {
           text="Invalid Admission No or Password"
         />
 
-        <label>Admission No</label>
-
-        <input
-          {...register("admissionNo", {
-            required: "Required",
-          })}
-          type="text"
+        <Input
+          register={register}
+          name="admissionNo"
+          label="Admission Number"
+          errors={errors}
         />
-        {errors.admissionNo && <Errror message={errors.admissionNo.message} />}
-
-        <label>Password</label>
-
-        <input
-          {...register("password", { required: "Required" })}
+        <Input
+          register={register}
+          name="password"
+          label="Password"
           type="password"
-        />
-        {errors.password && <Errror message={errors.password.message} />}
-
-        <button className="flex">
-          <Spinner loading={loading} /> Submit
-          </button>
+          errors={errors} />
+        <ButtonSpinner loading={loading} />
 
       </form>
     </div>

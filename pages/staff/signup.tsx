@@ -106,6 +106,7 @@ export default function App() {
           register={register}
           name="email"
           label="Email"
+          type="email"
           errors={errors}
         />
         <Input
