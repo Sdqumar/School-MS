@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Errror from "../../components/global/Error";
+import ButtonSpinner from "../../components/global/buttonSpinner";
 import Input from "../../components/global/input";
-import Spinner from "../../components/utils/Spinner";
+
 
 export type staff = {
   staffID: string;
@@ -34,9 +34,9 @@ export default function App() {
     const { firstName, middleName, lastName } = getValues();
     setValue("fullName", `${firstName} ${middleName} ${lastName}`);
   };
+  
   const submitHandler = async (formValues: staff) => {
     setLoading(true)
-
 
     try {
       const res = await fetch("/api/staff/signup", {
@@ -67,7 +67,7 @@ export default function App() {
 
         <Input
           register={register}
-          name="staffId"
+          name="staffID"
           label="Staff ID"
           errors={errors}
         />
@@ -119,6 +119,7 @@ export default function App() {
           register={register}
           name="password"
           label="Password"
+          type="password"
           errors={errors} />
 
         <Input
@@ -131,14 +132,11 @@ export default function App() {
         <Input
           register={register}
           name="fullName"
-          label="FullName"
+          label="Full Name"
           errors={errors}
           disabled={true}
         />
-
-        <button className="flex">
-          <Spinner loading={loading} /> Submit
-        </button>
+        <ButtonSpinner loading={loading} />
 
       </form>
     </div>

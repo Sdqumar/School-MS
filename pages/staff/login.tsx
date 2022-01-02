@@ -3,6 +3,8 @@ import {  useForm } from "react-hook-form";
 import { useCookies } from 'react-cookie';
 import Errror from "../../components/global/Error";
 import Spinner from "../../components/utils/Spinner";
+import ButtonSpinner from "../../components/global/buttonSpinner";
+import Input from "../../components/global/input";
 
 type staff = {
   password: string;
@@ -49,31 +51,24 @@ export default function App() {
   return (
     <div className="max-w-screen-md mx-auto">
 
-    <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}>
+    <form onSubmit={handleSubmit((formValues) => submitHandler(formValues))}
+    
+    >
       <h2 className="-mt-2">Staff Login to Portal</h2>
-
-      <label>Staff ID</label>
-
-      <input
-        {...register("staffID", {
-          required: "Required"
-        })}
-        type="text"
-      />
-      {errors.staffID && <Errror message={errors.staffID.message} />}
-
-      <label>Password</label>
-
-      <input
-        {...register("password", { required: "Required" })}
-        type="password"
-      />
-      {errors.password && <Errror message={errors.password.message} />}
-
-      <button className="flex">
-          <Spinner loading={loading} /> Submit
-          </button>
-
+<div className="mt-5"></div>
+<Input
+          register={register}
+          name="staffID"
+          label="Staff ID"
+          errors={errors}
+        />
+ <Input
+          register={register}
+          name="password"
+          label="Password"
+          type="password"
+          errors={errors} />
+<ButtonSpinner loading={loading} />
     </form>
     </div>
   );

@@ -9,8 +9,9 @@ export default function Input({register,name,label,required=true,errors,type='te
         {...register(name, { required: required })}
         type={type}
         {...rest}
+         className={errors[name] &&"border-red-600"}
       />
-      {errors.staffID && <Errror message={errors.staffID.message} />}
+      {errors[name] && <Errror message={`${label} is required`} />}
       </div>
 
     )

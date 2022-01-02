@@ -50,12 +50,10 @@ select {
     @apply text-lg font-medium;
   }
   button {
-    @apply border-0 block font-semibold text-sm mt-8 py-2 px-4 text-white
-        bg-[#005cff]
-        tracking-widest;
+    @apply border-0 block font-semibold text-sm mt-8 py-2 px-4 text-white bg-primary tracking-widest 
   }
   input{
-    @apply border border-black px-6 py-2 w-80
+    @apply border  px-6 py-2 w-80 focus:outline-none focus:border-primary focus:ring-1 ;
   }
   label{
     @apply block text-xl py-2 
