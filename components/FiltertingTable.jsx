@@ -78,7 +78,7 @@ export const FilteringTable = ({ tableData, COLUMNS }) => {
   };
 
   return (
-    <>
+    <div className="mb-10">
       <select
         value={pageSize}
         onChange={(e) => setPageSize(Number(e.target.value))}
@@ -116,7 +116,7 @@ export const FilteringTable = ({ tableData, COLUMNS }) => {
         </tbody>
       </table>
 
-      <div className="flex  justify-center children:mr-5 items-center">
+      <div className="flex justify-center children:mr-5 items-center">
         <span className="mt-7">
           Page{" "}
           <strong>
@@ -130,12 +130,12 @@ export const FilteringTable = ({ tableData, COLUMNS }) => {
           Next
         </button>
       </div>
-      <div className="flex children:mr-5">
+      <div className="-mt-8">
         {/* <button onClick={handleDelete}>Promote</button> */}
         {/* <button onClick={handleDelete}>Demote</button> */}
         <button onClick={handleDelete}>Delete</button>
       </div>
-    </>
+    </div>
   );
 };
 
