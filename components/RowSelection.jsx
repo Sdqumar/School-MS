@@ -58,7 +58,7 @@ export default function Table( {TableData,COLUMNS }) {
   
 
   return (
-    <>
+    <div>
     <table {...getTableProps()}>
         <thead>
           {headerGroups.map(headerGroup => (
@@ -83,7 +83,7 @@ export default function Table( {TableData,COLUMNS }) {
         </tbody>
       </table>
    <button onClick={handleDelete}>Delete</button>
-    </>
+    </div>
   )
 }
 

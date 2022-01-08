@@ -83,7 +83,7 @@ export default function App() {
           label="Password"
           type="password"
           errors={errors} />
-        <ButtonSpinner loading={loading} />
+        <ButtonSpinner loading={loading}/>
       </form>
     </div>
   );

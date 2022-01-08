@@ -174,9 +174,9 @@ export default function Result({ data }) {
     <section className="mx-5 mt-5 p-4">
       {!createResult && (
         <div onClick={() => setCreateResult(true)}>
-          <h2 className="text-2xl border border-blue-200 w-max p-2 cursor-pointer hover:bg-gray-50">
+          <button className="text-2xl border border-blue-200 w-max p-2 cursor-pointer hover:bg-gray-50">
             Create a new Result
-          </h2>
+          </button>
         </div>
       )}
       {createResult && (

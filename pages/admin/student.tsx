@@ -50,12 +50,10 @@ export default function Students({ data }) {
 
   return (
     <section className="mx-10 mb-4">
-      <div className="ml-3">
         <h1>Students</h1>
-        <div className="link">
+        <button className="link">
           <Link href="/student/signup">Add New Student</Link>
-        </div>
-      </div>
+        </button>
 
       {!res && <h2>Error fatching Students list...</h2>}
       {res && <FilteringTable tableData={res} COLUMNS={COLUMNS} />}

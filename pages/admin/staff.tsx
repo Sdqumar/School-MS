@@ -35,9 +35,9 @@ export default function Students({ data }) {
       <div className="mx-10">
 
       <h1>Staffs</h1>
-      <div className="link">
+      <button className="link">
         <Link href="/staff/signup">Add New Staff</Link>
-      </div>
+      </button>
         
 
     {!res && <h2>Error fatching Staffs list...</h2>}

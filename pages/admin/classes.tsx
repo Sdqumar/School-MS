@@ -4,6 +4,7 @@ import subjects from "../api/subjects.json";
 import classes from "../api/classes.json";
 import { useState } from "react";
 import RowSelection from "../../components/RowSelection";
+import Input from "../../components/global/input";
 type classes = {
   name: string;
   subjects: [""];
@@ -12,12 +13,11 @@ type classes = {
 const COLUMNS = [
   {
     Header: "Class",
-    accessor: "name",
+    accessor: row=><div className="w-20">{row.name}</div>,
   },
   {
     Header: "Subjects",
-    accessor: (originalRow) =>
-      originalRow.subjects.map((item) => <span key={item}>{item}, </span>),
+    accessor: (row) =>row?.subjects?.map((item) => <span key={item}>{item}, </span>)
   },
 ];
 
@@ -72,15 +72,12 @@ export default function Classes({ data }) {
 
   const [showAdd, setShowAdd] = useState(false);
   return (
-    <section>
-      <div className="ml-4">
+    <main className="mx-10">
       <h1>Classes</h1>
-      <div className="link" onClick={() => setShowAdd(true)}>Add Class</div>
-      </div>
+      <button className="link" onClick={() => setShowAdd(true)}>Add Class</button>
 
       {showAdd && (
-        <div className="flex w-full">
-         
+        <div className="flex w-full ">
 
           <form
             onSubmit={handleSubmit((formValues) => submitHandler(formValues))}
@@ -88,22 +85,20 @@ export default function Classes({ data }) {
          >
             <div className="w-48">
 
-            <h4>Add Class</h4>
-            <input
-              {...register("name", {
-                required: "Required",
-              })}
-              type="text"
-              />
-            {errors.name && <Errror message={errors.name.message} />}
-
+            <Input
+          register={register}
+          name="name"
+          label="Add Class"
+          errors={errors}
+        />
+            
               </div>
             <h3 className="mt-8 font-medium text-xl">Subjects</h3>
             <div className="flex flex-col   ">
               {subjects.map((item) => (
                 <span
                   key={item}
-                 className="flex   items-center "
+                 className="flex items-center "
                 >
                   <input
                   className="w-auto mr-9"
@@ -116,17 +111,17 @@ export default function Classes({ data }) {
                 </span>
               ))}
             </div>
-            <button>submit</button>
-            <span style={{ cursor: "pointer" }} onClick={handleDelete}>
+            <button>Add Class</button>
+            <div className="font-semibold text-sm mt-2 max-w-max cursor-pointer py-2 px-4 text-white bg-primary tracking-widest " onClick={handleDelete}>
               Delete subject
-            </span>
+            </div>
           </form>
           <AddSubject />
 
         </div>
       )}
       <RowSelection TableData={classes} COLUMNS={COLUMNS} />
-    </section>
+    </main>
   );
 }
 
@@ -139,7 +134,6 @@ export const AddSubject = () => {
     formState: { errors },
   } = useForm();
   const submitHandler = async (formValues) => {
-    console.log(formValues.subject);
     try {
       const res = await fetch("/api/subject", {
         method: "POST",
@@ -150,7 +144,6 @@ export const AddSubject = () => {
       if (data.errors) {
         console.log(data.errors);
       } else {
-        // location.assign("/");
         console.log(data);
       }
     } catch (err) {
@@ -160,25 +153,17 @@ export const AddSubject = () => {
   return (
     <form
       onSubmit={handleSubmit((formValues) => submitHandler(formValues))}
-className="h-48"
+className="max-h-60"
     >
       <h4>Add Subject</h4>
-
-      <input
-        {...register("subject", {
-          required: "Required",
-        })}
-        type="text"
-      />
-      {errors.subject && <Errror message={errors.subject.message} />}
-      <button>submit</button>
+      <Input
+          register={register}
+          name="subject"
+          label="Add Subject"
+          errors={errors}
+        />
+      
+      <button>Add Subject</button>
     </form>
   );
 };
-
-type errorProps = {
-  message?: string | undefined;
-};
-export function Errror({ message }: errorProps) {
-  return <p>{message}</p>;
-}
