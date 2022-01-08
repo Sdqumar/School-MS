@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import ButtonSpinner from "../../components/global/buttonSpinner";
-import Errror from "../../components/global/Error";
 import Input from "../../components/global/input";
 export type student = {
   admissionNo: string;
@@ -157,8 +156,6 @@ export default function App() {
           errors={errors}
           disabled={true}
            />
-
-
 
         <ButtonSpinner loading={loading} />
       </form>

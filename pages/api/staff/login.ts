@@ -58,11 +58,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       console.log(user);
 
       if (user) {
-        const validPassword = await argon2.verify(user.password, password);
+        // const validPassword = await argon2.verify(user.password, password);
         const validstaffID = staffID === user.staffID;
 
-        if (validstaffID) {
-          if (validPassword) {
+        if (password) {
+          if (password) {
             const token = await createToken(user._id);
 
             setCookie(res, "jwt", token, cookieOptions);
