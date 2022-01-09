@@ -1,4 +1,4 @@
-export default function Success() {
+export default function warning() {
   return (
     <div className="alert flex flex-row items-center bg-yellow-200 p-5 rounded border-b-2 border-yellow-300">
       <div className="alert-icon flex items-center bg-yellow-100 border-2 border-yellow-500 justify-center h-10 w-10 flex-shrink-0 rounded-full">

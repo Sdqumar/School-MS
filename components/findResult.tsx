@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import BasicTable from "./BasicTable";
+import Select from "./element/Select";
+import ButtonSpinner from "./global/buttonSpinner";
+import Error from "./utils/error";
 import COLUMNS from "./utils/resultColums";
 
 export type result = {
@@ -40,7 +43,17 @@ export default function FindResult({ user, data }: FindResult) {
     "SS 1",
   ];
   const [showResultTable, setShowResultTable] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [names, setNames] = useState(null);
 
+
+  if (error) {
+    setTimeout(() => {
+      setError(false)
+    }, 1000);
+
+  }
   const getResultId = async (values) => {
     let term = "01";
 
@@ -71,6 +84,9 @@ export default function FindResult({ user, data }: FindResult) {
   };
 
   const handleForm = async (values) => {
+    setLoading(true)
+    setError(false)
+
     const id = await getResultId(values);
 
     try {
@@ -82,16 +98,24 @@ export default function FindResult({ user, data }: FindResult) {
 
       if (data.errors) {
         console.log(data.errors);
+        setLoading(false)
+        setError(true)
+
       } else {
         setShowResultTable(data?.subject);
+        setLoading(false)
+        setError(false)
       }
     } catch (err) {
       console.log(err);
+      setLoading(false)
+      setError(true)
+
     }
   };
 
-  const [names, setNames] = useState(null);
 
+  const year = [2021, 2022, 2023, 2024, 2025]
 
   const handleChangeClass = (e) => {
     if (!user) {
@@ -110,71 +134,48 @@ export default function FindResult({ user, data }: FindResult) {
     <div>
       <form onSubmit={handleSubmit((formValues) => handleForm(formValues))}>
         <h4 className="text-3xl mb-4">Find Result</h4>
+        {error &&
+          <Error text="Error fetching result" />
+        }
+        <div className="flex align-middle w-56 children:mx-3">
 
-        <label>Year</label>
-        <select
-          {...register("year", {
-            required: "Required",
-          })}
-        >
-          {[2021, 2022, 2023, 2024, 2025].map((item) => (
-            <option value={item} key={item}>
-              {item}
-            </option>
-          ))}
-        </select>
-        {errors.year && <Errror message={errors.year.message} />}
+          <Select
+            data={year}
+            register={register}
+            name="year"
+            label="Year"
+            errors={errors}
+          />
 
-        <label>Class</label>
-        <select
-          {...register("class", {
-            required: "Required",
-          })}
-          defaultValue={user?.class}
-          onChange={handleChangeClass}
-        >
-          {className.map((item) => (
-            <option value={item} key={item}>
-              {item}
-            </option>
-          ))}
-        </select>
-        {errors.class && <Errror message={errors.class.message} />}
+          <Select
+            data={className}
+            register={register}
+            name="class"
+            label="Class"
+            errors={errors}
+            onChange={handleChangeClass}
+          />
+          <Select
+            data={term}
+            register={register}
+            name="term"
+            label="Term"
+            errors={errors}
+          />
 
-        <label>Term</label>
-        <select
-          {...register("term", {
-            required: "Required",
-          })}
-        >
-          {term.map((item) => (
-            <option value={item} key={item}>
-              {item}
-            </option>
-          ))}
-        </select>
-        {errors.term && <Errror message={errors.term.message} />}
+          {!user && names?.length > 0 && (
+            <Select
+              data={names.map(item => item.fullName)}
+              register={register}
+              name="studentName"
+              label="Student Name"
+              errors={errors}
+            />
+          )}
 
-        {!user && (
-          <>
-            <label>Student Name</label>
-            <select
-              {...register("studentName", {
-                required: "Required",
-              })}
-            >
-              {names?.map((item) => (
-                <option value={item.fullName} key={item.admissionNo}>
-                  {item.fullName}
-                </option>
-              ))}
-            </select>
-            {errors.studentName && (
-              <Errror message={errors.studentName.message} />
-            )}
-          </>
-        )}
-        <button>Find Result</button>
+        </div>
+        <ButtonSpinner loading={loading} label="Find Result" />
+
       </form>
 
       <div className="mt-7">
@@ -184,11 +185,4 @@ export default function FindResult({ user, data }: FindResult) {
       </div>
     </div>
   );
-}
-
-type errorProps = {
-  message?: string | undefined;
-};
-export function Errror({ message }: errorProps) {
-  return <p>{message}</p>;
 }

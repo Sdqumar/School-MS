@@ -8,6 +8,7 @@ import FindResult from "../../components/findResult";
 import Select from "../../components/element/Select";
 import ResultForm from "../../components/admin/resultForm";
 import ButtonSpinner from "../../components/global/buttonSpinner";
+import Success from "../../components/utils/success";
 
 const term = ["First Term", "Second Term", "Third Term"];
 
@@ -41,8 +42,14 @@ export default function Result({ data }) {
   const [names, setNames] = useState(null);
   const [subjects, setSubjects] = useState(null);
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-
+  if (success) {
+    setTimeout(() => {
+      setSuccess(false)
+      setReviewResult(false)
+    }, 1000);
+  }
   const {
     handleSubmit,
     register,
@@ -95,8 +102,6 @@ export default function Result({ data }) {
     return id;
   };
 
-
-
   const submitCreateResult = async () => {
     setSubmitLoading(true)
     const id = await getResultId(values);
@@ -118,6 +123,7 @@ export default function Result({ data }) {
       } else {
         console.log(data);
         setSubmitLoading(false)
+        setSuccess(true)
         reset()
       }
     } catch (err) {
@@ -163,7 +169,7 @@ export default function Result({ data }) {
         >
           <h4 className="text-3xl mb-4 font-medium">Create a new Result</h4>
 
-          <div className="flex align-middle w-56 children:mx-3 ">
+          <div className="flex align-middle w-56 children:mx-3">
 
             <Select
               data={classes?.map(item => item.name)}
@@ -187,10 +193,10 @@ export default function Result({ data }) {
               label="Student Name"
               errors={errors}
             />
+              </div>
             {!showResultForm && (
               <button onClick={() => setShowResultForm(true)}>Contiune</button>
             )}
-          </div>
 
 
           {showResultForm &&
@@ -210,7 +216,7 @@ export default function Result({ data }) {
         </form>
       )}
 
-
+      {success && <Success text="Student Result Added" />}
       {reviewResult && (
         <div>
           <BasicTable TableData={values.subject} COLUMNS={COLUMNS} />
