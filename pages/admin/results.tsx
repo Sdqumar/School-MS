@@ -5,6 +5,8 @@ import { getStudents } from "../api/student";
 import classes from "../api/classes.json";
 import COLUMNS from "../../components/utils/resultColums";
 import FindResult from "../../components/findResult";
+import Input from "../../components/element/input";
+import Select from "../../components/element/Select";
 
 const term = ["First Term", "Second Term", "Third Term"];
 
@@ -27,7 +29,7 @@ export type result = {
   subject: subject;
 };
 export default function Result({ data }) {
-  
+
   let res = JSON.parse(data);
 
   const [names, setNames] = useState(null);
@@ -151,7 +153,6 @@ export default function Result({ data }) {
       if (data.errors) {
         console.log(data.errors);
       } else {
-        // location.assign("/");
         console.log(data);
       }
     } catch (err) {
@@ -174,66 +175,49 @@ export default function Result({ data }) {
     <section className="mx-5 mt-5 p-4">
       {!createResult && (
         <div onClick={() => setCreateResult(true)}>
-          <button className="text-2xl border border-blue-200 w-max p-2 cursor-pointer hover:bg-gray-50">
+          <button className="text-xl ">
             Create a new Result
           </button>
         </div>
       )}
+
       {createResult && (
         <form
           onSubmit={handleSubmit((formValues) =>
             submitCreateHandler(formValues)
           )}
         >
-          <h4 className="text-2xl mb-4 font-medium">Create a new Result</h4>
+          <h4 className="text-3xl mb-4 font-medium">Create a new Result</h4>
+         
+          <div className="flex align-middle justify-around">
 
-          <label>Class</label>
-          <select
-            {...register("class", {
-              required: "Required",
-            })}
-            onChange={(e) => handleChangeClass(e)}
-          >
-            {classes.map((item) => (
-              <option value={item.name} key={item.name}>
-                {item.name}
-              </option>
-            ))}
-          </select>
-          {errors.class && <Errror message={errors.class.message} />}
-
-          <label>Term</label>
-          <select
-            {...register("term", {
-              required: "Required",
-            })}
-          >
-            {term.map((item) => (
-              <option value={item} key={item}>
-                {item}
-              </option>
-            ))}
-          </select>
-          {errors.term && <Errror message={errors.term.message} />}
-
-          <label>Student Name</label>
-          <select
-            {...register("studentName", {
-              required: "Required",
-            })}
-          >
-            {names?.map((item) => (
-              <option value={item.fullName} key={item.admissionNo}>
-                {item.fullName}
-              </option>
-            ))}
-          </select>
-          {errors.studentName && (
-            <Errror message={errors.studentName.message} />
-          )}
+          <Select 
+            data={classes.map(item=>item.name)}
+            register={register}
+            name="class"
+            label="Class"
+            errors={errors}
+          />
+          <Select 
+            data={term}
+            register={register}
+            name="term"
+            label="Term"
+            errors={errors}
+          />
+          <Select 
+            data={names.map(item=>item.fullName)}
+            register={register}
+            name="studentName"
+            label="Student Name"
+            errors={errors}
+          />
           {!showResultForm && (
             <button onClick={() => setShowResultForm(true)}>Contiune</button>
           )}
+          </div>
+          
+         
           {showResultForm &&
             subjects.map((item, index) => (
               <div
@@ -358,10 +342,10 @@ export default function Result({ data }) {
 
 export async function getStaticProps() {
   let res = await getStudents();
-  let data =  JSON.stringify(res);
+  let data = JSON.stringify(res);
 
   return {
-    props: {data}
+    props: { data }
   };
 }
 

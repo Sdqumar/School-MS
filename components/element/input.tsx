@@ -1,4 +1,4 @@
-import Errror from "./Error";
+import Errror from "../global/Error";
 
 export default function Input({register,name,label,required=true,errors,type='text',...rest}) {
   

@@ -4,7 +4,7 @@ import useStore from "../../components/useStore";
 import Image from "next/image";
 import SideNavBar from "../../components/StudentSideBar";
 import { useForm } from "react-hook-form";
-import Select from "../../components/utils/Select";
+import Select from "../../components/element/Select";
 import BasicTable from "../../components/BasicTable";
 
 import COLUMNS from "../../components/utils/resultColums";

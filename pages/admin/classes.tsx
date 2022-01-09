@@ -4,7 +4,7 @@ import subjects from "../api/subjects.json";
 import classes from "../api/classes.json";
 import { useState } from "react";
 import RowSelection from "../../components/RowSelection";
-import Input from "../../components/global/input";
+import Input from "../../components/element/input";
 type classes = {
   name: string;
   subjects: [""];
@@ -13,11 +13,11 @@ type classes = {
 const COLUMNS = [
   {
     Header: "Class",
-    accessor: row=><div className="w-20">{row.name}</div>,
+    accessor: row => <div className="w-20">{row.name}</div>,
   },
   {
     Header: "Subjects",
-    accessor: (row) =>row?.subjects?.map((item) => <span key={item}>{item}, </span>)
+    accessor: (row) => row?.subjects?.map((item) => <span key={item}>{item}, </span>)
   },
 ];
 
@@ -81,27 +81,27 @@ export default function Classes({ data }) {
 
           <form
             onSubmit={handleSubmit((formValues) => submitHandler(formValues))}
-         className="flex-grow"
-         >
+            className="flex-grow"
+          >
             <div className="w-48">
 
-            <Input
-          register={register}
-          name="name"
-          label="Add Class"
-          errors={errors}
-        />
-            
-              </div>
+              <Input
+                register={register}
+                name="name"
+                label="Add Class"
+                errors={errors}
+              />
+
+            </div>
             <h3 className="mt-8 font-medium text-xl">Subjects</h3>
             <div className="flex flex-col   ">
               {subjects.map((item) => (
                 <span
                   key={item}
-                 className="flex items-center "
+                  className="flex items-center "
                 >
                   <input
-                  className="w-auto mr-9"
+                    className="w-auto mr-9"
                     type="checkbox"
                     value={item}
                     {...register("subjects")}
@@ -153,16 +153,15 @@ export const AddSubject = () => {
   return (
     <form
       onSubmit={handleSubmit((formValues) => submitHandler(formValues))}
-className="max-h-60"
+      className="max-h-60"
     >
-      <h4>Add Subject</h4>
       <Input
-          register={register}
-          name="subject"
-          label="Add Subject"
-          errors={errors}
-        />
-      
+        register={register}
+        name="subject"
+        label="Add Subject"
+        errors={errors}
+      />
+
       <button>Add Subject</button>
     </form>
   );

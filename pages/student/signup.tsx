@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import ButtonSpinner from "../../components/global/buttonSpinner";
-import Input from "../../components/global/input";
+import Input from "../../components/element/input";
 export type student = {
   admissionNo: string;
   firstName: string;

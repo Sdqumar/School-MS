@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useCookies } from 'react-cookie';
 import ButtonSpinner from "../../components/global/buttonSpinner";
-import Input from "../../components/global/input";
+import Input from "../../components/element/input";
 import Success from "../../components/utils/success";
 import Error from "../../components/utils/Error";
 

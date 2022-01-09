@@ -5,7 +5,7 @@ import Success from "../../components/utils/success";
 import Error from "../../components/utils/Error";
 import Spinner from "../../components/utils/Spinner";
 import Errror from "../../components/global/Error";
-import Input from "../../components/global/input";
+import Input from "../../components/element/input";
 import ButtonSpinner from "../../components/global/buttonSpinner";
 type student = {
   password: string;
