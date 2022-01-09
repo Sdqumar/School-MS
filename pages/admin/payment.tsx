@@ -1,9 +1,12 @@
 import classes from "../api/classes.json";
 import { useForm } from "react-hook-form";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import BasicTable from "../../components/BasicTable";
+import Select from "../../components/element/Select";
+import Input from "../../components/element/input";
 
 const term = ["First Term", "Second Term", "Third Term"];
+const year = [2021, 2022, 2023, 2024, 2025]
 
 const COLUMNS = [
   {
@@ -22,7 +25,7 @@ const COLUMNS = [
   {
     Header: "Total",
     accessor: (row) => `₦ ${Number(row.total).toLocaleString()}`,
-    
+
   },
 ];
 
@@ -41,7 +44,7 @@ type payment = {
 export default function Payment() {
   const [preview, setPreview] = useState(null);
 
-  const handleForm = async (values:payment) => {
+  const handleForm = async (values: payment) => {
     values.class.forEach((item, index) => {
       setValue(
         `class.${index}.total`,
@@ -54,25 +57,25 @@ export default function Payment() {
     setPreview(null);
     setPreview(values.class);
 
-    
+
   };
-const handleSave=async()=>{
-try {
-        const res = await fetch("/api/payment", {
-          method: "POST",
-          body: JSON.stringify(values),
-          headers: { "Content-Type": "application/json" },
-        });
-        const data = await res.json();
-        if (data.errors) {
-          console.log(data.errors);
-        } else {
-          console.log(data);
-        }
-      } catch (err) {
-        console.log(err);
+  const handleSave = async () => {
+    try {
+      const res = await fetch("/api/payment", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if (data.errors) {
+        console.log(data.errors);
+      } else {
+        console.log(data);
       }
-}
+    } catch (err) {
+      console.log(err);
+    }
+  }
   const {
     handleSubmit,
     register,
@@ -91,72 +94,54 @@ try {
           Set Payment for current Academic Seassion
         </h4>
 
-        <label>Year</label>
-        <select
-          {...register("year", {
-            required: "Required",
-          })}
-        >
-          {[2021, 2022, 2023, 2024, 2025].map((item) => (
-            <option value={item} key={item}>
-              {item}
-            </option>
-          ))}
-        </select>
-        {errors.year && <Errror message={errors.year.message} />}
+        <Select
+          data={year}
+          register={register}
+          name="year"
+          label="Year"
+          errors={errors}
+        />
 
-        <label>Term</label>
-        <select
-          {...register("term", {
-            required: "Required",
-          })}
-        >
-          {term.map((item) => (
-            <option value={item} key={item}>
-              {item}
-            </option>
-          ))}
-        </select>
-        {errors.term && <Errror message={errors.term.message} />}
+        <Select
+          data={term}
+          register={register}
+          name="term"
+          label="Term"
+          errors={errors}
+        />
 
         {classes.map((item, index) => {
           setValue(`class.${index}.name`, item.name);
           return (
-            <div className="flex items-center" key={item.name}>
-              <label className="mt-5">{item.name}</label>
-              <input
-                {...register(`class.${index}.amount`, {
-                  required: "Required",
-                })}
+            <div className="flex items-center mt-5" key={item.name}>
+              <Input
+                register={register}
+                name={`class.${index}.amount`}
+                label={item.name}
+                errors={errors}
                 type="number"
-                className="w-60 ml-5 h-10"
+                containerStyle="flex children:mr-2.5"
               />
+
             </div>
           );
         })}
-        <div className="flex items-center">
-          <label className="mt-5">Processing Fees</label>
-          <input
-            {...register("charges", {
-              required: "Required",
-            })}
-            type="number"
-            className="w-60 ml-5 h-10"
-          />
-        </div>
+        <Input
+          register={register}
+          name='charges'
+          label={"Processing Fees"}
+          errors={errors}
+          type="number"
+          containerStyle="flex children:mr-2.5 mt-5"
+        />
+
 
         <button>preview</button>
       </form>
 
       {preview && <BasicTable TableData={preview} COLUMNS={COLUMNS} />}
-          <button className="mb-10" onClick={handleSave}>save</button>
+      <button className="mb-10" onClick={handleSave}>save</button>
     </div>
   );
 }
 
-type errorProps = {
-  message?: string | undefined;
-};
-export function Errror({ message }: errorProps) {
-  return <p>{message}</p>;
-}

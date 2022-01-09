@@ -1,10 +1,10 @@
 import Errror from "../global/Error";
 
-export default function Input({ register, name, label, required = true, errors, type = 'text', style = '', ...rest }) {
+export default function Input({ register, name, label, required = true, errors, type = 'text',containerStyle='', style = '', ...rest }) {
 
 
   return (
-    <div>
+    <div className={containerStyle}>
       <label>{label}</label>
       <input
         {...register(name, { required: required })}

@@ -42,6 +42,8 @@ export default function FindResult({ user, data }: FindResult) {
     "Primary 6",
     "SS 1",
   ];
+  const year = [2021, 2022, 2023, 2024, 2025]
+
   const [showResultTable, setShowResultTable] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -115,7 +117,6 @@ export default function FindResult({ user, data }: FindResult) {
   };
 
 
-  const year = [2021, 2022, 2023, 2024, 2025]
 
   const handleChangeClass = (e) => {
     if (!user) {

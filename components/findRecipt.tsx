@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import BasicTable from "./BasicTable";
-import getResultId from "./utils/getStudntId";
+import getResultId from "./global/getStudntId";
 import COLUMNS from "./utils/resultColums";
 
 export type result = {

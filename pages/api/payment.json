@@ -1,9 +1,1 @@
-{
-  "year": "2021",
-  "term": "First Term",
-  "class": [
-    { "name": "Primary 1", "amount": "50000", "total": 50200, "charges": 200 },
-    { "name": "Primary 2", "amount": "40000", "total": 40200, "charges": 200 }
-  ],
-  "charges": "200"
-}
+{"year":"2021","term":"First Term","class":[{"name":"Primary 1","amount":"50000","total":50150,"charges":150},{"name":"Primary 2","amount":"200000","total":200150,"charges":150}],"charges":"150"}
