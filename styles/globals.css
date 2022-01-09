@@ -51,7 +51,7 @@ select {
     @apply text-lg font-medium;
   }
   button {
-    @apply border-0 block font-semibold text-sm mt-5 py-2 px-4 text-white bg-primary tracking-widest text-center
+    @apply border-0 block font-semibold text-sm mt-5 py-2 px-4 text-white bg-primary tracking-widest text-center disabled:bg-blue-300
   }
   input{
     @apply border  px-3 py-2 w-80 focus:outline-none focus:border-primary focus:ring-1 ;
@@ -68,16 +68,16 @@ select {
     @apply border-collapse min-w-full  py-10 rounded-lg shadow-xl
   }
   th{
-    @apply px-8 py-4 
+    @apply px-8 py-4 border
   }
   thead tr{
-    @apply hover:bg-white
+    @apply hover:bg-white 
   }
   td{
-    @apply px-8 py-4 
+    @apply px-8 py-4 border
   }
   tr{
-    @apply hover:bg-gray-200 cursor-pointer
+    @apply hover:bg-gray-200 cursor-pointer 
   }
   .link {
     @apply border border-blue-200 max-w-max py-2 px-4 my-4 cursor-pointer;
