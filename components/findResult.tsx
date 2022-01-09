@@ -92,7 +92,6 @@ export default function FindResult({ user, data }: FindResult) {
 
   const [names, setNames] = useState(null);
 
-  const defaultClass = () => {};
 
   const handleChangeClass = (e) => {
     if (!user) {

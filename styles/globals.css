@@ -17,13 +17,14 @@ select {
   align-items: center;
   width: 50rem;
   justify-content: space-between;
+  margin-top: 2rem;
 }
 .result input {
   width: 4rem;
   padding: 8px 0;
   text-align: center;
 }
-.result .grade {
+.result .remark {
   width: 10rem;
 }
 .result div {
@@ -50,7 +51,7 @@ select {
     @apply text-lg font-medium;
   }
   button {
-    @apply border-0 block font-semibold text-sm mt-8 py-2 px-4 text-white bg-primary tracking-widest disabled:bg-gray-200 
+    @apply border-0 block font-semibold text-sm mt-5 py-2 px-4 text-white bg-primary tracking-widest text-center
   }
   input{
     @apply border  px-3 py-2 w-80 focus:outline-none focus:border-primary focus:ring-1 ;
@@ -61,7 +62,7 @@ select {
 
   form {
     @apply  my-5 mx-2 p-8
-  rounded-lg shadow-xl;
+  rounded-lg shadow-md;
   }
   table{
     @apply border-collapse min-w-full  py-10 rounded-lg shadow-xl

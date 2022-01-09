@@ -5,8 +5,9 @@ import { getStudents } from "../api/student";
 import classes from "../api/classes.json";
 import COLUMNS from "../../components/utils/resultColums";
 import FindResult from "../../components/findResult";
-import Input from "../../components/element/input";
 import Select from "../../components/element/Select";
+import ResultForm from "../../components/admin/resultForm";
+import ButtonSpinner from "../../components/global/buttonSpinner";
 
 const term = ["First Term", "Second Term", "Third Term"];
 
@@ -32,14 +33,22 @@ export default function Result({ data }) {
 
   let res = JSON.parse(data);
 
+
+  const [reviewResult, setReviewResult] = useState(false);
+  const [showResultForm, setShowResultForm] = useState(false);
+  const [createResult, setCreateResult] = useState(false);
+  const [showResultTable, setShowResultTable] = useState(null);
   const [names, setNames] = useState(null);
   const [subjects, setSubjects] = useState(null);
+  const [submitLoading, setSubmitLoading] = useState(false);
+
 
   const {
     handleSubmit,
     register,
     setValue,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<result>();
   const values = getValues();
@@ -56,10 +65,6 @@ export default function Result({ data }) {
     setNames(studentNames);
   };
 
-  const [subjectIndex, setSubjectIndex] = useState(0);
-  const [resultComplete, setResultComplete] = useState(false);
-  const [reviewResult, setReviewResult] = useState(false);
-  const [showResultForm, setShowResultForm] = useState(false);
 
   const handleResultReview = () => {
     reviewResult && setReviewResult(false);
@@ -90,58 +95,15 @@ export default function Result({ data }) {
     return id;
   };
 
-  const setTotalScore = () => {
-    const firstCA = values.subject?.[subjectIndex].firstCA.toString();
-    const secondCA = values.subject?.[subjectIndex].secondCA.toString();
-    const examScore = values.subject?.[subjectIndex].examScore.toString();
 
-    if (firstCA && secondCA && examScore) {
-      const totalScore =
-        parseInt(firstCA) + parseInt(secondCA) + parseInt(examScore);
 
-      setValue(`subject.${subjectIndex}.totalScore`, totalScore);
-
-      let grade = "";
-      let remark = "";
-
-      if (totalScore >= 0 && totalScore <= 29) {
-        grade = "F";
-        remark = "Very Poor";
-      }
-      if (totalScore >= 30 && totalScore <= 39) {
-        grade = "E";
-        remark = "Poor";
-      }
-      if (totalScore >= 40 && totalScore <= 49) {
-        grade = "D";
-        remark = "Fair";
-      }
-      if (totalScore >= 50 && totalScore <= 59) {
-        grade = "C";
-        remark = "Good";
-      }
-
-      if (totalScore >= 60 && totalScore <= 69) {
-        grade = "B";
-        remark = "Very Good";
-      }
-
-      if (totalScore >= 70 && totalScore <= 100) {
-        grade = "A";
-        remark = "Excellent";
-      }
-
-      setValue(`subject.${subjectIndex}.grade`, grade);
-      setValue(`subject.${subjectIndex}.remark`, remark);
-    }
-  };
-
-  const submitCreateHandler = async (formValues) => {
-    const id = await getResultId(formValues);
+  const submitCreateResult = async () => {
+    setSubmitLoading(true)
+    const id = await getResultId(values);
 
     const docName = year;
 
-    const doc = { ...formValues, id, year };
+    const doc = { ...values, id, year };
 
     try {
       const res = await fetch("/api/result", {
@@ -152,16 +114,20 @@ export default function Result({ data }) {
       const data = await res.json();
       if (data.errors) {
         console.log(data.errors);
+        setSubmitLoading(false)
       } else {
         console.log(data);
+        setSubmitLoading(false)
+        reset()
       }
     } catch (err) {
       console.log(err);
+      setSubmitLoading(false)
+
     }
   };
 
-  const [createResult, setCreateResult] = useState(false);
-  const [showResultTable, setShowResultTable] = useState(null);
+
   useEffect(() => {
     const studentNames = res?.filter((item) => item.class === classes[0].name);
     const [{ subjects }] = classes?.filter(
@@ -174,165 +140,86 @@ export default function Result({ data }) {
   return (
     <section className="mx-5 mt-5 p-4">
       {!createResult && (
-        <div onClick={() => setCreateResult(true)}>
-          <button className="text-xl ">
-            Create a new Result
-          </button>
+        <div>
+
+          <div onClick={() => setCreateResult(true)}>
+            <button className="text-xl ">
+              Create a new Result
+            </button>
+          </div>
+          <div className="mt-5">
+            <FindResult data={res} />
+          </div>
+
         </div>
       )}
+
 
       {createResult && (
         <form
           onSubmit={handleSubmit((formValues) =>
-            submitCreateHandler(formValues)
+            handleResultReview()
           )}
         >
           <h4 className="text-3xl mb-4 font-medium">Create a new Result</h4>
-         
-          <div className="flex align-middle justify-around">
 
-          <Select 
-            data={classes.map(item=>item.name)}
-            register={register}
-            name="class"
-            label="Class"
-            errors={errors}
-          />
-          <Select 
-            data={term}
-            register={register}
-            name="term"
-            label="Term"
-            errors={errors}
-          />
-          <Select 
-            data={names.map(item=>item.fullName)}
-            register={register}
-            name="studentName"
-            label="Student Name"
-            errors={errors}
-          />
-          {!showResultForm && (
-            <button onClick={() => setShowResultForm(true)}>Contiune</button>
-          )}
+          <div className="flex align-middle w-56 children:mx-3 ">
+
+            <Select
+              data={classes?.map(item => item.name)}
+              register={register}
+              name="class"
+              label="Class"
+              errors={errors}
+              onChange={handleChangeClass}
+            />
+            <Select
+              data={term}
+              register={register}
+              name="term"
+              label="Term"
+              errors={errors}
+            />
+            <Select
+              data={names?.map(item => item.fullName)}
+              register={register}
+              name="studentName"
+              label="Student Name"
+              errors={errors}
+            />
+            {!showResultForm && (
+              <button onClick={() => setShowResultForm(true)}>Contiune</button>
+            )}
           </div>
-          
-         
+
+
           {showResultForm &&
-            subjects.map((item, index) => (
-              <div
-                className="result"
-                key={item}
-                onClick={() => setSubjectIndex(index)}
-              >
-                <div>
-                  <label className="mt-5">{item}</label>
-                  <input
-                    {...register(`subject.${index}.name`, {
-                      required: "Required",
-                    })}
-                    type="text"
-                    defaultValue={item}
-                    hidden
-                  />
-                </div>
-                <section>
-                  {" "}
-                  <div>
-                    <label>1st CA</label>
-                    <input
-                      {...register(`subject.${index}.firstCA`, {
-                        required: "Required",
-                      })}
-                      min="0"
-                      max="20"
-                      type="number"
-                      onBlur={setTotalScore}
-                    />
-                  </div>
-                  <div>
-                    <label>2st CA</label>
-
-                    <input
-                      {...register(`subject.${index}.secondCA`, {
-                        required: "Required",
-                      })}
-                      type="number"
-                      min="0"
-                      max="20"
-                      onBlur={setTotalScore}
-                    />
-                  </div>
-                  <div>
-                    <label>Exam</label>
-
-                    <input
-                      {...register(`subject.${index}.examScore`, {
-                        required: "Required",
-                      })}
-                      type="number"
-                      min="0"
-                      max="60"
-                      onBlur={setTotalScore}
-                    />
-                  </div>
-                  <div>
-                    <label>Total</label>
-
-                    <input
-                      {...register(`subject.${index}.totalScore`, {
-                        required: "Required",
-                      })}
-                      type="number"
-                      min="0"
-                      max="100"
-                    />
-                  </div>
-                  <div>
-                    <label>Grade</label>
-
-                    <input
-                      {...register(`subject.${index}.grade`, {
-                        required: "Required",
-                      })}
-                      type="text"
-                    />
-                  </div>
-                  <div>
-                    <label>Remark</label>
-
-                    <input
-                      className="grade"
-                      {...register(`subject.${index}.remark`, {
-                        required: "Required",
-                      })}
-                      type="text"
-                    />
-
-                    {errors.studentName && (
-                      <Errror message={errors.studentName.message} />
-                    )}
-                  </div>
-                </section>
-              </div>
-            ))}
+            <ResultForm
+              values={values}
+              setValue={setValue}
+              subjects={subjects}
+              register={register}
+              errors={errors}
+            />
+          }
 
           {showResultForm && (
-            <>
-              <button type="submit">submit</button>
-            </>
+            <button>Review</button>
+
           )}
         </form>
       )}
-      {showResultForm && <button onClick={handleResultReview}>Review</button>}
+
+
       {reviewResult && (
-        <BasicTable TableData={values.subject} COLUMNS={COLUMNS} />
-      )}{" "}
-      {!createResult && (
-        <div className="mt-5">
-          <FindResult data={res} />
+        <div>
+          <BasicTable TableData={values.subject} COLUMNS={COLUMNS} />
+
+          <ButtonSpinner loading={submitLoading} label="Create Result" onClick={submitCreateResult} className="text-xl mb-9" />
         </div>
-      )}
+      )
+      }
+
       {showResultTable && (
         <BasicTable TableData={showResultTable} COLUMNS={COLUMNS} />
       )}
@@ -349,9 +236,3 @@ export async function getStaticProps() {
   };
 }
 
-type errorProps = {
-  message?: string | undefined;
-};
-export function Errror({ message }: errorProps) {
-  return <p>{message}</p>;
-}
