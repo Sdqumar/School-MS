@@ -40,6 +40,9 @@ select {
 @import "tailwindcss/utilities";
 
 @layer base {
+  a{
+    @apply hover:bg-transparent
+  }
   h1 {
     @apply text-4xl font-medium my-4;
   }
