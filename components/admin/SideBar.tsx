@@ -6,7 +6,7 @@ export default function SideNavBar() {
   const navData = ["Dashboard", "Staff", "Student", "Classes", "Results", "Payment"];
 
   return (
-    <div className="  w-60 shadow-lg  pt-5 h-screen ">
+    <div className="  w-60 shadow-lg  pt-5 min-h-screen ">
       <div className="flex justify-center items-center ">
         <div className="w-16 h-16 relative  mr-3 z-10">
         <Image
@@ -41,7 +41,7 @@ export default function SideNavBar() {
                     <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                   </svg>
                   <a
-                    className="py-2  text-xl font-medium flex flex-col px-4 hover:bg-white"
+                    className="py-2  text-xl font-medium  px-4 "
                   >
                     {item}
                   </a>
@@ -51,6 +51,9 @@ export default function SideNavBar() {
             </Link>
           )
         })}
+      </div>
+      <div className="flex items-center">
+      <button className="w-full mx-2">Log Out</button>
       </div>
     </div>
   );
